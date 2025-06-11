@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    [SerializeField] private SerializableStats _serialisedStats = new();
+    private Stats _stats;
+
     private Player _player;
     private IEnemyAttack _attack;
     private GameObject _spawner;
     private Rigidbody2D _rigidBody;
+    public ObjectPool Pool; // pool that contains this enemy
 
     private void Awake()
     {
@@ -17,9 +22,15 @@ public class Enemy : MonoBehaviour, IDamageable
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        Assert.IsNotNull(Pool);
+    }
+
     private void OnEnable()
     {
         TurnManager.Instance().OnTurnChange += PlayTurn;
+        _stats = _serialisedStats;
     }
 
     private void OnDisable()
@@ -45,8 +56,16 @@ public class Enemy : MonoBehaviour, IDamageable
         _attack.TryAttack();
     }
 
-    public void OnDamage(float damage)
+    void IDamageable.DamageReceiveEvent(float damage)
     {
-        print("enemy damaged for " + damage);
+        if (_stats.IsDead())
+        {
+            Pool.ReleaseObject(gameObject);
+        }
+    }
+
+    public Stats GetStats()
+    {
+        return _stats;
     }
 }

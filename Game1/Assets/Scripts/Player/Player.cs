@@ -1,14 +1,25 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
+    [SerializeField] private SerializableStats _serializedStats = new();
+
     public PlayerMana PlayerMana { get; private set; }
-    public Camera Camera {  get; private set; }
+    public Camera Camera { get; private set; }
     public Vector3 PositionAtFrameStart { get; set; }
+    public Stats Stats { get; private set; }
 
     private void Awake()
     {
         Camera = GetComponentInChildren<Camera>();
         PlayerMana = GetComponentInChildren<PlayerMana>();
+        Stats = _serializedStats;
     }
+
+    public Stats GetStats()
+    {
+        return Stats;
+    }
+
+    void IDamageable.DamageReceiveEvent(float damage) { }
 }

@@ -27,8 +27,10 @@ public class EnemySpawner : MonoBehaviour
 
         _turnsSinceSpawn = 0;
 
-        GameObject enemy = _pool.ActivateObject();
-        enemy.transform.position = PickSpawnLocation();
+        GameObject enemyObj = _pool.ActivateObject();
+        enemyObj.transform.position = PickSpawnLocation();
+        Enemy enemy = enemyObj.GetComponent<Enemy>();
+        enemy.Pool = _pool;
     }
 
     private Vector3 PickSpawnLocation()
@@ -44,6 +46,6 @@ public class EnemySpawner : MonoBehaviour
         if (offset.y < 0) offset.y -= cameraSize.y * 1.1f;
         offset.x = Mathf.Round(offset.x);
         offset.y = Mathf.Round(offset.y);
-        return  location + offset;
+        return location + offset;
     }
 }

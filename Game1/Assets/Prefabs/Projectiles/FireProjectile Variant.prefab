@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireProjectile Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4808493538190937495, guid: aa210b41b9536eb46b69df43808b2de3, type: 3}
+      propertyPath: _statModifiers.entries.Array.data[0].Modifier.Value
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

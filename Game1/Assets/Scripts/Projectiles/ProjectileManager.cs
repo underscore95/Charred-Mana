@@ -21,17 +21,21 @@ public class ProjectileManager : MonoBehaviour
         Assert.IsNotNull(_projectiles);
     }
 
-    public GameObject SpawnProjectile()
+    public Projectile SpawnProjectile(IHasStats shooter)
     {
         if (_projectiles.IsFull())
         {
             _projectiles.ReleaseOldestObject();
         }
-        return _projectiles.ActivateObject();
+        Projectile projectile = _projectiles.ActivateObject().GetComponent<Projectile>();
+        projectile.Shooter = shooter;
+        return projectile;
     }
 
     public void RemoveProjectile(GameObject proj)
     {
         _projectiles.ReleaseObject(proj);
     }
+
+    public ObjectPool InternalPool() { return _projectiles; }
 }

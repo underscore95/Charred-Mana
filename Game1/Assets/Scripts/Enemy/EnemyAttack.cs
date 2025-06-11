@@ -24,7 +24,7 @@ public class EnemyAttack : MonoBehaviour, IEnemyAttack
             float dotProduct = Vector3.Dot(toPlayer, Vector3.left); // both of these are normalised, so we have cos(a) here
             swipe.rotation = Quaternion.Euler(0, 0, Mathf.Acos(dotProduct) * Mathf.Rad2Deg);
 
-            _player.GetComponentInChildren<PlayerHealth>().Damage(Random.Range(3, 9));
+            IDamageable.Damage(_player, Random.Range(3.0f, 9.0f));
         }
     }
 }

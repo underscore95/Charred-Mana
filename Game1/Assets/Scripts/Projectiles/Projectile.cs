@@ -1,21 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
-    [SerializeField] private float _damage = 5;
-    public float Damage { get { return _damage; } }
+    [SerializeField] private SerializableStatModifiersContainer _statModifiers;
+    public IHasStats Shooter;
+
     private Rigidbody2D _rigidBody;
     private ManagedProjectile _managed;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        Assert.IsNotNull(_statModifiers);
     }
 
     private void Start()
     {
+        Assert.IsNotNull(Shooter);
         _managed = GetComponent<ManagedProjectile>();
     }
 
@@ -38,7 +42,9 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<IDamageable>(out var damageable))
         {
-            damageable.OnDamage(Damage);
+            Stats stats = Shooter.GetStats().DuplicateAndAddModifiers(_statModifiers);
+            float dmg = damageable.GetStats().GetDamageWhenAttackedBy(stats);
+            IDamageable.Damage(damageable, dmg);
         }
 
         _managed.DestroyProjectile();

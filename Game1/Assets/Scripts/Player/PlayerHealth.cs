@@ -6,25 +6,16 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _healthBarText;
 
-    public float MaxHealth { get; private set; } = 100;
-    public float Health { get; private set; }
+    private Stats _stats;
 
-    private void Awake()
+    private void Start()
     {
-        Health = MaxHealth;
-        UpdateText();
+        _stats = transform.parent.GetComponent<IHasStats>().GetStats();
     }
 
-    public void Damage(float damage)
+    private void Update()
     {
-        Assert.IsTrue(damage > 0);
-        Health -= damage;
-
-        UpdateText();
-    }
-
-    private void UpdateText()
-    {
-        _healthBarText.text = string.Format("Health: {0} / {1}", Mathf.RoundToInt(Health), Mathf.RoundToInt(MaxHealth));
+        int currentHealth = Mathf.CeilToInt(_stats.CurrentHealth);
+        _healthBarText.text = string.Format("Health: {0} / {1}", currentHealth, Mathf.RoundToInt(_stats.Get(StatType.MaxHealth)));
     }
 }
