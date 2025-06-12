@@ -10,13 +10,22 @@ public class EnemySpawner : MonoBehaviour
     private Player _player;
     private ObjectPool _pool;
     private int _turnsSinceSpawn = 0;
+    private TurnManager _turnManager;
 
     private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
         _pool = new(_enemyPrefab, 10, transform);
 
-        TurnManager.Instance().OnTurnChange += TrySpawnEnemy;
+        _turnManager = FindAnyObjectByType<TurnManager>();
+        _turnManager.OnTurnChange += TrySpawnEnemy;
+    }
+
+    private void Start()
+    {
+        // Start with one enemy
+        _turnsSinceSpawn = _spawnCooldown;
+        TrySpawnEnemy();
     }
 
     private void TrySpawnEnemy()

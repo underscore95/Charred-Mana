@@ -15,7 +15,7 @@ public abstract class PlayerSpell : MonoBehaviour
 
         Assert.IsTrue(_spellCooldown > 0);
 
-        TurnManager.Instance().OnTurnChange += () => { if (CurrentCooldown > 0) CurrentCooldown--; };
+        FindAnyObjectByType<TurnManager>().OnTurnChange += () => { if (CurrentCooldown > 0) CurrentCooldown--; };
     }
 
     public abstract void OnTrigger(SpellTriggerInfo info);

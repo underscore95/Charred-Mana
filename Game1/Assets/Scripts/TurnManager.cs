@@ -1,17 +1,28 @@
 
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
 
-public  class TurnManager
+public class TurnManager : MonoBehaviour
 {
-    private static readonly TurnManager _instance = new();
-
-    public static TurnManager Instance() {  return _instance; }
-
-    public UnityAction OnTurnChange;
-
+    [SerializeField] private TextMeshProUGUI _turnText;
+    [SerializeField] private List<DelayedStatBoost> _enemyStatBoosts = new();
+    public StatModifiersContainer CurrentEnemyStatBoost { get; private set; } = new();
+    public UnityAction OnTurnChange { get; set; }
     public int CurrentTurn { get; private set; } = 0;
 
-    public TurnManager() {
+    private void Awake()
+    {
+        OnTurnChange += OnTurnChangeOrAwake;
         OnTurnChange += () => CurrentTurn++;
-    }    
+        
+        OnTurnChangeOrAwake();
+    }
+
+    private void OnTurnChangeOrAwake()
+    {
+        _turnText.text = "Turn #" + (CurrentTurn + 1);
+        CurrentEnemyStatBoost = DelayedStatBoost.GetMergedStatBoost(_enemyStatBoosts, CurrentTurn);
+    }
 }

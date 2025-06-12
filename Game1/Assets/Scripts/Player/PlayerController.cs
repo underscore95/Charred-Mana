@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,11 +12,13 @@ public class PlayerController : MonoBehaviour
     private bool _canGoToNextTurn = true;
     private Player _player;
     private Rigidbody2D _rigidBody;
+    private TurnManager _turnManager;
 
     private void Awake()
     {
         _player = GetComponent<Player>();
         _rigidBody = GetComponent<Rigidbody2D>();
+        _turnManager = FindAnyObjectByType<TurnManager>();
     }
 
     private void Update()
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
         }
 
         StartCoroutine(Utils.MoveRigidBody(_rigidBody, displacement));
-        TurnManager.Instance().OnTurnChange.Invoke();
+        _turnManager.OnTurnChange.Invoke();
         StartCoroutine(StartNextTurnCooldown());
     }
 

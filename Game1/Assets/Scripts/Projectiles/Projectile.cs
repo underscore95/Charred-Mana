@@ -10,11 +10,13 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody2D _rigidBody;
     private ManagedProjectile _managed;
+    private TurnManager _turnManager;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         Assert.IsNotNull(_statModifiers);
+        _turnManager = FindAnyObjectByType<TurnManager>();
     }
 
     private void Start()
@@ -25,12 +27,12 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
-        TurnManager.Instance().OnTurnChange += TurnChange;
+        _turnManager.OnTurnChange += TurnChange;
     }
 
     private void OnDisable()
     {
-        TurnManager.Instance().OnTurnChange -= TurnChange;
+        _turnManager.OnTurnChange -= TurnChange;
     }
 
     private void TurnChange()

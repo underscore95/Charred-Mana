@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private GameObject _spawner;
     private Rigidbody2D _rigidBody;
     public ObjectPool Pool; // pool that contains this enemy
+    private TurnManager _turnManager;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _attack = GetComponent<IEnemyAttack>();
         _spawner = transform.parent.gameObject;
         _rigidBody = GetComponent<Rigidbody2D>();
+        _turnManager = FindAnyObjectByType<TurnManager>();
     }
 
     private void Start()
@@ -29,13 +31,15 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
-        TurnManager.Instance().OnTurnChange += PlayTurn;
+        _turnManager.OnTurnChange += PlayTurn;
         _stats = _serialisedStats;
+        _stats.ApplyModifiers(_turnManager.CurrentEnemyStatBoost);
+        _stats.Heal();
     }
 
     private void OnDisable()
     {
-        TurnManager.Instance().OnTurnChange -= PlayTurn;
+        _turnManager.OnTurnChange -= PlayTurn;
     }
 
     private void PlayTurn()

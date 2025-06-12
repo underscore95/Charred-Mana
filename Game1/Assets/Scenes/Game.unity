@@ -703,8 +703,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 739235274}
+  - component: {fileID: 739235275}
   m_Layer: 0
-  m_Name: TimeManager
+  m_Name: TurnManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,12 +720,44 @@ Transform:
   m_GameObject: {fileID: 739235273}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.543677, y: -0.6980841, z: 0.034857005}
+  m_LocalPosition: {x: 2.543, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &739235275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739235273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d14636dd866da74b89454eec26c94e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turnText: {fileID: 1038945658}
+  _enemyStatBoosts:
+  - RequiredTurn: 50
+    StatModifiers:
+      entries:
+      - Type: 1
+        Modifier:
+          Operation: 0
+          Value: 1
+  - RequiredTurn: 100
+    StatModifiers:
+      entries:
+      - Type: 1
+        Modifier:
+          Operation: 0
+          Value: 2
+      - Type: 2
+        Modifier:
+          Operation: 0
+          Value: 1
 --- !u!1 &816295197
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,7 +906,7 @@ GameObject:
   - component: {fileID: 1038945659}
   - component: {fileID: 1038945658}
   m_Layer: 5
-  m_Name: TimeText
+  m_Name: TurnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -895,8 +928,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 483.02}
-  m_SizeDelta: {x: 209.5882, y: 89.9507}
+  m_AnchoredPosition: {x: 46.1157, y: 483.02}
+  m_SizeDelta: {x: 452.0327, y: 89.9507}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1038945658
 MonoBehaviour:
@@ -918,7 +951,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00
+  m_text: Turn #1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -952,7 +985,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -983,7 +1016,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -164.59694, w: 0}
+  m_margin: {x: -6.0110626, y: 0, z: -2.2995224, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

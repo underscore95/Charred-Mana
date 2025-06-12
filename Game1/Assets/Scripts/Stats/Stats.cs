@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 public class Stats
@@ -67,6 +68,17 @@ public class Stats
         RecalculateModifiers(type);
     }
 
+    public void ApplyModifiers(StatModifiersContainer currentEnemyStatBoost)
+    {
+      foreach (var (type, mods) in currentEnemyStatBoost.Modifiers)
+        {
+            foreach (var mod in mods)
+            {
+                ApplyModifier(type, mod);
+            }
+        }
+    }
+
     public float Get(StatType type) => _modifiedStats[type];
     public void Set(StatType type, float value) {
         _baseStats[type] = value;
@@ -103,5 +115,10 @@ public class Stats
         }
 
         _modifiedStats[type] = temp;
+    }
+
+    public void Heal()
+    {
+        CurrentHealth = Get(StatType.MaxHealth);
     }
 }
