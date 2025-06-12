@@ -2,11 +2,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class PlayerHealth : MonoBehaviour
+// Display health of parent object
+public class PlayerHealth : PlayerValue
 {
-    [SerializeField] private TextMeshProUGUI _healthBarText;
-
     private Stats _stats;
+
+    public float Health
+    {
+        get => _stats.CurrentHealth;
+        set
+        {
+            _stats.CurrentHealth = value;
+            UpdateText();
+        }
+    }
+
+    private new void Awake()
+    {
+        _unitName = "Health";
+        _value = 0;
+        _maxValue = 0;
+        base.Awake();
+    }
 
     private void Start()
     {
@@ -15,7 +32,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        int currentHealth = Mathf.CeilToInt(_stats.CurrentHealth);
-        _healthBarText.text = string.Format("Health: {0} / {1}", currentHealth, Mathf.RoundToInt(_stats.Get(StatType.MaxHealth)));
+        _value = Mathf.CeilToInt(_stats.CurrentHealth);
+        _maxValue = Mathf.CeilToInt(_stats.Get(StatType.MaxHealth));
+        UpdateText();
     }
 }

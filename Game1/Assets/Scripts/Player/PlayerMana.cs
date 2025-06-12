@@ -2,29 +2,39 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class PlayerMana : MonoBehaviour
+public class PlayerMana : PlayerValue
 {
-    [SerializeField] private TextMeshProUGUI _manaBarText;
-
-    public float MaxMana { get; private set; } = 100;
-    public float Mana { get; private set; }
-
-    private void Awake()
+    public float MaxMana
     {
-        Mana = MaxMana;
-        UpdateText();
+        get
+        {
+            return _maxValue;
+        }
+        set
+        {
+            _maxValue = value;
+            UpdateText();
+        }
     }
 
-    public void RemoveMana(float amount)
+    public float Mana
     {
-        Assert.IsTrue(amount > 0);
-        Mana -= amount;
-
-        UpdateText();
+        get
+        {
+            return _value;
+        }
+        set
+        {
+            _value = value;
+            UpdateText();
+        }
     }
 
-    private void UpdateText()
+    protected new void Awake()
     {
-        _manaBarText.text = string.Format("Mana: {0} / {1}", Mathf.RoundToInt(Mana), Mathf.RoundToInt(MaxMana));
+        _unitName = "Mana";
+        _maxValue = 100;
+        _value = 100;
+        base.Awake();
     }
 }

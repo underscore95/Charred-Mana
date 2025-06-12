@@ -9,7 +9,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _turnText;
     [SerializeField] private List<DelayedStatBoost> _enemyStatBoosts = new();
     public StatModifiersContainer CurrentEnemyStatBoost { get; private set; } = new();
-    public UnityAction OnTurnChange { get; set; }
+    public UnityAction OnTurnChange { get; set; } = () => { };
     public int CurrentTurn { get; private set; } = 0;
 
     private void Awake()

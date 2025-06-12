@@ -36,7 +36,7 @@ public class SpellQueue : MonoBehaviour
         };
         _queuedSpells.Add(triggered);
         spell.StartCooldown();
-        _mana.RemoveMana(spell.ManaCost);
+        _mana.Mana -= spell.ManaCost;
         UpdateText();
     }
 
