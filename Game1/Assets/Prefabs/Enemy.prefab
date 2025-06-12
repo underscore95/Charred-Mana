@@ -135,14 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e59a06ae9f07740acbfe7ccc789e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _serialisedStats:
-    _serializedStats:
-    - Type: 0
-      Value: 10
-    - Type: 1
-      Value: 0
-    - Type: 2
-      Value: 0
+  _baseStats:
+    MaxHealth: 10
+    Defense: 0
+    Damage: 5
 --- !u!114 &7953354953284377577
 MonoBehaviour:
   m_ObjectHideFlags: 0

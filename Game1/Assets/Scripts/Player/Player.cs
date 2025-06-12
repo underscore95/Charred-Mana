@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    [SerializeField] private SerializableStats _serializedStats = new();
+    [SerializeField] private StatContainer _baseStats = new();
 
     public PlayerMana PlayerMana { get; private set; }
     public Camera Camera { get; private set; }
@@ -13,7 +13,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         Camera = GetComponentInChildren<Camera>();
         PlayerMana = GetComponentInChildren<PlayerMana>();
-        Stats = _serializedStats;
+        Stats = new(_baseStats);
     }
 
     public Stats GetStats()

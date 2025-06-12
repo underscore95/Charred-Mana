@@ -31,6 +31,8 @@ public class PlayerLevel : PlayerValue
     protected new void Awake()
     {
         base.Awake();
+        CalculateExperienceToNextLevel();
+        UpdateText();
     }
 
     private void CalculateExperienceToNextLevel()

@@ -1,65 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-public class Stats
+using UnityEngine.Assertions;
+
+public class Stats : StatContainer
 {
-    private readonly Dictionary<StatType, float> _baseStats;
+    private readonly StatContainer _baseStats;
     private readonly StatModifiersContainer _modifiers = new(); // todo operation order
-    private readonly Dictionary<StatType, float> _modifiedStats = new();
 
     public float CurrentHealth { get; set; }
 
-    public Stats(Dictionary<StatType, float> stats = null, StatModifiersContainer modifiers = null)
+    public Stats(StatContainer stats = null, StatModifiersContainer modifiers = null)
     {
-        _baseStats = stats ?? new();
-        foreach (StatType type in _baseStats.Keys)
-        {
-            if (_baseStats.ContainsKey(type)) continue;
-            _baseStats[type] = 0;
-        }
-
-        foreach (var (k, v) in _baseStats)
-        {
-            _modifiedStats[k] = v;
-        }
+        _baseStats = new StatContainer(stats) ?? new();
+        SetEqualTo(_baseStats);
 
         if (modifiers != null)
         {
             _modifiers = modifiers;
-            foreach (var (type, _) in _baseStats)
+            foreach (StatType type in Enum.GetValues(typeof(StatType)))
             {
-               RecalculateModifiers(type);
+                RecalculateModifiers(type);
             }
         }
 
-        CurrentHealth = Get(StatType.MaxHealth);
-    }
-
-    public Stats(SerializableStats stats)
-    {
-        _baseStats = new();
-        foreach (var pair in stats.GetStats())
-        {
-            if (_baseStats.ContainsKey(pair.Type))
-            {
-                Debug.LogWarningFormat("Stat type {} appears twice in serializable stats {}, using maximum value", pair.Type, stats);
-                if (pair.Value <= _baseStats[pair.Type]) continue;
-            }
-            _baseStats[pair.Type] = pair.Value;
-        }
-        foreach (StatType type in _baseStats.Keys)
-        {
-            if (_baseStats.ContainsKey(type)) continue;
-            Debug.LogWarningFormat("Stat type {} is missing in serializable stats {}, using 0", type, stats);
-            _baseStats[type] = 0;
-        }
-
-        foreach (var (k, v) in _baseStats)
-        {
-            _modifiedStats[k] = v;
-        }
-
-        CurrentHealth = Get(StatType.MaxHealth);
+        CurrentHealth = MaxHealth;
     }
 
     public void ApplyModifier(StatType type, StatModifier mod)
@@ -70,7 +35,7 @@ public class Stats
 
     public void ApplyModifiers(StatModifiersContainer currentEnemyStatBoost)
     {
-      foreach (var (type, mods) in currentEnemyStatBoost.Modifiers)
+        foreach (var (type, mods) in currentEnemyStatBoost.Modifiers)
         {
             foreach (var mod in mods)
             {
@@ -79,10 +44,15 @@ public class Stats
         }
     }
 
-    public float Get(StatType type) => _modifiedStats[type];
-    public void Set(StatType type, float value) {
-        _baseStats[type] = value;
+    public void SetBaseStat(StatType type, float value)
+    {
+        _baseStats.Set(type, value);
         RecalculateModifiers(type);
+    }
+
+    public new void Set(StatType type, float value)
+    {
+        Debug.LogError("Attempted to use Set on a Stats, operation not supported"); // Probably looking for SetBaseStat, the modified stat is automatically calculated and cannot be set
     }
 
     public float GetDamageWhenAttackedBy(Stats attacker)
@@ -106,7 +76,7 @@ public class Stats
     // Recalculate the value after modifiers for a specific stat type
     private void RecalculateModifiers(StatType type)
     {
-        float temp = _baseStats[type];
+        float temp = _baseStats.Get(type);
 
         if (_modifiers.Modifiers.ContainsKey(type))
         {
@@ -114,7 +84,7 @@ public class Stats
                 modifier.Apply(ref temp);
         }
 
-        _modifiedStats[type] = temp;
+        base.Set(type, temp);
     }
 
     public void Heal()

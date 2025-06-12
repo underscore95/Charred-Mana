@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private SerializableStats _serialisedStats = new();
+    [SerializeField] private StatContainer _baseStats = new();
     private Stats _stats;
 
     private Player _player;
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         _turnManager.OnTurnChange += PlayTurn;
-        _stats = _serialisedStats;
+        _stats = new(_baseStats);
         _stats.ApplyModifiers(_turnManager.CurrentEnemyStatBoost);
         _stats.Heal();
     }
