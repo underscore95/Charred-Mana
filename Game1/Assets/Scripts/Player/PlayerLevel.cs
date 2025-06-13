@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PlayerLevel : PlayerValue
 {
     public UnityAction OnLevelUp { get; set; } = () => { };
-    public float Level { get; private set; } = 1;
+    public int Level { get; private set; } = 1;
 
     public float Experience
     {

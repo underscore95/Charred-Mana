@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private StatContainer _baseStats = new();
+    [SerializeField] private float _experienceDropped = 10;
     private Stats _stats;
 
     private Player _player;
@@ -64,6 +65,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (_stats.IsDead())
         {
+            _player.PlayerLevel.Experience += _experienceDropped;
             Pool.ReleaseObject(gameObject);
         }
     }

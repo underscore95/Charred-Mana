@@ -34,6 +34,8 @@ public class SpellManager : MonoBehaviour
 
     private void Update()
     {
+        if (UIState.IsAnyUiOpen()) return;
+
         for (int i = 0; i < _spellTriggers.Count; i++)
         {
             if (_spellTriggers[i].ToInputAction().WasPressedThisFrame())

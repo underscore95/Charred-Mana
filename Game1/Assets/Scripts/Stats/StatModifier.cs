@@ -8,6 +8,12 @@ public class StatModifier
     public MathOp Operation;
     public float Value;
 
+    public StatModifier(MathOp op, float value)
+    {
+        Operation = op;
+        Value = value;
+    }
+
     public void Apply(ref float value)
     {
         value = MathOps.Eval(Operation, value, Value);
@@ -53,7 +59,7 @@ public class StatModifier
     {
         for (int i = 0; i < list.Count; i++)
         {
-            if (list[i].Merge(modifier)) break;
+            if (list[i].Merge(modifier)) return;
         }
         list.Add(modifier);
     }

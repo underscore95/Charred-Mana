@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         _player.PositionAtFrameStart = transform.position;
 
+        if (UIState.IsAnyUiOpen()) return;
         if (!_canGoToNextTurn) return;
 
         var moveDirection = _moveInput.ToInputAction().ReadValue<Vector2>();

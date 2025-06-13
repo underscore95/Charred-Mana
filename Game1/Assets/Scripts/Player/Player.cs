@@ -5,6 +5,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private StatContainer _baseStats = new();
 
     public PlayerMana PlayerMana { get; private set; }
+    public PlayerLevel PlayerLevel { get; private set; }
     public Camera Camera { get; private set; }
     public Vector3 PositionAtFrameStart { get; set; }
     public Stats Stats { get; private set; }
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour, IDamageable
         Camera = GetComponentInChildren<Camera>();
         PlayerMana = GetComponentInChildren<PlayerMana>();
         Stats = new(_baseStats);
+        PlayerLevel = GetComponentInChildren<PlayerLevel>();
     }
 
     public Stats GetStats()

@@ -139,6 +139,7 @@ MonoBehaviour:
     MaxHealth: 10
     Defense: 0
     Damage: 5
+  _experienceDropped: 10
 --- !u!114 &7953354953284377577
 MonoBehaviour:
   m_ObjectHideFlags: 0
