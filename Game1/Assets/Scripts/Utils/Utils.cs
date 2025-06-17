@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -25,5 +26,10 @@ public static class Utils
         rb.linearVelocity = displacement / PlayerController.TURN_CHANGE_COOLDOWN;
         yield return new WaitForSeconds(PlayerController.TURN_CHANGE_COOLDOWN);
         rb.linearVelocity = Vector2.zero;
+    }
+
+    public static Vector3 ToV3(Vector2 xy, int z=0)
+    {
+        return new(xy.x, xy.y, z);
     }
 }

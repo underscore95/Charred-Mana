@@ -5,9 +5,12 @@ using UnityEngine.Assertions;
 public abstract class PlayerSpell : MonoBehaviour
 {
     [SerializeField] private int _spellCooldown = 1;
+    [SerializeField] private int _manaCost = 10;
+    public int ManaCost { get { return _manaCost; } }
+    [SerializeField] private string _optionalDescription = string.Empty;
+    public string OptionalDescription { get { return _optionalDescription; } }
     public int SpellCooldown { get { return _spellCooldown; } }
     public int CurrentCooldown { get; private set; }
-    public int ManaCost { get; private set; } = 10;
 
     protected void Awake()
     {
