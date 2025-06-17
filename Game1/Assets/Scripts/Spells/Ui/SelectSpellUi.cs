@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SelectSpellUi : MonoBehaviour
 {
@@ -7,9 +9,10 @@ public class SelectSpellUi : MonoBehaviour
     [SerializeField] private SpellListUi _unlocked;
     [SerializeField] private TextMeshProUGUI _activeSpellsText;
     [SerializeField] private string _activeSpellsTextText = "Active: {0} / {1}";
+    [SerializeField] private InputActionReference _closeUiInput;
     private SpellManager _spellManager;
 
-    private void Awake()
+    private void Start()
     {
         _spellManager = FindAnyObjectByType<SpellManager>();
         RecreateSpellListsContents();
@@ -25,6 +28,14 @@ public class SelectSpellUi : MonoBehaviour
         {
             _spellManager.DeselectSpell(spell);
         };
+    }
+
+    private void Update()
+    {
+        if (_closeUiInput.ToInputAction().WasPressedThisFrame())
+        {
+            CloseUi();
+        }
     }
 
     private void RecreateSpellListsContents()
@@ -60,5 +71,17 @@ public class SelectSpellUi : MonoBehaviour
 
         _unlocked.RemoveSpell(spell);
         _active.AddSpell(spell, () => MoveToUnlocked(spell));
+    }
+
+    public void OpenUi()
+    {
+        UIState.IsLevelUpRewardsUiOpen = true;
+        gameObject.SetActive(true);
+    }
+
+    private void CloseUi()
+    {
+        UIState.IsLevelUpRewardsUiOpen = false;
+        gameObject.SetActive(false);
     }
 }

@@ -16,6 +16,7 @@ public class PlayerLevel : PlayerValue
         }
         set
         {
+            Assert.IsTrue(_hasStarted); // Some listeners might not be registered yet
             _value = value;
             while (_value >= _maxValue)
             {
@@ -28,11 +29,19 @@ public class PlayerLevel : PlayerValue
         }
     }
 
+    private bool _hasStarted = false;
+
     protected new void Awake()
     {
         base.Awake();
         CalculateExperienceToNextLevel();
         UpdateText();
+    }
+
+    private void Start()
+    {
+        _hasStarted = true;
+      //  Experience = 200;
     }
 
     private void CalculateExperienceToNextLevel()

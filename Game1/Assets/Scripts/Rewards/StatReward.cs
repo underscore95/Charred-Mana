@@ -19,4 +19,9 @@ public class StatReward : Reward
             _playerStats.CurrentHealth += (_playerStats.MaxHealth - oldMaxHealth);
         }
     }
+
+    public override bool CanGive()
+    {
+        return true;
+    }
 }

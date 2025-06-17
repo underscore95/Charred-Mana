@@ -35,8 +35,8 @@ public class AvailableRewardUi : MonoBehaviour
 
     public void GiveReward()
     {
+        Assert.IsTrue(_reward.CanGive());
         _reward.Give();
-        _reward = null;
-        _rewardManager.NotifyRewardClaimed();
+        _rewardManager.NotifyRewardClaimed(_reward); 
     }
 }

@@ -119,6 +119,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &15651548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 15651549}
+  - component: {fileID: 15651550}
+  m_Layer: 0
+  m_Name: FireBallSpell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &15651549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15651548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 176574633}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &15651550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15651548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ca5dc7a2c2e444384999e3a3f6e119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: 
+  _description: 
+  _spell: {fileID: 1571841655}
 --- !u!224 &46972341 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4419299335272899014, guid: bc98ecebed18360428e60ee89d7097f3, type: 3}
@@ -297,6 +344,7 @@ Transform:
   - {fileID: 709871212}
   - {fileID: 1158805776}
   - {fileID: 178347394}
+  - {fileID: 15651549}
   m_Father: {fileID: 891771361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &178347393
@@ -2033,6 +2081,8 @@ MonoBehaviour:
     Select a reward.'
   _registeredRewardsParent: {fileID: 176574633}
   _availableRewardUisParent: {fileID: 1355847319}
+  _selectSpellUi: {fileID: 1642557436}
+  _defaultReward: {fileID: 709871213}
 --- !u!4 &891771361
 Transform:
   m_ObjectHideFlags: 0
@@ -2485,6 +2535,7 @@ MonoBehaviour:
   _unlocked: {fileID: 218722762}
   _activeSpellsText: {fileID: 244187715}
   _activeSpellsTextText: 'Active: {0} / {1}'
+  _closeUiInput: {fileID: 7727032971491509709, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1001 &1734105812
 PrefabInstance:
   m_ObjectHideFlags: 0

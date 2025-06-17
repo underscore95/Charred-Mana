@@ -12,11 +12,14 @@ public class LevelRewardManager : MonoBehaviour
     [SerializeField] private string _levelUpMessage = "You levelled up to Level {0}!\nSelect a reward.";
     [SerializeField] private Transform _registeredRewardsParent;
     [SerializeField] private Transform _availableRewardUisParent;
+    [SerializeField] private SelectSpellUi _selectSpellUi;
+    [SerializeField] private Reward _defaultReward; // Reward to be used if we fail to find one that we can give
 
     private List<AvailableRewardUi> _availableRewardUis = new();
     private List<Reward> _registeredRewards = new();
     private int _levelUpsRemaining = 0;
     private PlayerLevel _playerLevel;
+    private bool _unlockedSpell = false;
 
     private void Awake()
     {
@@ -45,9 +48,16 @@ public class LevelRewardManager : MonoBehaviour
 
     private void SelectRewards()
     {
+        Assert.IsTrue(_defaultReward.CanGive());
         foreach (AvailableRewardUi ui in _availableRewardUis)
         {
-            ui.SetReward(_registeredRewards[Random.Range(0, _registeredRewards.Count)]);
+            for (int i = 0; i < 50; ++i)
+            {
+                Reward reward = _registeredRewards[Random.Range(0, _registeredRewards.Count)];
+                if (!reward.CanGive()) continue;
+                ui.SetReward(reward);
+                break;
+            }
         }
     }
 
@@ -66,6 +76,11 @@ public class LevelRewardManager : MonoBehaviour
     {
         _levelUpUi.SetActive(false);
         UIState.IsLevelUpRewardsUiOpen = false;
+
+        if (_levelUpsRemaining <= 0 && _unlockedSpell)
+        {
+            _selectSpellUi.OpenUi();
+        }
     }
 
     public IReadOnlyList<Reward> GetRegisteredRewards()
@@ -73,8 +88,13 @@ public class LevelRewardManager : MonoBehaviour
         return _registeredRewards;
     }
 
-    public void NotifyRewardClaimed()
+    public void NotifyRewardClaimed(Reward claimed)
     {
+        if (claimed is SpellReward)
+        {
+            _unlockedSpell = true;
+        }
+
         Assert.IsTrue(_levelUpsRemaining > 0);
         _levelUpsRemaining--;
         CloseUi();

@@ -25,6 +25,8 @@ public class SpellListUi : MonoBehaviour
     private void Awake()
     {
         _scrollableArea = GetComponentInChildren<ScrollableArea>();
+        Assert.IsNotNull(_scrollableArea);
+        Assert.IsNotNull(_spellUiPrefab);
         Assert.IsNotNull(_spellUiPrefab.GetComponentInChildren<IHasSpell>());
         Assert.IsNotNull(_spellUiPrefab.GetComponent<RectTransform>());
     }

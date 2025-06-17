@@ -26,11 +26,12 @@ public class SpellManager : MonoBehaviour
 
         for (int i = 0; i < _spellUis.Count; i++)
         {
-            _spellUis[i].Spell = i == 0 ? _spells[0] : null;
+            _spellUis[i].Spell = null;
             _originalSpellUiPositions.Add(_spellUis[i].transform.position);
         }
 
         UnlockSpell(0);
+        _spellUis[0].Spell = _spells[0];
     }
 
     private void Update()
@@ -127,5 +128,24 @@ public class SpellManager : MonoBehaviour
     public int GetMaximumSelectedSpells()
     {
         return _spellUis.Count;
+    }
+
+    public int GetSpellIndex(PlayerSpell spell)
+    {
+        for (int i = 0; i < _spells.Count; i++)
+        {
+            if (_spells[i] == spell) return i;
+        }
+        Assert.IsTrue(false);
+        return -1;
+    }
+
+    public bool IsSpellUnlocked(PlayerSpell spell)
+    {
+        foreach (int index in _unlockedSpells)
+        {
+            if (spell == _spells[index]) return true;
+        }
+        return false;
     }
 }

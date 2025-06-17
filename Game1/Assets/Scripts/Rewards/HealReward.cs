@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HeakReward : Reward
+public class HealReward : Reward
 {
     private Stats _playerStats;
 
@@ -12,5 +12,9 @@ public class HeakReward : Reward
     public override void Give()
     {
         _playerStats.Heal();
+    }
+    public override bool CanGive()
+    {
+        return true;
     }
 }
