@@ -2512,8 +2512,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spellCooldown: 1
   _manaCost: 10
-  _optionalDescription: 
+  _optionalDescription: Fires a ball of fire mana at your mouse position.
   _prefab: {fileID: 6486085362373255532, guid: cf9bbe0a2faf1404393b026be85633cb, type: 3}
+  _targetParticlePrefab: {fileID: 2440388646761163849, guid: 30d17d6c9ca6a1f43ae3755088328877, type: 3}
 --- !u!1 &1642557435 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9205094844818470103, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}

@@ -34,6 +34,8 @@ public class SpellQueue : MonoBehaviour
             Spell = spell,
             TriggerInfo = new()
         };
+
+        spell.OnPreTrigger(triggered.TriggerInfo);
         _queuedSpells.Add(triggered);
         spell.StartCooldown();
         _mana.Mana -= spell.ManaCost;

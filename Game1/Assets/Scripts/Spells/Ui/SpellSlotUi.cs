@@ -9,6 +9,8 @@ public class SpellSlotUi : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _keybindText;
     [SerializeField] private TextMeshProUGUI _spellTitle;
     [SerializeField] private InputActionReference _triggerInput;
+    [SerializeField] private GameObject _cooldownParent;
+    [SerializeField] private TextMeshProUGUI _cooldownText;
 
     private PlayerSpell _spell;
     public PlayerSpell Spell
@@ -32,13 +34,37 @@ public class SpellSlotUi : MonoBehaviour
     {
         _spellQueue = FindAnyObjectByType<SpellQueue>();
         Spell = null;
+
+        _cooldownParent.SetActive(false);
+
+        FindAnyObjectByType<TurnManager>().OnLateTurnChange += UpdateCooldownDisplay;
     }
 
     private void Update()
     {
         if (Spell == null) return;
-        if (!_triggerInput.ToInputAction().WasPressedThisFrame()) return;
 
-        _spellQueue.QueueTrigger(Spell);
+        if (_triggerInput.ToInputAction().WasPressedThisFrame())
+        {
+            _spellQueue.QueueTrigger(Spell);
+            UpdateCooldownDisplay();
+        }
+    }
+
+    private void UpdateCooldownDisplay()
+    {
+        if (_spell == null)
+        {
+            _cooldownParent.SetActive(false);
+            return;
+        }
+
+        // Display cooldown
+        int cd = _spell.CurrentCooldown;
+        if (cd > 0)
+        {
+            _cooldownText.text = cd + "Turn" + (cd == 1 ? "" : "s");
+        }
+        _cooldownParent.SetActive(cd > 0);
     }
 }

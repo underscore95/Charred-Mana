@@ -22,6 +22,7 @@ public abstract class PlayerSpell : MonoBehaviour
     }
 
     public abstract void OnTrigger(SpellTriggerInfo info);
+    public abstract void OnPreTrigger(SpellTriggerInfo info);
 
     public void StartCooldown()
     {
