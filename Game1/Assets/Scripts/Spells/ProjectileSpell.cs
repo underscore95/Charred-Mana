@@ -31,8 +31,8 @@ public class ProjectileSpell : PlayerSpell
 
         Vector3 projPos = pos + Utils.ToV3(toTarget).normalized * 0.5f; // 0.5 units infront of player
         // slightly random offset and direction
-        projPos.x += Random.Range(-0.05f, 0.05f);
-        projPos.y += Random.Range(-0.05f, 0.05f);
+        projPos.x += Random.Range(-0.15f, 0.15f);
+        projPos.y += Random.Range(-0.15f, 0.15f);
         toTarget.x += Random.Range(-0.01f, 0.01f);
         toTarget.y += Random.Range(-0.01f, 0.01f);
         proj.transform.SetPositionAndRotation(projPos, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(toTarget.y, toTarget.x))); // right vector points towards position of mouse when triggered
