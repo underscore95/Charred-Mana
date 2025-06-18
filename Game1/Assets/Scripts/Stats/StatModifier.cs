@@ -23,7 +23,7 @@ public class StatModifier
     public bool Merge(StatModifier other)
     {
         if (other.Operation != Operation) return false;
-        Value += other.Value;
+        Value = MathOps.Merge(Operation, other.Value, Value);
         return true;
     }
 

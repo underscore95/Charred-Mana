@@ -82,7 +82,11 @@ public class Stats : StatContainer
 
         if (_modifiers.Modifiers.ContainsKey(type))
         {
-            foreach (var modifier in _modifiers.Modifiers[type])
+            List<StatModifier> modifiers = _modifiers.Modifiers[type];
+            // sort based on op
+            modifiers.Sort((a, b) => MathOps.StatOpApplyOrder(a.Operation).CompareTo(MathOps.StatOpApplyOrder(b.Operation)));
+
+            foreach (var modifier in modifiers)
                 modifier.Apply(ref temp);
         }
 
