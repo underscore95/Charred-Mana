@@ -13,7 +13,7 @@ public struct DelayedStatBoost
         StatModifiersContainer boost = new();
         foreach (var delayedBoost in boosts)
         {
-            if (delayedBoost.RequiredTurn >= currentTurn)
+            if (delayedBoost.RequiredTurn <= currentTurn)
             {
                 boost.Merge(delayedBoost.StatModifiers);
             }

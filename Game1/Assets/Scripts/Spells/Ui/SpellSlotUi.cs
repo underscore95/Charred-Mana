@@ -37,6 +37,8 @@ public class SpellSlotUi : MonoBehaviour
 
         _cooldownParent.SetActive(false);
 
+        _keybindText.text = "Key: " + _triggerInput.action.GetBindingDisplayString();
+
         FindAnyObjectByType<TurnManager>().OnLateTurnChange += UpdateCooldownDisplay;
     }
 

@@ -41,17 +41,32 @@ public class PlayerLevel : PlayerValue
     private void Start()
     {
         _hasStarted = true;
-      //  Experience = 200;
     }
 
     private void CalculateExperienceToNextLevel()
     {
-        _maxValue = 100;
+        _maxValue = Level switch
+        {
+            1 => 25,
+            2 => 40,
+            3 => 50,
+            4 => 70,
+            5 => 90,
+            _ => (float)100,
+        };
     }
 
     private new void UpdateText()
     {
         _unitName = "Level: " + Level + "\nExperience";
         base.UpdateText();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+          //  Experience = _maxValue;
+        }
     }
 }

@@ -16,7 +16,6 @@ public class DamageOverTimeEffect : Effect
 
     public override void OnTurnChange()
     {
-        print("damaging for " + Amplification + " new health: " + (_entity.GetStats().CurrentHealth - Amplification));
         ILivingEntity.Damage(_entity, Amplification);
     }
 }

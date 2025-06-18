@@ -29,7 +29,10 @@ public class SpellManager : MonoBehaviour
             _spellUis[i].Spell = null;
             _originalSpellUiPositions.Add(_spellUis[i].transform.position);
         }
+    }
 
+    private void Start()
+    {
         UnlockSpell(0);
         _spellUis[0].Spell = _spells[0];
     }

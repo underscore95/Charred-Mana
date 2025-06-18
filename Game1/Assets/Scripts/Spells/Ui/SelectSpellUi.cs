@@ -12,9 +12,13 @@ public class SelectSpellUi : MonoBehaviour
     [SerializeField] private InputActionReference _closeUiInput;
     private SpellManager _spellManager;
 
-    private void Start()
+    private void Awake()
     {
         _spellManager = FindAnyObjectByType<SpellManager>();
+    }
+
+    private void Start()
+    {
         RecreateSpellListsContents();
 
         _spellManager.OnSpellUnlock += RecreateSpellListsContents;
@@ -40,19 +44,19 @@ public class SelectSpellUi : MonoBehaviour
 
     private void RecreateSpellListsContents()
     {
-        _active.ClearSpells();
-        _unlocked.ClearSpells();
+        _active.SilentlyClearSpells();
+        _unlocked.SilentlyClearSpells();
 
         foreach (int spellIndex in _spellManager.GetUnlockedSpellsIndices())
         {
             PlayerSpell spell = _spellManager.GetSpell(spellIndex);
             if (_spellManager.IsSpellIndexSelected(spellIndex, out int _))
             {
-                MoveToActive(spell);
+                _active.AddSpell(spell, () => MoveToUnlocked(spell), true);
             }
             else
             {
-                MoveToUnlocked(spell);
+                _unlocked.AddSpell(spell, () => MoveToActive(spell), true);
             }
         }
 
@@ -77,6 +81,7 @@ public class SelectSpellUi : MonoBehaviour
     {
         UIState.IsLevelUpRewardsUiOpen = true;
         gameObject.SetActive(true);
+        RecreateSpellListsContents();
     }
 
     private void CloseUi()

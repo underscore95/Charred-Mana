@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour, ILivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
+    [SerializeField] private TextMeshProUGUI _playerStatsText;
 
     public PlayerMana PlayerMana { get; private set; }
     public PlayerLevel PlayerLevel { get; private set; }
@@ -16,6 +18,11 @@ public class Player : MonoBehaviour, ILivingEntity
         PlayerMana = GetComponentInChildren<PlayerMana>();
         Stats = new(_baseStats);
         PlayerLevel = GetComponentInChildren<PlayerLevel>();
+    }
+
+    private void Update()
+    {
+        _playerStatsText.text = string.Format("DMG: {0}\nDEF: {1}\nMP RGN: {2}", Stats.Damage, Stats.Defense, Stats.ManaRegen);
     }
 
     public Stats GetStats()

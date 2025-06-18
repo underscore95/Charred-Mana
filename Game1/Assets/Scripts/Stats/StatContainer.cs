@@ -6,10 +6,12 @@ using UnityEngine.Assertions;
 [System.Serializable]
 public class StatContainer
 {
+    // todo private setters in Stats
+    // if adding field, don't forget to add condition to set and get functions
     public float MaxHealth = 100;
     public float Defense = 0;
     public float Damage = 5;
-
+    public float ManaRegen = 5;
     public float Get(StatType type)
     {
         switch (type)
@@ -20,6 +22,8 @@ public class StatContainer
                 return Defense;
             case StatType.Damage:
                 return Damage;
+            case StatType.ManaRegen:
+                return ManaRegen;
             default:
                 Assert.IsTrue(false);
                 return 0;
@@ -39,6 +43,9 @@ public class StatContainer
             case StatType.Damage:
                 Damage = value;
                 break;
+            case StatType.ManaRegen:
+                ManaRegen = value;
+                break;
             default:
                 Assert.IsTrue(false);
                 break;
@@ -54,8 +61,8 @@ public class StatContainer
 
     protected void SetEqualTo(StatContainer other)
     {
-        MaxHealth = other.MaxHealth;
-        Defense = other.Defense;
-        Damage = other.Damage;
+        foreach (StatType type in Enum.GetValues(typeof(StatType))) {
+            Set(type, other.Get(type));
+        }
     }
 }

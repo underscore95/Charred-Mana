@@ -46,7 +46,7 @@ public class SpellListUi : MonoBehaviour
         }
     }
 
-    public void AddSpell(PlayerSpell spell, Action onClick)
+    public void AddSpell(PlayerSpell spell, Action onClick, bool silent = false)
     {
         GameObject ui = Instantiate(_spellUiPrefab, _scrollableArea.transform);
         ui.GetComponent<IHasSpell>().SetSpell(spell);
@@ -59,10 +59,10 @@ public class SpellListUi : MonoBehaviour
         };
 
         _spellList.Add(e);
-        OnElementAdd.Invoke(spell);
+        if (!silent) OnElementAdd.Invoke(spell);
     }
 
-    public void RemoveSpell(PlayerSpell spell)
+    public void RemoveSpell(PlayerSpell spell, bool silent = false)
     {
         for (int i = 0; i < _spellList.Count; i++)
         {
@@ -73,7 +73,7 @@ public class SpellListUi : MonoBehaviour
                 break;
             }
         }
-        OnElementRemove.Invoke(spell);
+        if (!silent) OnElementRemove.Invoke(spell);
     }
 
     public bool ContainsSpell(PlayerSpell spell)
@@ -85,8 +85,12 @@ public class SpellListUi : MonoBehaviour
         return false;
     }
 
-    public void ClearSpells()
+    public void SilentlyClearSpells()
     {
+        for (int i = 0; i < _spellList.Count; i++)
+        {
+            Destroy(_spellList[i].Rect.gameObject);
+        }
         _spellList.Clear();
     }
 

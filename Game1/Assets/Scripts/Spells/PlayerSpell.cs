@@ -16,7 +16,7 @@ public abstract class PlayerSpell : MonoBehaviour
     {
         CurrentCooldown = 0;
 
-        Assert.IsTrue(_spellCooldown > 0);
+        Assert.IsTrue(_spellCooldown >= 0, "Spell cooldown cannot be negative");
 
         FindAnyObjectByType<TurnManager>().OnTurnChange += () => { if (CurrentCooldown > 0) CurrentCooldown--; };
     }

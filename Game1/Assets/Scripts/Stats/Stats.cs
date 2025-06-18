@@ -57,7 +57,9 @@ public class Stats : StatContainer
 
     public float GetDamageWhenAttackedBy(Stats attacker)
     {
-        return Mathf.Max(1, attacker.Get(StatType.Damage) - Get(StatType.Defense));
+        float attackerDamage = attacker.Get(StatType.Damage);
+        float defense = Get(StatType.Defense);
+        return Mathf.Max(1, attackerDamage - defense);
     }
 
     public Stats DuplicateAndAddModifiers(StatModifiersContainer modifiers)

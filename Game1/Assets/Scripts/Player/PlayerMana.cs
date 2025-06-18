@@ -30,11 +30,16 @@ public class PlayerMana : PlayerValue
         }
     }
 
+    private Player _player;
+
     protected new void Awake()
     {
         _unitName = "Mana";
         _maxValue = 100;
         _value = 100;
         base.Awake();
+
+        _player = FindAnyObjectByType<Player>();
+        FindAnyObjectByType<TurnManager>().OnTurnChange += () => Mana = Mathf.Min(MaxMana, Mana + _player.Stats.ManaRegen);
     }
 }

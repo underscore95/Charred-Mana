@@ -4,5 +4,6 @@ public enum StatType
 {
     MaxHealth,
     Damage,
-    Defense
+    Defense,
+    ManaRegen
 }

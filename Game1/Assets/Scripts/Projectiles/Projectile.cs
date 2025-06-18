@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
+    [SerializeField] private int _pierce = 1;
     [SerializeField] private SerializableStatModifiersContainer _statModifiers;
     public ILivingEntity Shooter;
     public List<SerializableEffect> Effects = new(); // applies when it hits an entity, before the damage
@@ -14,6 +15,7 @@ public class Projectile : MonoBehaviour
     private ManagedProjectile _managed;
     private TurnManager _turnManager;
     private EffectManager _effectManager;
+    private int _enemiesHit = 0;
 
     private void Awake()
     {
@@ -54,6 +56,10 @@ public class Projectile : MonoBehaviour
             ILivingEntity.Damage(entity, dmg);
         }
 
-        _managed.ReleaseProjectile();
+        _enemiesHit++;
+        if (_enemiesHit >= _pierce)
+        {
+            _managed.ReleaseProjectile();
+        }
     }
 }
