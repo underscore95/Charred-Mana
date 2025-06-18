@@ -22,7 +22,7 @@ public class Player : MonoBehaviour, ILivingEntity
 
     private void Update()
     {
-        _playerStatsText.text = string.Format("DMG: {0}\nDEF: {1}\nMP RGN: {2}", Stats.Damage, Stats.Defense, Stats.ManaRegen);
+        _playerStatsText.text = string.Format("DMG: {0:0.0}\nDEF: {1:0.0}\nMP RGN: {2:0.0}", Stats.Damage, Stats.Defense, Stats.ManaRegen);
     }
 
     public Stats GetStats()

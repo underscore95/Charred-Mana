@@ -65,7 +65,7 @@ public class SpellSlotUi : MonoBehaviour
         int cd = _spell.CurrentCooldown;
         if (cd > 0)
         {
-            _cooldownText.text = cd + "Turn" + (cd == 1 ? "" : "s");
+            _cooldownText.text = cd + " Turn" + (cd == 1 ? "" : "s");
         }
         _cooldownParent.SetActive(cd > 0);
     }
