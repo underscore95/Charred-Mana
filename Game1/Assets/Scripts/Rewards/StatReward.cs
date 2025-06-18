@@ -16,7 +16,7 @@ public class StatReward : Reward
         _playerStats.ApplyModifiers(_modifiers);
         if (_playerStats.MaxHealth > oldMaxHealth)
         {
-            _playerStats.CurrentHealth += (_playerStats.MaxHealth - oldMaxHealth);
+            _playerStats.SetCurrentHealthSilently(_playerStats.CurrentHealth + _playerStats.MaxHealth - oldMaxHealth); // Heal the player if they gained max health
         }
     }
 

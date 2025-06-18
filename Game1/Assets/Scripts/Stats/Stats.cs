@@ -8,7 +8,7 @@ public class Stats : StatContainer
     private readonly StatContainer _baseStats;
     private readonly StatModifiersContainer _modifiers = new(); // todo operation order
 
-    public float CurrentHealth { get; set; }
+    public float CurrentHealth { get; private set; }
 
     public Stats(StatContainer stats = null, StatModifiersContainer modifiers = null)
     {
@@ -90,5 +90,11 @@ public class Stats : StatContainer
     public void Heal()
     {
         CurrentHealth = Get(StatType.MaxHealth);
+    }
+
+    // Sets the current health, this will not notify any death listeners, use ILivingEntity.Damage if damaging
+    internal void SetCurrentHealthSilently(float value)
+    {
+        CurrentHealth = value;
     }
 }

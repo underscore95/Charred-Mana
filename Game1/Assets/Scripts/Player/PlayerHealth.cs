@@ -12,7 +12,7 @@ public class PlayerHealth : PlayerValue
         get => _stats.CurrentHealth;
         set
         {
-            _stats.CurrentHealth = value;
+            _stats.SetCurrentHealthSilently(value);
             UpdateText();
         }
     }
@@ -27,7 +27,7 @@ public class PlayerHealth : PlayerValue
 
     private void Start()
     {
-        _stats = transform.parent.GetComponent<IHasStats>().GetStats();
+        _stats = transform.parent.GetComponent<ILivingEntity>().GetStats();
     }
 
     private void Update()

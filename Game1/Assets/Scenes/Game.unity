@@ -2235,6 +2235,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1038945656}
   m_CullTransparentMesh: 1
+--- !u!1 &1046816241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1046816243}
+  - component: {fileID: 1046816242}
+  m_Layer: 0
+  m_Name: EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1046816242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046816241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b59550ecd30b9418a8df36deefa98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _capacityPerPool: 100
+  _effectTypePrefabs:
+  - EffectType: 0
+    Prefab: {fileID: 2994655892752301892, guid: 878a9b0db5e15124f8204dce33440b77, type: 3}
+--- !u!4 &1046816243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046816241}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1158805775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2512,7 +2560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spellCooldown: 1
   _manaCost: 10
-  _optionalDescription: Fires a ball of fire mana at your mouse position.
+  _optionalDescription: Fires a ball of fire mana at your mouse position, inflicting
+    Burn.
   _prefab: {fileID: 6486085362373255532, guid: cf9bbe0a2faf1404393b026be85633cb, type: 3}
   _targetParticlePrefab: {fileID: 2440388646761163849, guid: 30d17d6c9ca6a1f43ae3755088328877, type: 3}
 --- !u!1 &1642557435 stripped
@@ -3981,3 +4030,4 @@ SceneRoots:
   - {fileID: 2117248935}
   - {fileID: 739235274}
   - {fileID: 891771361}
+  - {fileID: 1046816243}

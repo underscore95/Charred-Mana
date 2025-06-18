@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class ObjectPool
 {
@@ -27,7 +28,7 @@ public class ObjectPool
 
     public bool IsFull() => _freeIndices.Count == 0;
 
-    public GameObject ActivateObject()
+    public GameObject ActivateObject(UnityAction<GameObject> runBeforeActivation = null)
     {
         Assert.IsTrue(!IsFull(), "Tried to allocate from a full pool.");
 
@@ -36,10 +37,16 @@ public class ObjectPool
 
         Assert.IsFalse(_activeIndices.ContainsKey(obj), "Object is already active.");
 
+        runBeforeActivation?.Invoke(obj);
         obj.SetActive(true);
         _activeIndices[obj] = index;
 
         return obj;
+    }
+
+    public bool IsActive(GameObject obj)
+    {
+        return _activeIndices.ContainsKey(obj);
     }
 
     public void ReleaseObject(GameObject obj)
@@ -50,8 +57,8 @@ public class ObjectPool
             return;
         }
 
-        obj.SetActive(false);
         _activeIndices.Remove(obj);
+        obj.SetActive(false);
         _freeIndices.Push(index);
     }
 

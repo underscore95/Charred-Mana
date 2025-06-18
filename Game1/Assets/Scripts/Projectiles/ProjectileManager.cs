@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,6 +15,8 @@ public class ProjectileManager : MonoBehaviour
         {
             projectile.AddComponent<ManagedProjectile>()._projManager = this;
         }
+
+        FindAnyObjectByType<TurnManager>().OnLateTurnChange += OnLateTurnChange;
     }
 
     private void Start()
@@ -21,7 +24,25 @@ public class ProjectileManager : MonoBehaviour
         Assert.IsNotNull(_projectiles);
     }
 
-    public Projectile SpawnProjectile(IHasStats shooter)
+    private readonly List<ManagedProjectile> _projectilesToReleaseAfterTurn = new();
+    private void OnLateTurnChange()
+    {
+        _projectilesToReleaseAfterTurn.Clear();
+        foreach (var proj in _projectiles.Alive)
+        {
+            var m = proj.GetComponent<ManagedProjectile>();
+            if (m.IsPastLifespan())
+            {
+                _projectilesToReleaseAfterTurn.Add(m);
+            }
+        }
+        foreach (ManagedProjectile m in _projectilesToReleaseAfterTurn)
+        {
+            m.ReleaseProjectile();
+        }
+    }
+
+    public Projectile SpawnProjectile(ILivingEntity shooter)
     {
         if (_projectiles.IsFull())
         {

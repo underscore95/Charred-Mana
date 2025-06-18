@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour, ILivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
 
@@ -23,5 +23,10 @@ public class Player : MonoBehaviour, IDamageable
         return Stats;
     }
 
-    void IDamageable.DamageReceiveEvent(float damage) { }
+    void ILivingEntity.DamageReceiveEvent(float damage) { }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }

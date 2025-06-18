@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour, ILivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private float _experienceDropped = 10;
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _attack.TryAttack();
     }
 
-    void IDamageable.DamageReceiveEvent(float damage)
+    void ILivingEntity.DamageReceiveEvent(float damage)
     {
         if (_stats.IsDead())
         {
@@ -73,5 +73,10 @@ public class Enemy : MonoBehaviour, IDamageable
     public Stats GetStats()
     {
         return _stats;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }

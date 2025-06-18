@@ -1,22 +1,35 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Component added to any projectile managed by a projectile manager
 /// </summary>
 class ManagedProjectile : MonoBehaviour
 {
-    public ProjectileManager _projManager;
+    private const int LIFESPAN = 15;
 
-    public void DestroyProjectile()
+    public ProjectileManager _projManager;
+    private int _destroyOnTurn = 0;
+    private TurnManager _turnManager;
+
+    private void Awake()
+    {
+        _turnManager = FindAnyObjectByType<TurnManager>();
+    }
+
+    private void OnEnable()
+    {
+        _destroyOnTurn = _turnManager.CurrentTurn + LIFESPAN;
+    }
+
+    public void ReleaseProjectile()
     {
         _projManager.RemoveProjectile(gameObject);
     }
 
-    private void OnBecameInvisible()
+    public bool IsPastLifespan()
     {
-        if (enabled)
-        {
-            DestroyProjectile();
-        }
+        Assert.IsTrue(enabled);
+        return _turnManager.CurrentTurn >= _destroyOnTurn;
     }
 }

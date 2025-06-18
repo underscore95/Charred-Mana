@@ -37,7 +37,7 @@ public class TargetParticle : MonoBehaviour
         _secondsElapsed += Time.deltaTime;
         if (_secondsElapsed >= _duration)
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 
