@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour, ILivingEntity
 {
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
     private Rigidbody2D _rigidBody;
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
+    private UnityAction<float> _onDamaged = (dmg) => { };
 
     private void Awake()
     {
@@ -61,7 +63,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
         _attack.TryAttack();
     }
 
-    void ILivingEntity.DamageReceiveEvent(float damage)
+    private void DamageReceiveEvent(float damage)
     {
         if (_stats.IsDead())
         {
@@ -78,5 +80,10 @@ public class Enemy : MonoBehaviour, ILivingEntity
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    public ref UnityAction<float> OnDamaged()
+    {
+        return ref _onDamaged;
     }
 }

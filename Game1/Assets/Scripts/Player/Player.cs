@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour, ILivingEntity
 {
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour, ILivingEntity
     public Camera Camera { get; private set; }
     public Vector3 PositionAtFrameStart { get; set; }
     public Stats Stats { get; private set; }
+    private UnityAction<float> _onDamaged = (dmg) => { };
 
     private void Awake()
     {
@@ -30,10 +32,13 @@ public class Player : MonoBehaviour, ILivingEntity
         return Stats;
     }
 
-    void ILivingEntity.DamageReceiveEvent(float damage) { }
-
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    public ref UnityAction<float> OnDamaged()
+    {
+        return ref _onDamaged;
     }
 }

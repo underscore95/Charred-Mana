@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public interface ILivingEntity
 {
@@ -11,9 +13,12 @@ public interface ILivingEntity
     {
         Assert.IsTrue(damage > 0);
         entity.GetStats().SetCurrentHealthSilently(entity.GetStats().CurrentHealth - damage);
-        entity.DamageReceiveEvent(damage);
+        entity.OnDamaged().Invoke(damage);
         return entity.GetStats().CurrentHealth <= 0;
     }
 
-    void DamageReceiveEvent(float damage);
+    // Event that will be called whenever the entity takes damage
+    // parameters:
+    // float damage
+    ref UnityAction<float> OnDamaged();
 }
