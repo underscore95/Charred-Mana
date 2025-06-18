@@ -80,6 +80,7 @@ public class LevelRewardManager : MonoBehaviour
         if (_levelUpsRemaining <= 0 && _unlockedSpell)
         {
             _selectSpellUi.OpenUi();
+            _unlockedSpell = false;
         }
     }
 
