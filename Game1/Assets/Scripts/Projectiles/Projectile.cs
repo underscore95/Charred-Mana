@@ -34,6 +34,7 @@ public class Projectile : MonoBehaviour
     private void OnEnable()
     {
         _turnManager.OnTurnChange += TurnChange;
+        _enemiesHit = 0;
     }
 
     private void OnDisable()
@@ -48,6 +49,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_enemiesHit >= _pierce) return; // Hitting multiple enemies in the same frame can cause this
+
+        // Damage the entity they hit (if they hit an entity)
         if (collision.gameObject.TryGetComponent<ILivingEntity>(out var entity))
         {
             Stats stats = Shooter.GetStats().DuplicateAndAddModifiers(_statModifiers);
@@ -56,6 +60,7 @@ public class Projectile : MonoBehaviour
             ILivingEntity.Damage(entity, dmg);
         }
 
+        // Kill if at pierce cap now
         _enemiesHit++;
         if (_enemiesHit >= _pierce)
         {

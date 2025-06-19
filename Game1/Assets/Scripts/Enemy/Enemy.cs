@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour, ILivingEntity
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
     private UnityAction<float> _onDamaged = (dmg) => { };
+    [SerializeField] private float _currentHealthInspector;
+    [SerializeField] private float _maxHealthInspector;
 
     private void Awake()
     {
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour, ILivingEntity
         _spawner = transform.parent.gameObject;
         _rigidBody = GetComponent<Rigidbody2D>();
         _turnManager = FindAnyObjectByType<TurnManager>();
+
+        _onDamaged += OnDamage;
     }
 
     private void Start()
@@ -63,7 +67,16 @@ public class Enemy : MonoBehaviour, ILivingEntity
         _attack.TryAttack();
     }
 
-    private void DamageReceiveEvent(float damage)
+    private void Update()
+    {
+        if (_stats != null)
+        {
+            _currentHealthInspector = _stats.CurrentHealth;
+            _maxHealthInspector = _stats.MaxHealth;
+        }
+    }
+
+    private void OnDamage(float damage)
     {
         if (_stats.IsDead())
         {

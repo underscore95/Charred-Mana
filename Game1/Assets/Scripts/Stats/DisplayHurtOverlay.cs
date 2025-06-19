@@ -19,6 +19,16 @@ public class DisplayHurtOverlay : MonoBehaviour
         GetComponent<ILivingEntity>().OnDamaged() += OnTakeDamage;
     }
 
+    private void OnEnable()
+    {
+        if (_shouldBeRed)
+        {
+            _sprite.color = _previousColor;
+        }
+        _shouldBeRed = false;
+        _secondsRed = 0;
+    }
+
     private void Update()
     {
         if (!_shouldBeRed) return;
@@ -26,7 +36,7 @@ public class DisplayHurtOverlay : MonoBehaviour
         float redness = Utils.GetTransitionValueInOut(_secondsRed, TRANSITION_DURATION, DURATION, TRANSITION_DURATION);
         Color c = Color.Lerp(_previousColor, COLOR, redness);
         _sprite.color = c;
-       _shouldBeRed = redness > 0;
+        _shouldBeRed = redness > 0;
     }
 
     private void OnTakeDamage(float damage)
