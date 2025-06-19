@@ -15,10 +15,12 @@ public class SpellQueue : MonoBehaviour
 
     private PlayerMana _mana;
     private readonly List<TriggeredSpell> _queuedSpells = new();
+    private Stats _playerStats;
 
     private void Awake()
     {
         _mana = FindAnyObjectByType<PlayerMana>();
+        _playerStats = FindAnyObjectByType<Player>().Stats;
 
         FindAnyObjectByType<TurnManager>().OnTurnChange += UseSpellsOnTurnChange;
         UpdateText();
@@ -26,6 +28,7 @@ public class SpellQueue : MonoBehaviour
 
     public void QueueTrigger(PlayerSpell spell)
     {
+        if (_queuedSpells.Count >= _playerStats.Focus) return;
         if (spell.IsOnCooldown()) return;
         if (_mana.Mana < spell.ManaCost) return;
 
@@ -54,7 +57,7 @@ public class SpellQueue : MonoBehaviour
 
     private void UpdateText()
     {
-        StringBuilder sb = new(_queuedSpells.Count > 0 ? "Queued Spells:\n" : "");
+        StringBuilder sb = new(string.Format("{0} / {1} Queued Spells{2}", _queuedSpells.Count, _playerStats.Focus, _queuedSpells.Count > 0 ? ":\n" : ""));
         foreach (var spell in _queuedSpells)
         {
             sb.AppendLine(spell.Spell.name);

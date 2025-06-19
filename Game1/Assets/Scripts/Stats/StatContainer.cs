@@ -1,5 +1,4 @@
 
-using JetBrains.Annotations;
 using System;
 using UnityEngine.Assertions;
 
@@ -11,7 +10,10 @@ public class StatContainer
     public float MaxHealth = 100;
     public float Defense = 0;
     public float Damage = 5;
-    public float ManaRegen = 5;
+    public float ManaRegen = 5; // Only affects players
+    public float Focus = 3.0f; // Only affects players
+    public float HealthRegen = 2.0f; // Only affects players
+    public float MaxMana = 100.0f; // Only affects players
     public float Get(StatType type)
     {
         switch (type)
@@ -24,6 +26,12 @@ public class StatContainer
                 return Damage;
             case StatType.ManaRegen:
                 return ManaRegen;
+            case StatType.Focus:
+                return Focus;
+            case StatType.HealthRegen:
+                return HealthRegen;
+            case StatType.MaxMana:
+                return MaxMana;
             default:
                 Assert.IsTrue(false);
                 return 0;
@@ -46,6 +54,15 @@ public class StatContainer
             case StatType.ManaRegen:
                 ManaRegen = value;
                 break;
+            case StatType.Focus:
+                Focus = value;
+                break;
+            case StatType.HealthRegen:
+                HealthRegen = value;
+                break;
+            case StatType.MaxMana:
+                MaxMana = value;
+                break;
             default:
                 Assert.IsTrue(false);
                 break;
@@ -61,7 +78,8 @@ public class StatContainer
 
     protected void SetEqualTo(StatContainer other)
     {
-        foreach (StatType type in Enum.GetValues(typeof(StatType))) {
+        foreach (StatType type in Enum.GetValues(typeof(StatType)))
+        {
             Set(type, other.Get(type));
         }
     }

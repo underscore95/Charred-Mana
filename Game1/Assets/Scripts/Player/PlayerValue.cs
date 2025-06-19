@@ -26,6 +26,6 @@ public abstract class PlayerValue : MonoBehaviour
 
     protected void UpdateText()
     {
-        _text.text = string.Format("{2}: {0} / {1}", Mathf.RoundToInt(_value), Mathf.RoundToInt(_maxValue), _unitName);
+        _text.text = string.Format("{2}: {0} / {1}", Mathf.CeilToInt(_value), Mathf.CeilToInt(_maxValue), _unitName);
     }
 }

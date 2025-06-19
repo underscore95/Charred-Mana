@@ -10,11 +10,6 @@ public class PlayerMana : PlayerValue
         {
             return _maxValue;
         }
-        set
-        {
-            _maxValue = value;
-            UpdateText();
-        }
     }
 
     public float Mana
@@ -26,6 +21,7 @@ public class PlayerMana : PlayerValue
         set
         {
             _value = value;
+            if (_value > _maxValue) _value= _maxValue;  
             UpdateText();
         }
     }
@@ -41,5 +37,10 @@ public class PlayerMana : PlayerValue
 
         _player = FindAnyObjectByType<Player>();
         FindAnyObjectByType<TurnManager>().OnTurnChange += () => Mana = Mathf.Min(MaxMana, Mana + _player.Stats.ManaRegen);
+    }
+
+    private void Update()
+    {
+        _maxValue = _player.Stats.MaxMana;
     }
 }

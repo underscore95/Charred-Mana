@@ -23,6 +23,8 @@ public class PlayerHealth : PlayerValue
         _value = 0;
         _maxValue = 0;
         base.Awake();
+
+        FindAnyObjectByType<TurnManager>().OnTurnChange += () => Health = Mathf.Min(_stats.MaxHealth, Health + _stats.HealthRegen);
     }
 
     private void Start()
