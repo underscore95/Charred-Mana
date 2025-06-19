@@ -551,6 +551,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 176574633}
+  - component: {fileID: 176574634}
+  - component: {fileID: 176574635}
+  - component: {fileID: 176574636}
   m_Layer: 0
   m_Name: Rewards
   m_TagString: Untagged
@@ -572,65 +575,94 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 709871212}
-  - {fileID: 1158805776}
-  - {fileID: 178347394}
   - {fileID: 15651549}
   - {fileID: 553677594}
   - {fileID: 752262275}
   m_Father: {fileID: 891771361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &178347393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 178347394}
-  - component: {fileID: 178347395}
-  m_Layer: 0
-  m_Name: DamageReward+10%
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &178347394
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178347393}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 176574633}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &178347395
+--- !u!114 &176574634
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178347393}
+  m_GameObject: {fileID: 176574632}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b256131f9fabdce4caf38560723deb57, type: 3}
+  m_Script: {fileID: 11500000, guid: cc9385520031ae743af9db59b5e35048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _title: +10% Damage
-  _description: Increases damage dealt by 10%.
-  _modifiers:
-    entries:
-    - Type: 1
-      Modifier:
-        Operation: 1
-        Value: 1.1
+  _statTypes:
+  - Type: 1
+    Desc: Increases the damage of your spells.
+  - Type: 2
+    Desc: Each defense point decreases damage taken by 1.
+  - Type: 0
+    Desc: Increases your maximum health.
+  - Type: 6
+    Desc: Increases your maximum mana.
+  _statValues:
+  - Operation: 0
+    Values:
+    - 1
+    - 2
+    - 3
+  - Operation: 1
+    Values:
+    - 1.02
+    - 1.05
+  _numDecimals: 0
+--- !u!114 &176574635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176574632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9385520031ae743af9db59b5e35048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statTypes:
+  - Type: 3
+    Desc: Your mana regeneration is applied at the end of each turn.
+  - Type: 5
+    Desc: Your health regeneration is applied at the end of each turn.
+  _statValues:
+  - Operation: 0
+    Values:
+    - 0.1
+    - 0.25
+    - 0.5
+  - Operation: 1
+    Values:
+    - 1.015
+    - 1.025
+    - 1.035
+  _numDecimals: 1
+--- !u!114 &176574636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176574632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9385520031ae743af9db59b5e35048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statTypes:
+  - Type: 4
+    Desc: Your focus affects the maximum amount of spells you can cast in a single
+      turn.
+  _statValues:
+  - Operation: 0
+    Values:
+    - 1
+    - 2
+  _numDecimals: 0
 --- !u!1001 &218722760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2717,58 +2749,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1158805775
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1158805776}
-  - component: {fileID: 1158805777}
-  m_Layer: 0
-  m_Name: DamageReward+2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1158805776
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158805775}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 176574633}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1158805777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158805775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b256131f9fabdce4caf38560723deb57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _title: +2 Damage
-  _description: Increases damage dealt by 2.
-  _modifiers:
-    entries:
-    - Type: 1
-      Modifier:
-        Operation: 0
-        Value: 2
 --- !u!1 &1232652833
 GameObject:
   m_ObjectHideFlags: 0

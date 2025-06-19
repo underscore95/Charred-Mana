@@ -10,6 +10,21 @@ public enum MathOp
 
 public class MathOps
 {
+    public static string ToString(MathOp op, float val, int numDecimals = 1)
+    {
+        string format = "F" + numDecimals;
+        switch (op)
+        {
+            case MathOp.Add:
+                return (val < 0 ? "-" : "+") + Math.Abs(val).ToString(format);
+            case MathOp.Multiply:
+                return "+" + ((val-1) * 100).ToString(format) + "%";
+            default:
+                Assert.IsTrue(false);
+                return "";
+        }
+    }
+
     public static float Eval(MathOp operation, float one, float two)
     {
         return operation switch
@@ -34,7 +49,7 @@ public class MathOps
         return operation switch
         {
             MathOp.Add => one + two,
-            MathOp.Multiply => (one - 1)  + ( two-1) + 1,
+            MathOp.Multiply => (one - 1) + (two - 1) + 1,
             _ => throw new System.NotImplementedException($"Eval not implemented for {operation}"),
         };
     }

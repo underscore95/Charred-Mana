@@ -14,6 +14,16 @@ public class StatModifier
         Value = value;
     }
 
+    public override string ToString()
+    {
+        return ToString(0);
+    }
+
+    public string ToString(int numDecimals)
+    {
+        return MathOps.ToString(Operation, Value, numDecimals);
+    }
+
     public void Apply(ref float value)
     {
         value = MathOps.Eval(Operation, value, Value);

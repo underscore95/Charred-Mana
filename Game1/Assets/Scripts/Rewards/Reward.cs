@@ -3,10 +3,10 @@ using UnityEngine;
 public abstract class Reward : MonoBehaviour
 {
     [SerializeField] protected string _title;
-    public string Title { get { return _title; } }
+    public string Title { get { return _title; } internal set { _title = value; } }
 
     [SerializeField] protected string _description;
-    public string Description { get { return _description; } }
+    public string Description { get { return _description; } internal set { _description = value; } }
 
     public abstract void Give();
 

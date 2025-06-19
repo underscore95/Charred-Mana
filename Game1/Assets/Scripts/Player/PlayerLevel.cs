@@ -66,7 +66,7 @@ public class PlayerLevel : PlayerValue
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-          //  Experience = _maxValue;
+           Experience = _maxValue;
         }
     }
 }

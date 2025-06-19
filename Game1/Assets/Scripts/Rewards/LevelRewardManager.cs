@@ -21,7 +21,7 @@ public class LevelRewardManager : MonoBehaviour
     private PlayerLevel _playerLevel;
     private bool _unlockedSpell = false;
 
-    private void Awake()
+    private void Start()
     {
         // Get registered rewards
         TransformUtils.GetChildrenWithComponent<Reward>(ref _registeredRewards, _registeredRewardsParent, true);

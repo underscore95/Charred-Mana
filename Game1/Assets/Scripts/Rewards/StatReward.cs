@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StatReward : Reward
 {
-    [SerializeField] private SerializableStatModifiersContainer _modifiers = new();
+    [SerializeField] internal SerializableStatModifiersContainer _modifiers = new();
     private Stats _playerStats;
 
     private void Start()

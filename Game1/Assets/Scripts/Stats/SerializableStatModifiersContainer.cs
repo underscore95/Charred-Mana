@@ -17,6 +17,11 @@ public class SerializableStatModifiersContainer
 
     public List<Entry> Entries => entries;
 
+    public void AddModifierNoMerging(StatType type,StatModifier modifier)
+    {
+        Entries.Add(new Entry { Type = type, Modifier = modifier });
+    }
+
     public static implicit operator StatModifiersContainer(SerializableStatModifiersContainer serializable)
     {
         var container = new StatModifiersContainer();
