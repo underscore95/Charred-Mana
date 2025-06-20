@@ -29,13 +29,13 @@ public class Stats : StatContainer
 
     public void ApplyModifier(StatType type, StatModifier mod)
     {
-        _modifiers.Add(type, mod);
+        _modifiers.Add(type, new(mod));
         RecalculateModifiers(type);
     }
 
-    public void ApplyModifiers(StatModifiersContainer currentEnemyStatBoost)
+    public void ApplyModifiers(StatModifiersContainer modifiers)
     {
-        foreach (var (type, mods) in currentEnemyStatBoost.Modifiers)
+        foreach (var (type, mods) in modifiers.Modifiers)
         {
             foreach (var mod in mods)
             {

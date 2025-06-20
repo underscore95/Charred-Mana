@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 [Serializable]
@@ -10,6 +11,11 @@ public class SerializableStatModifiersContainer
     {
         public StatType Type;
         public StatModifier Modifier;
+
+        public override readonly string ToString()
+        {
+            return "{" + Type + ": " + Modifier.ToString(3) + "}";
+        }
     }
 
     [SerializeField]
@@ -36,5 +42,14 @@ public class SerializableStatModifiersContainer
         }
 
         return container;
+    }
+
+    public override string ToString()
+    {
+        StringBuilder s = new();
+        s.AppendLine("SerializableStatsContainer[");
+        foreach (var entry in entries) s.AppendLine(entry.ToString());
+        s.AppendLine("]");
+        return s.ToString();
     }
 }

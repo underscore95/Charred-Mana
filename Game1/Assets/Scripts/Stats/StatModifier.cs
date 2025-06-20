@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 [Serializable]
@@ -14,9 +15,14 @@ public class StatModifier
         Value = value;
     }
 
+    public StatModifier(StatModifier statModifier) : this(statModifier.Operation, statModifier.Value)
+    {
+
+    }
+
     public override string ToString()
     {
-        return ToString(0);
+        return ToString(5);
     }
 
     public string ToString(int numDecimals)
@@ -69,7 +75,10 @@ public class StatModifier
     {
         for (int i = 0; i < list.Count; i++)
         {
-            if (list[i].Merge(modifier)) return;
+            if (list[i].Merge(new(modifier)))
+            {
+                return;
+            }
         }
         list.Add(modifier);
     }
