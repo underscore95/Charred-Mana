@@ -101,17 +101,16 @@ public class LevelRewardManager : MonoBehaviour
         // Pick rarity
         if (RewardRarities.Roll(rarity => IsAvailableRewardRarityValid(category, rarity), out var rarity))
         {
-            if (category == RewardCategory.Spell)
-                // Pick reward in rarity
-                for (int i = 0; i < 500; ++i)
+            // Pick reward in rarity
+            for (int i = 0; i < 500; ++i)
+            {
+                Reward reward = GetRewards(category, rarity)[UnityEngine.Random.Range(0, GetRewards(category, rarity).Count)];
+                if (reward.CanGive())
                 {
-                    Reward reward = GetRewards(category, rarity)[UnityEngine.Random.Range(0, GetRewards(category, rarity).Count)];
-                    if (reward.CanGive())
-                    {
-                        ui.SetReward(reward);
-                        return;
-                    }
+                    ui.SetReward(reward);
+                    return;
                 }
+            }
         }
 
         // Didn't find a reward
