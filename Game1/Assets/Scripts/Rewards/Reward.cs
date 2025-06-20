@@ -2,11 +2,17 @@ using UnityEngine;
 
 public abstract class Reward : MonoBehaviour
 {
-    [SerializeField] protected string _title;
+    [SerializeField] private string _title;
     public string Title { get { return _title; } internal set { _title = value; } }
 
-    [SerializeField] protected string _description;
+    [SerializeField] private string _description;
     public string Description { get { return _description; } internal set { _description = value; } }
+
+    [SerializeField] private RewardCategory _category;
+    public RewardCategory Category { get { return _category; } internal set { _category = value; } }
+
+    [SerializeField] private Rarity _rarity;
+    public Rarity Rarity { get { return _rarity; } internal set { _rarity = value; } }
 
     public abstract void Give();
 

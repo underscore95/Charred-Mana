@@ -215,6 +215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _title: 
   _description: 
+  _category: 0
+  _rarity: 0
   _spell: {fileID: 13409859}
 --- !u!1 &16559150
 GameObject:
@@ -273,7 +275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.0.3
+  m_text: v0.0.4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -602,15 +604,23 @@ MonoBehaviour:
   - Type: 6
     Desc: Increases your maximum mana.
   _statValues:
-  - Operation: 0
+  - Rarity: 0
+    Operation: 0
     Values:
     - 1
     - 2
-    - 3
-  - Operation: 1
+  - Rarity: 0
+    Operation: 1
     Values:
     - 1.02
+  - Rarity: 2
+    Operation: 1
+    Values:
     - 1.05
+  - Rarity: 1
+    Operation: 0
+    Values:
+    - 3
   _numDecimals: 0
 --- !u!114 &176574635
 MonoBehaviour:
@@ -630,15 +640,24 @@ MonoBehaviour:
   - Type: 5
     Desc: Your health regeneration is applied at the end of each turn.
   _statValues:
-  - Operation: 0
+  - Rarity: 1
+    Operation: 0
     Values:
     - 0.1
     - 0.25
     - 0.5
-  - Operation: 1
+  - Rarity: 1
+    Operation: 1
     Values:
     - 1.015
     - 1.025
+  - Rarity: 3
+    Operation: 0
+    Values:
+    - 0.75
+  - Rarity: 2
+    Operation: 1
+    Values:
     - 1.035
   _numDecimals: 1
 --- !u!114 &176574636
@@ -658,9 +677,13 @@ MonoBehaviour:
     Desc: Your focus affects the maximum amount of spells you can cast in a single
       turn.
   _statValues:
-  - Operation: 0
+  - Rarity: 3
+    Operation: 0
     Values:
     - 1
+  - Rarity: 4
+    Operation: 0
+    Values:
     - 2
   _numDecimals: 0
 --- !u!1001 &218722760
@@ -1450,6 +1473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _title: 
   _description: 
+  _category: 0
+  _rarity: 2
   _spell: {fileID: 82544576}
 --- !u!1001 &564744039
 PrefabInstance:
@@ -1840,6 +1865,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _title: Full Heal
   _description: Replenishes your health to the maximum.
+  _category: 2
+  _rarity: 0
 --- !u!1 &734475962
 GameObject:
   m_ObjectHideFlags: 0
@@ -2374,6 +2401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _title: 
   _description: 
+  _category: 0
+  _rarity: 1
   _spell: {fileID: 1232652835}
 --- !u!1 &816295197
 GameObject:

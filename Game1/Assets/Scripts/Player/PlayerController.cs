@@ -41,16 +41,17 @@ public class PlayerController : MonoBehaviour
             displacement += moveDirection.y > 0 ? Vector3.up : Vector3.down;
         }
 
+        Assert.IsTrue(_canGoToNextTurn);
+        _canGoToNextTurn = false;
+        StartCoroutine(StartNextTurnCooldown());
+
         StartCoroutine(Utils.MoveRigidBody(_rigidBody, displacement));
         _turnManager.OnTurnChange.Invoke();
         _turnManager.OnLateTurnChange.Invoke();
-        StartCoroutine(StartNextTurnCooldown());
     }
 
     private IEnumerator StartNextTurnCooldown()
     {
-        Assert.IsTrue(_canGoToNextTurn);
-        _canGoToNextTurn = false;
         yield return new WaitForSeconds(TURN_CHANGE_COOLDOWN + 0.05f);
         _canGoToNextTurn = true;
     }

@@ -9,13 +9,14 @@ public class SpellReward : Reward
     {
         _spellManager = FindAnyObjectByType<SpellManager>();
 
-        if (Utils.StringNotEmpty(_title) || Utils.StringNotEmpty(_description))
+        if (Utils.StringNotEmpty(Title) || Utils.StringNotEmpty(Description))
         {
             Debug.LogWarningFormat("{0} spell reward had a title or description, this will be set automatically to the spell title/description and should be left blank in inspector.", gameObject.name);
         }
 
-        _title = _spell.gameObject.name + " Spell";
-        _description = _spell.OptionalDescription;
+        Title = _spell.gameObject.name + " Spell";
+        Description = _spell.OptionalDescription;
+        Category = RewardCategory.Spell;
     }
 
     public override void Give()

@@ -9,14 +9,21 @@ public class GenerateStatRewards : MonoBehaviour
     public class GeneratedStatType
     {
         [SerializeField] public StatType Type;
-        [Multiline(3)] [SerializeField] public string Desc = "Increases damage dealt by {0}.";
+        [Multiline(3)][SerializeField] public string Desc = "Increases damage dealt by {0}.";
     }
 
     [Serializable]
     public class GeneratedStatValues
     {
+        [SerializeField] public Rarity Rarity;
         [SerializeField] public MathOp Operation;
         [SerializeField] public List<float> Values;
+    }
+
+    private struct StatRewardBase
+    {
+        public Rarity Rarity;
+        public StatModifier Modifier;
     }
 
     [SerializeField] private List<GeneratedStatType> _statTypes;
@@ -29,19 +36,17 @@ public class GenerateStatRewards : MonoBehaviour
         HashSet<MathOp> ops = new();
 
         // Generate all the stat modifiers
-        List<StatModifier> modifiers = new();
+        List<StatRewardBase> baseRewards = new();
         foreach (GeneratedStatValues opType in _statValues)
         {
-            if (!ops.Add(opType.Operation))
-            {
-                Debug.LogWarningFormat("{0} (GenerateStatRewards script) is attempting to generate values for the same operation ({1}), skipping the latter one(s).", gameObject.name, opType.Operation);
-                continue;
-            }
-
             foreach (float val in opType.Values)
             {
                 StatModifier mod = new(opType.Operation, val);
-                modifiers.Add(mod);
+                baseRewards.Add(new()
+                {
+                    Rarity = opType.Rarity,
+                    Modifier = mod
+                });
             }
         }
 
@@ -54,19 +59,21 @@ public class GenerateStatRewards : MonoBehaviour
                 continue;
             }
 
-            foreach (StatModifier mod in modifiers)
+            foreach (StatRewardBase baseReward in baseRewards)
             {
                 GameObject obj = new(
-                    string.Format("StatReward {0} {1}", StatTypes.ToString(type.Type), mod.ToString(_numDecimals)),
+                    string.Format("{2} StatReward {0} {1}", StatTypes.ToString(type.Type), baseReward.Modifier.ToString(_numDecimals), baseReward.Rarity),
                     new Type[] { typeof(StatReward) }
                     );
 
                 obj.transform.parent = transform;
 
                 StatReward reward = obj.GetComponent<StatReward>();
-                reward._modifiers.AddModifierNoMerging(type.Type, mod);
-                reward.Title = mod.ToString(_numDecimals) + " " + StatTypes.ToString(type.Type);
-                reward.Description = string.Format(type.Desc, mod.ToString(_numDecimals));
+                reward._modifiers.AddModifierNoMerging(type.Type, baseReward.Modifier);
+                reward.Title = baseReward.Modifier.ToString(_numDecimals) + " " + StatTypes.ToString(type.Type);
+                reward.Description = string.Format(type.Desc, baseReward.Modifier.ToString(_numDecimals));
+                reward.Category = RewardCategory.Stat;
+                reward.Rarity = baseReward.Rarity;
             }
         }
     }
