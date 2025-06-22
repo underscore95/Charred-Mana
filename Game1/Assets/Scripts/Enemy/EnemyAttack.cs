@@ -11,7 +11,7 @@ public class EnemyAttack : MonoBehaviour, IEnemyAttack
         _player = FindAnyObjectByType<Player>();
     }
 
-    public void TryAttack()
+    public void HandleAttack()
     {
         if (Vector3.Distance(transform.position, _player.PositionAtFrameStart) <= _attackRange)
         {

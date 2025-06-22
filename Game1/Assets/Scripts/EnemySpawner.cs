@@ -57,4 +57,9 @@ public class EnemySpawner : MonoBehaviour
         offset.y = Mathf.Round(offset.y);
         return location + offset;
     }
+
+    public System.Collections.Generic.IEnumerable<GameObject> GetAliveEnemies()
+    {
+        return _pool.Alive;
+    }
 }

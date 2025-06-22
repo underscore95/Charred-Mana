@@ -8,25 +8,25 @@ public class Enemy : MonoBehaviour, ILivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private float _experienceDropped = 10;
+    [SerializeField] private float _currentHealthInspector;
+    [SerializeField] private float _maxHealthInspector;
     private Stats _stats;
 
     private Player _player;
     private IEnemyAttack _attack;
-    private GameObject _spawner;
-    private Rigidbody2D _rigidBody;
+    public IEnemyController Controller { get; private set; }
+    public EnemySpawner Spawner { get; private set; }
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
     private UnityAction<float> _onDamaged = (dmg) => { };
-    [SerializeField] private float _currentHealthInspector;
-    [SerializeField] private float _maxHealthInspector;
 
     private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
         _attack = GetComponent<IEnemyAttack>();
-        _spawner = transform.parent.gameObject;
-        _rigidBody = GetComponent<Rigidbody2D>();
+        Spawner = transform.parent.gameObject.GetComponent<EnemySpawner>();
         _turnManager = FindAnyObjectByType<TurnManager>();
+        Controller = GetComponent<IEnemyController>();
 
         _onDamaged += OnDamage;
     }
@@ -51,20 +51,8 @@ public class Enemy : MonoBehaviour, ILivingEntity
 
     private void PlayTurn()
     {
-        Vector3 deltaPos = new(
-            _player.PositionAtFrameStart.x - transform.position.x,
-            _player.PositionAtFrameStart.y - transform.position.y,
-            0.0f
-        );
-
-        foreach (Transform obj in _spawner.transform)
-        {
-            // boids
-        }
-
-        StartCoroutine(Utils.MoveRigidBody(_rigidBody, deltaPos.normalized));
-
-        _attack.TryAttack();
+        Controller.HandleMovement();
+        _attack.HandleAttack();
     }
 
     private void Update()

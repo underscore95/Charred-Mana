@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 1535381825471655550}
   - component: {fileID: 716090180635617715}
   - component: {fileID: 5594692311953215228}
+  - component: {fileID: 7959942840039656439}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -141,7 +142,12 @@ MonoBehaviour:
     Defense: 0
     Damage: 5
     ManaRegen: 5
+    Focus: 3
+    HealthRegen: 2
+    MaxMana: 100
   _experienceDropped: 10
+  _currentHealthInspector: 0
+  _maxHealthInspector: 0
 --- !u!114 &7953354953284377577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,3 +248,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprite: {fileID: 6466381022320544557}
+--- !u!114 &7959942840039656439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190042482056591089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290380905f737384092bb9ccc3231675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyNearbyRadius: 0.1
+  _speed: 1
+  _boidsWeight: 0.8
+  _cohesionThreshold: 2

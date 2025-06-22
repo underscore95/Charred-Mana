@@ -1,4 +1,4 @@
 public interface IEnemyAttack
 {
-    void TryAttack();
+    void HandleAttack();
 }
