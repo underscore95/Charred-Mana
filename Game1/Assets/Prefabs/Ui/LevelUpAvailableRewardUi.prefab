@@ -662,3 +662,4 @@ MonoBehaviour:
   _desc: {fileID: 5681317782478755550}
   _selectButton: {fileID: 4301208145794061485}
   _background: {fileID: 1646070612485278586}
+  _rewardColors: {fileID: 11400000, guid: 5a748b2a8be8f864082ea2484d371183, type: 2}

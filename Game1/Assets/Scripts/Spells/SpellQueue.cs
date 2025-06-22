@@ -23,6 +23,10 @@ public class SpellQueue : MonoBehaviour
         _player = FindAnyObjectByType<Player>();
 
         FindAnyObjectByType<TurnManager>().OnTurnChange += UseSpellsOnTurnChange;
+    }
+
+    private void Start()
+    {
         UpdateText();
     }
 

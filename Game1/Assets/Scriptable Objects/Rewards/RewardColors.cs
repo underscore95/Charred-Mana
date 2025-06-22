@@ -7,26 +7,24 @@ public class RewardColors : ScriptableObject
 {
     [SerializeField] private SerializableEnumDictionary<Rarity, Color> _rarityColorsSerializable = new();
     private EnumDictionary<Rarity, Color> _rarityToColor;
-    private static RewardColors _instance;
 
     private void OnEnable()
     {
-        OnValidate();
+        Setup();
     }
 
     private void OnValidate()
     {
-        if (_instance != null && _instance != this)
-        {
-            Debug.LogErrorFormat("Multiple RewardColor scriptable objects found, only one should exist");
-            return;
-        }
-        _instance = this;
+        Setup();
+    }
+
+    private void Setup()
+    {
         _rarityToColor = _rarityColorsSerializable;
     }
 
-    public static Color GetColor(Rarity rarity)
+    public Color GetColor(Rarity rarity)
     {
-        return _instance._rarityToColor[rarity];
+        return _rarityToColor[rarity];
     }
 }

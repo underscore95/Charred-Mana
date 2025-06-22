@@ -12,6 +12,7 @@ public class AvailableRewardUi : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _desc;
     [SerializeField] private Button _selectButton;
     [SerializeField] private Image _background;
+    [SerializeField] private RewardColors _rewardColors;
     private Reward _reward;
     private LevelRewardManager _rewardManager;
 
@@ -35,7 +36,7 @@ public class AvailableRewardUi : MonoBehaviour
 
         _title.text = _reward.Title;
         _desc.text = _reward.Description;
-        _background.color = RewardColors.GetColor(_reward.Rarity);
+        _background.color = _rewardColors.GetColor(_reward.Rarity);
     }
 
     public void GiveReward()

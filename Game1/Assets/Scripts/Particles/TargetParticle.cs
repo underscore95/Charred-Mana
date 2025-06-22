@@ -32,6 +32,15 @@ public class TargetParticle : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        _secondsElapsed = 0;
+        foreach (var c in _circles)
+        {
+            c.Renderer.color = new(1,1,1,0);
+        }
+    }
+
     private void Update()
     {
         _secondsElapsed += Time.deltaTime;
