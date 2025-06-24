@@ -1,0 +1,13 @@
+Developers:
+Jack Briggs - Programming, Game Design
+
+Assets:
+
+Music:
+https://alkakrab.itch.io/free-12-tracks-pixel-rpg-game-music-pack
+
+Sound Effects:
+Button Click: https://pixabay.com/sound-effects/click-21156/
+Player Move: https://pixabay.com/sound-effects/rustling-grass-1-101282/
+Spell Cast: https://pixabay.com/sound-effects/click-21156/
+Player Damaged: https://pixabay.com/sound-effects/whipslapbeltpunch-6949/
