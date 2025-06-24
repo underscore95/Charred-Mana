@@ -12,6 +12,7 @@ public class DebugMenu : MonoBehaviour
         public bool CanDie = true;
     }
 
+    [SerializeField] private GameObject _debugBuildText;
     [SerializeField] private GameObject _canvas;
     [SerializeField] private Toggle _canDie;
     [SerializeField] private Button _levelUpButton;
@@ -21,6 +22,11 @@ public class DebugMenu : MonoBehaviour
 
     private void Awake()
     {
+        if (_debugBuildText)
+        {
+            _debugBuildText.SetActive(DEBUG);
+        }
+
         _canvas.SetActive(false);
 
         if (DEBUG)
