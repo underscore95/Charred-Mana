@@ -36,6 +36,8 @@ public class SpellQueue : MonoBehaviour
         if (spell.IsOnCooldown()) return;
         if (_mana.Mana < spell.ManaCost) return;
 
+        Sfx.PlaySpellCast();
+
         TriggeredSpell triggered = new()
         {
             Spell = spell,

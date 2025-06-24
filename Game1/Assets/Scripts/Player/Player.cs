@@ -20,6 +20,7 @@ public class Player : MonoBehaviour, ILivingEntity
         PlayerMana = GetComponentInChildren<PlayerMana>();
         Stats = new(_baseStats);
         PlayerLevel = GetComponentInChildren<PlayerLevel>();
+        _onDamaged += _ => Sfx.PlayPlayerDamaged();
     }
 
     private void Update()

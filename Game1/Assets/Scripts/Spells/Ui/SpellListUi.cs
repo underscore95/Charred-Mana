@@ -36,14 +36,18 @@ public class SpellListUi : MonoBehaviour
         if (!_clickAction.ToInputAction().WasPressedThisFrame()) return;
 
         Vector2 mousePos = Input.mousePosition;
+        bool anyClicked = false;
         for (int i = 0; i < _spellList.Count; ++i)
         {
             int count = _spellList.Count;
             var element = _spellList[i];
             if (!RectTransformUtility.RectangleContainsScreenPoint(element.Rect, mousePos)) continue;
+            anyClicked = true;
             element.OnClick.Invoke();
             if (count < _spellList.Count) --i;
         }
+
+        if (anyClicked) Sfx.PlayClick();
     }
 
     public void AddSpell(PlayerSpell spell, Action onClick, bool silent = false)

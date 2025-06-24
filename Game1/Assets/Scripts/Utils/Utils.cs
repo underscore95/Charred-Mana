@@ -43,4 +43,9 @@ public static class Utils
         if (elapsed < transitionIn) return Mathf.InverseLerp(0, transitionIn, elapsed);
         else return Mathf.InverseLerp(transitionOut, 0, elapsed - transitionIn - stay);
     }
+
+    public static System.Random CreateRandom()
+    {
+        return new((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
+    }
 }

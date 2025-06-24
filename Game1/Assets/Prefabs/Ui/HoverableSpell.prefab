@@ -57,7 +57,8 @@ MonoBehaviour:
   _cooldown: {fileID: 5389247292885835496}
   _hoverArea: {fileID: 7055101161476235475}
   _enableOnHover: {fileID: 3618718470986701170}
-  _hoverModulate: {r: 0.8, g: 0.8, b: 0.8, a: 0.8}
+  _normalColor: {r: 0, g: 0, b: 1, a: 1}
+  _hoverColor: {r: 0, g: 0, b: 0.8, a: 0.8}
   _background: {fileID: 3387375756561966918}
 --- !u!1 &2523647584497983246
 GameObject:
@@ -230,7 +231,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 730, y: 90.495}
+  m_AnchoredPosition: {x: 508, y: 0.0000076294}
   m_SizeDelta: {x: 420.21, y: 190.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4014863938814161910

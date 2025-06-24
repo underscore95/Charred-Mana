@@ -17,6 +17,7 @@ public class TurnManager : MonoBehaviour
     {
         OnTurnChange += OnTurnChangeOrAwake;
         OnTurnChange += () => CurrentTurn++;
+        OnTurnChange += Sfx.PlayPlayerMove;
         
         OnTurnChangeOrAwake();
     }

@@ -26,6 +26,7 @@ public class AvailableRewardUi : MonoBehaviour
         Assert.IsTrue(_selectButton.transform.parent == transform);
         _rewardManager = FindAnyObjectByType<LevelRewardManager>();
 
+        _selectButton.onClick.AddListener(Sfx.PlayClick);
         _selectButton.onClick.AddListener(GiveReward);
     }
 
