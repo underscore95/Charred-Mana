@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, ILivingEntity
     public Vector3 PositionAtFrameStart { get; set; }
     public Stats Stats { get; private set; }
     private UnityAction<float> _onDamaged = (dmg) => { };
+    private DebugMenu _debugMenu;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour, ILivingEntity
         Stats = new(_baseStats);
         PlayerLevel = GetComponentInChildren<PlayerLevel>();
         _onDamaged += _ => Sfx.PlayPlayerDamaged();
+        _debugMenu=FindAnyObjectByType<DebugMenu>();
     }
 
     private void Update()
@@ -41,5 +43,10 @@ public class Player : MonoBehaviour, ILivingEntity
     public ref UnityAction<float> OnDamaged()
     {
         return ref _onDamaged;
+    }
+
+    public bool IsDead()
+    {
+        return Stats.CurrentHealth <= 0 && _debugMenu.Options.CanDie;
     }
 }

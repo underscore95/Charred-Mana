@@ -1,7 +1,9 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PlayerLevel : PlayerValue
 {
@@ -66,7 +68,12 @@ public class PlayerLevel : PlayerValue
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-           Experience = _maxValue;
+            Experience = _maxValue;
         }
+    }
+
+    public void ForceLevelUp()
+    {
+        Experience += _maxValue;
     }
 }
