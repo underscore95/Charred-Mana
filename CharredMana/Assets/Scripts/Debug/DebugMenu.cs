@@ -17,6 +17,7 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Toggle _canDie;
     [SerializeField] private Button _levelUpButton;
     [SerializeField] private Button _levelUp10Button;
+    [SerializeField] private Button _killPlayerButton;
 
     public DebugOptions Options { get; private set; }
 
@@ -48,6 +49,8 @@ public class DebugMenu : MonoBehaviour
                     for (int i = 0; i < 10; i++) player.PlayerLevel.ForceLevelUp();
                 });
         }
+
+        _killPlayerButton.onClick.AddListener(() => ILivingEntity.Damage(player, player.Stats.MaxHealth));
     }
 
     private void OnDestroy()
