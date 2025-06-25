@@ -68,6 +68,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
     {
         if (_stats.IsDead())
         {
+            _player.MonstersKilled++;
             _player.PlayerLevel.Experience += _experienceDropped;
             Pool.ReleaseObject(gameObject);
         }

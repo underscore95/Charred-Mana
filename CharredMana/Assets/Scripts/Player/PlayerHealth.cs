@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -6,6 +7,7 @@ using UnityEngine.Assertions;
 public class PlayerHealth : PlayerValue
 {
     private Stats _stats;
+    private DebugMenu _debug;
 
     public float Health
     {
@@ -19,6 +21,7 @@ public class PlayerHealth : PlayerValue
 
     private new void Awake()
     {
+        _debug = FindAnyObjectByType<DebugMenu>();
         _unitName = "Health";
         _value = 0;
         _maxValue = 0;
@@ -35,6 +38,7 @@ public class PlayerHealth : PlayerValue
     private void Update()
     {
         _value = Mathf.CeilToInt(_stats.CurrentHealth);
+        if (_value < 0 && _debug.Options.CanDie) _value = 0; // don't show negative health to the player
         _maxValue = Mathf.CeilToInt(_stats.Get(StatType.MaxHealth));
         UpdateText();
     }

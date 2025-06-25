@@ -3,6 +3,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
+// Handles queuing up the spells and then casting them all when the turn ends
 public class SpellQueue : MonoBehaviour
 {
     private struct TriggeredSpell
@@ -53,6 +54,7 @@ public class SpellQueue : MonoBehaviour
 
     private void UseSpellsOnTurnChange()
     {
+        _player.SpellsCast += _queuedSpells.Count;
         foreach (var spell in _queuedSpells)
         {
             spell.Spell.OnTrigger(spell.TriggerInfo);

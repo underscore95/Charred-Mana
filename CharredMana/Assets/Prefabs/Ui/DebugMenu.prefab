@@ -104,7 +104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2354636511752954971
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbaefb772a56c1340a0aae781f450c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debugBuildText: {fileID: 0}
   _canvas: {fileID: 152859962692676674}
   _canDie: {fileID: 6310632855828975891}
   _levelUpButton: {fileID: 9068760413271721414}

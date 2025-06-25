@@ -12,6 +12,8 @@ public class Player : MonoBehaviour, ILivingEntity
     public Camera Camera { get; private set; }
     public Vector3 PositionAtFrameStart { get; set; }
     public Stats Stats { get; private set; }
+    public int MonstersKilled { get; set; } = 0;
+    public int SpellsCast { get; set; } = 0;
     private UnityAction<float> _onDamaged = (dmg) => { };
     private DebugMenu _debugMenu;
 
