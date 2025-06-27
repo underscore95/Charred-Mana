@@ -9,15 +9,13 @@ public class BoidsEnemyController : MonoBehaviour, IEnemyController
     [SerializeField] private float _speed = 1.0f;
     [SerializeField] private float _boidsWeight = 0.5f; // toPlayer + boidsWeight * boids
     [SerializeField] private float _cohesionThreshold = 1.0f; // cohesion force only matters if distance to center is greater than this
-    private Player _player;
-    private EnemySpawner _spawner;
+    private Enemy _enemy;
     private Rigidbody2D _rigidBody;
     private Vector2 _deltaPosLastTurn;
 
     private void Awake()
     {
-        _player = FindAnyObjectByType<Player>();
-        _spawner = GetComponentInParent<Enemy>().Spawner;
+        _enemy = GetComponentInParent<Enemy>();
         _rigidBody = GetComponent<Rigidbody2D>();
         Assert.IsTrue(_boidsWeight >= 0 && _boidsWeight <= 1, "_boidsStrength must be in range 0 to 1");
     }
@@ -33,7 +31,7 @@ public class BoidsEnemyController : MonoBehaviour, IEnemyController
         Vector2 neighbourDeltaPosSum = Vector2.zero;
         Vector2 neighbourAveragePos = Vector2.zero;
 
-        Collider2D[] nearbyEnemies = GetNearbyEnemies();
+        Collider2D[] nearbyEnemies = Enemy.GetNearbyEnemies(transform.position, _enemyNearbyRadius);
         foreach (Collider2D enemy in nearbyEnemies)
         {
             // Move away from nearby enemies
@@ -64,8 +62,8 @@ public class BoidsEnemyController : MonoBehaviour, IEnemyController
             }
         }
 
-        // Move to player
-        deltaPos = (Vector2)(_player.PositionAtFrameStart - transform.position).normalized + deltaPos.normalized * _boidsWeight;
+        // Move to target
+        deltaPos = ((Vector2)_enemy.CurrentTarget.GetGameObject().transform.position - (Vector2)transform.position).normalized + deltaPos.normalized * _boidsWeight;
 
         _deltaPosLastTurn = transform.position;
         StartCoroutine(Utils.MoveRigidBody(_rigidBody, deltaPos.normalized * _speed));
@@ -85,11 +83,5 @@ public class BoidsEnemyController : MonoBehaviour, IEnemyController
             return -(toNeighbour.normalized) / distance;
         }
         return Vector2.zero;
-    }
-
-    private Collider2D[] GetNearbyEnemies()
-    {
-        Assert.IsTrue(LayerMask.NameToLayer("Enemy") != -1);
-        return Physics2D.OverlapCircleAll(gameObject.transform.position, _enemyNearbyRadius, LayerMask.GetMask("Enemy"));
     }
 }

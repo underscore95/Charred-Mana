@@ -13,6 +13,38 @@ public class EffectManager : MonoBehaviour
         public GameObject Prefab;
     }
 
+    public enum EffectResult
+    {
+        Applied, // effect didn't already exist
+        OverwroteWeakerEffect, // effect did already exist but had a lower amplifier
+        OverwroteShorterEqualEffect, // effect did already exist but had a lower duration and equal amplifier
+        NotAppliedTooWeak, // effect already existed with a higher amplifier
+        NotAppliedTooShort // effect already existed with an equal amplifier and higher duration
+    }
+
+    public static bool WasEffectNotApplied(EffectResult result)
+    {
+        return result == EffectResult.NotAppliedTooWeak || result == EffectResult.NotAppliedTooShort;
+    }
+
+    public static bool WasEffectNotApplied(EffectResult[] results)
+    {
+        foreach (EffectResult result in results)
+        {
+            if (!WasEffectNotApplied(result)) return false;
+        }
+        return true;
+    }
+
+    public static bool AppliedAnyNewEffect(EffectResult[] results)
+    {
+        foreach (EffectResult result in results)
+        {
+            if (result == EffectResult.Applied) return true;
+        }
+        return false;
+    }
+
     [SerializeField] private int _capacityPerPool = 100;
     [SerializeField] private List<EffectPrefab> _effectTypePrefabs = new(); // prefabs for each effect type
     private readonly List<ObjectPool> _pools = new(); // uses effecttype as index
@@ -66,7 +98,8 @@ public class EffectManager : MonoBehaviour
     }
 
     // Apply effect to entity, this does nothing if the entity already has the same effect with higher amplifier, this overwrites effects with lower amplifiers. Equal amplifiers will use the maximum duration.
-    public void ApplyEffect(ILivingEntity target, EffectType effectType, int duration, float amplifier = 1.0f)
+    // duration in turns
+    public EffectResult ApplyEffect(ILivingEntity target, EffectType effectType, int duration, float amplifier = 1.0f)
     {
         Assert.IsNotNull(target);
         Assert.IsTrue(duration > 0);
@@ -74,15 +107,23 @@ public class EffectManager : MonoBehaviour
 
         // Does the entity already have the effect?
         Dictionary<GameObject, Effect> objectsWithEffect = _effectsOnObjects[(int)effectType];
+        bool effectAlreadyExisted = false;
         if (objectsWithEffect.TryGetValue(target.GetGameObject(), out Effect effect))
         {
+            effectAlreadyExisted = true;
+
             // Set amplification and duration
             if (Mathf.Approximately(effect.Amplification, amplifier))
             {
-                effect.Duration = Mathf.Max(effect.Duration, duration); // we're equal
-                return;
+                // we're equal, pick max duration
+                if (duration > effect.Duration)
+                {
+                    effect.Duration = duration;
+                    return EffectResult.OverwroteShorterEqualEffect;
+                }
+                return EffectResult.NotAppliedTooShort;
             }
-            else if (effect.Amplification > amplifier) return; // we're weaker
+            else if (effect.Amplification > amplifier) return EffectResult.NotAppliedTooWeak; // we're weaker
             // else we're stronger, fall through
         }
         else
@@ -100,19 +141,22 @@ public class EffectManager : MonoBehaviour
         // Set amplification and duration
         effect.Amplification = amplifier;
         effect.Duration = duration;
+        return effectAlreadyExisted ? EffectResult.OverwroteWeakerEffect : EffectResult.Applied;
     }
 
-    public void ApplyEffect(ILivingEntity target, SerializableEffect effect)
+    public EffectResult ApplyEffect(ILivingEntity target, SerializableEffect effect)
     {
-        ApplyEffect(target, effect.Type, effect.Duration, effect.Amplifier);
+        return ApplyEffect(target, effect.Type, effect.Duration, effect.Amplifier);
     }
 
-    public void ApplyEffects(ILivingEntity entity, List<SerializableEffect> effects)
+    public EffectResult[] ApplyEffects(ILivingEntity entity, List<SerializableEffect> effects)
     {
-        foreach (SerializableEffect effect in effects)
+        EffectResult[] results = new EffectResult[effects.Count];
+        for (int i = 0; i < effects.Count; ++i)
         {
-            ApplyEffect(entity, effect);
+            results[i] = ApplyEffect(entity, effects[i]);
         }
+        return results;
     }
 
     internal void ReleaseFromPoolIfActive(Effect effect)

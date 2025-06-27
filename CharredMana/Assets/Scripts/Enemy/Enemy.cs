@@ -14,7 +14,9 @@ public class Enemy : MonoBehaviour, ILivingEntity
 
     private Player _player;
     private IEnemyAttack _attack;
+    private IEnemyTargeter _targeter;
     public IEnemyController Controller { get; private set; }
+    public ILivingEntity CurrentTarget { get; private set; }
     public EnemySpawner Spawner { get; private set; }
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
@@ -27,6 +29,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
         Spawner = transform.parent.gameObject.GetComponent<EnemySpawner>();
         _turnManager = FindAnyObjectByType<TurnManager>();
         Controller = GetComponent<IEnemyController>();
+        _targeter = GetComponent<IEnemyTargeter>();
 
         _onDamaged += OnDamage;
     }
@@ -51,6 +54,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
 
     private void PlayTurn()
     {
+        CurrentTarget = _targeter.GetTarget();
         Controller.HandleMovement();
         _attack.HandleAttack();
     }
@@ -87,5 +91,11 @@ public class Enemy : MonoBehaviour, ILivingEntity
     public ref UnityAction<float> OnDamaged()
     {
         return ref _onDamaged;
+    }
+
+    public static Collider2D[] GetNearbyEnemies(Vector2 position, float range)
+    {
+        Assert.IsTrue(LayerMask.NameToLayer("Enemy") != -1);
+        return Physics2D.OverlapCircleAll(position, range, LayerMask.GetMask("Enemy"));
     }
 }

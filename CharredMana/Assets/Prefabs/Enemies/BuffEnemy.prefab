@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.4009434, b: 0.4009434, a: 1}
+  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Color: {r: 0.745283, g: 0.4829743, b: 0.38431373, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,13 +97,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6380366394566473430}
   - component: {fileID: 7316090276454008211}
-  - component: {fileID: 7953354953284377577}
   - component: {fileID: 1535381825471655550}
   - component: {fileID: 716090180635617715}
-  - component: {fileID: 5594692311953215228}
   - component: {fileID: 7959942840039656439}
+  - component: {fileID: 1648381795316365312}
+  - component: {fileID: 9204285783086053642}
+  - component: {fileID: 231588146275183748}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: BuffEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,20 +149,6 @@ MonoBehaviour:
   _experienceDropped: 10
   _currentHealthInspector: 0
   _maxHealthInspector: 0
---- !u!114 &7953354953284377577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5190042482056591089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f4179f016de04e49b85f155989d51d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackRange: 1.0488088
-  _swipeAnimationPrefab: {fileID: 5157984295010700313, guid: 094f308736b91d04494362fdcd70485b, type: 3}
 --- !u!50 &1535381825471655550
 Rigidbody2D:
   serializedVersion: 5
@@ -235,19 +222,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5594692311953215228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5190042482056591089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 589d5ac2d9722414c954fe7a66fd2adc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 6466381022320544557}
 --- !u!114 &7959942840039656439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,3 +238,46 @@ MonoBehaviour:
   _speed: 1
   _boidsWeight: 0.8
   _cohesionThreshold: 2
+--- !u!114 &1648381795316365312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190042482056591089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b95264f1402da84da330ae7c091429d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 2
+  _buffAnimationPrefab: {fileID: 5157984295010700313, guid: 44a4062f01bb3d44db0ed6363fd57d2d, type: 3}
+  _effects:
+  - Type: 0
+    Duration: 5
+    Amplifier: 1
+--- !u!114 &9204285783086053642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190042482056591089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d03eeda3922c484dbe5fa5805ee9263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 6466381022320544557}
+--- !u!114 &231588146275183748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190042482056591089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d918293e7c7cc41b70a942fdf4dafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

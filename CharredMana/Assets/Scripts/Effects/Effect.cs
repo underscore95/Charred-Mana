@@ -36,7 +36,10 @@ public abstract class Effect : MonoBehaviour
         if (!_isInPool) return;
         _isInPool = false;
 
-        _effectManager.ReleaseFromPoolIfActive(this);
+        if (_effectManager != null)
+        {
+            _effectManager.ReleaseFromPoolIfActive(this); // null when exiting game
+        }
 
         _turnManager.OnTurnChange -= HandleTurnChange;
         OnPoolLeave();

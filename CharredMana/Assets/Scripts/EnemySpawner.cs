@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private int _spawnCooldown = 5;
     [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject _enemyPrefab2;
 
     private Player _player;
     private ObjectPool _pool;
@@ -26,6 +27,11 @@ public class EnemySpawner : MonoBehaviour
         // Start with one enemy
         _turnsSinceSpawn = _spawnCooldown;
         TrySpawnEnemy();
+
+        var pool = new ObjectPool(_enemyPrefab2, 1, transform);
+        GameObject obj=pool.ActivateObject();
+        obj.transform.position += Vector3.right * 4;
+        obj.GetComponent<Enemy>().Pool = _pool;
     }
 
     private void TrySpawnEnemy()
