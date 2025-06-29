@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Effect : MonoBehaviour
 {
-    public float Amplification { get; set; }
+    public int Amplifier { get; set; }
     public int Duration { get; set; }
 
     private TurnManager _turnManager;

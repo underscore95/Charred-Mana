@@ -1,5 +1,6 @@
 
 using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 public enum MathOp
@@ -10,6 +11,31 @@ public enum MathOp
 
 public class MathOps
 {
+    public static void Test()
+    {
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Add, 1, 1), 2));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Add, 1, 2), 3));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Add, 1, -2), -1));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Add, -1, -2), -3));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Add, -1, 2), 1));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, 1, 1), 1));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, 1, 1.1f), 1.1f));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, 1.1f, 1.1f), 1.2f));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, 1.1f, -1.1f), 1));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, 1.1f, -1.5f), -1.4f));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, -1.1f, -1.1f), -1.2f));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, -1.1f, 1.0f), -1.1f));
+        Assert.IsTrue(ApproxEqual(Merge(MathOp.Multiply, -1.1f, -1.0f), -1.1f));
+        Assert.IsTrue(ApproxEqual(Eval(MathOp.Multiply, 10, -1.1f), 9));
+    }
+
+    private static bool ApproxEqual(float a, float b)
+    {
+        if (Mathf.Approximately(a, b)) return true;
+        Debug.LogError($"Actual: {a} Expected: {b}");
+        return false;
+    }
+
     public static string ToString(MathOp op, float val, int numDecimals = 1)
     {
         string format = "F" + numDecimals;
@@ -18,7 +44,8 @@ public class MathOps
             case MathOp.Add:
                 return (val < 0 ? "-" : "+") + Math.Abs(val).ToString(format);
             case MathOp.Multiply:
-                return "+" + ((val-1) * 100).ToString(format) + "%";
+                string percent = ((Math.Abs(val) - 1) * 100).ToString(format) + "%";
+                return (val > 0 ? "+" : "-") + percent;
             default:
                 Assert.IsTrue(false);
                 return "";
@@ -27,12 +54,15 @@ public class MathOps
 
     public static float Eval(MathOp operation, float one, float two)
     {
-        return operation switch
+        switch (operation)
         {
-            MathOp.Add => one + two,
-            MathOp.Multiply => one * two,
-            _ => throw new System.NotImplementedException($"Eval not implemented for {operation}"),
-        };
+            case MathOp.Add:
+                return one + two;
+            case MathOp.Multiply:
+                Assert.IsTrue(two <= -1 || two >= 1);
+                return two >= 1 ? one * two : one - one * -(two + 1);
+            default: throw new System.NotImplementedException($"Eval not implemented for {operation}");
+        }
     }
 
     // Merge two of the same operation and return the value used so that the operation can be done once.
@@ -45,13 +75,16 @@ public class MathOps
     // Operation: *, one: 3, two: 3, result: 5
     public static float Merge(MathOp operation, float one, float two)
     {
-        if (operation == MathOp.Multiply) Assert.IsTrue(one >= 1 && two >= 1, "Merging * ops with value <1 untested.");
-        return operation switch
+        switch (operation)
         {
-            MathOp.Add => one + two,
-            MathOp.Multiply => (one - 1) + (two - 1) + 1,
-            _ => throw new System.NotImplementedException($"Eval not implemented for {operation}"),
-        };
+            case MathOp.Add: return one + two;
+            case MathOp.Multiply:
+                Assert.IsTrue(one <= -1 || one >= 1);
+                Assert.IsTrue(two <= -1 || two >= 1);
+                float p = (one >= 0 ? one - 1 : one + 1) + (two > 0 ? two - 1 : two + 1);
+                return p >= 0 ? p + 1 : p - 1;
+            default: throw new System.NotImplementedException($"Eval not implemented for {operation}");
+        }
     }
 
     // Lower numbers should be applied first

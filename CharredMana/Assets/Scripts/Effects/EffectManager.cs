@@ -52,6 +52,8 @@ public class EffectManager : MonoBehaviour
 
     private void Awake()
     {
+        MathOps.Test();
+
         var vals = Enum.GetValues(typeof(EffectType));
         foreach (EffectType effectType in vals)
         {
@@ -99,7 +101,7 @@ public class EffectManager : MonoBehaviour
 
     // Apply effect to entity, this does nothing if the entity already has the same effect with higher amplifier, this overwrites effects with lower amplifiers. Equal amplifiers will use the maximum duration.
     // duration in turns
-    public EffectResult ApplyEffect(ILivingEntity target, EffectType effectType, int duration, float amplifier = 1.0f)
+    public EffectResult ApplyEffect(ILivingEntity target, EffectType effectType, int duration, int amplifier = 1)
     {
         Assert.IsNotNull(target);
         Assert.IsTrue(duration > 0);
@@ -113,7 +115,7 @@ public class EffectManager : MonoBehaviour
             effectAlreadyExisted = true;
 
             // Set amplification and duration
-            if (Mathf.Approximately(effect.Amplification, amplifier))
+            if (effect.Amplifier == amplifier)
             {
                 // we're equal, pick max duration
                 if (duration > effect.Duration)
@@ -123,7 +125,7 @@ public class EffectManager : MonoBehaviour
                 }
                 return EffectResult.NotAppliedTooShort;
             }
-            else if (effect.Amplification > amplifier) return EffectResult.NotAppliedTooWeak; // we're weaker
+            else if (effect.Amplifier > amplifier) return EffectResult.NotAppliedTooWeak; // we're weaker
             // else we're stronger, fall through
         }
         else
@@ -132,6 +134,7 @@ public class EffectManager : MonoBehaviour
             GameObject poolObj = _pools[(int)effectType].ActivateObject(obj =>
             {
                 obj.transform.SetParent(target.GetGameObject().transform, false);
+                obj.transform.position += Vector3.back * 0.1f;
             });
 
             effect = poolObj.GetComponent<Effect>();
@@ -139,7 +142,7 @@ public class EffectManager : MonoBehaviour
         }
 
         // Set amplification and duration
-        effect.Amplification = amplifier;
+        effect.Amplifier = amplifier;
         effect.Duration = duration;
         return effectAlreadyExisted ? EffectResult.OverwroteWeakerEffect : EffectResult.Applied;
     }

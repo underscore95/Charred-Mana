@@ -82,4 +82,10 @@ public class StatModifier
         }
         list.Add(modifier);
     }
+
+    // Invert the modifier  so that applying this and the inverted results in no change
+    public void Invert()
+    {
+        Value *= -1;
+    }
 }

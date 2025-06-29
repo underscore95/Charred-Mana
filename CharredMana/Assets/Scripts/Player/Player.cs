@@ -27,6 +27,11 @@ public class Player : MonoBehaviour, ILivingEntity
         _debugMenu=FindAnyObjectByType<DebugMenu>();
     }
 
+    private void Start()
+    {
+        FindAnyObjectByType<EffectManager>().ApplyEffect(this, EffectType.DamageUp, 3, 2);
+    }
+
     private void Update()
     {
         _playerStatsText.text = string.Format("DMG: {0:0.0}\nDEF: {1:0.0}\nMP RGN: {2:0.0}", Stats.Damage, Stats.Defense, Stats.ManaRegen);

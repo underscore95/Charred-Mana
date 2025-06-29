@@ -23,7 +23,7 @@ public class SerializableStatModifiersContainer
 
     public List<Entry> Entries => entries;
 
-    public void AddModifierNoMerging(StatType type,StatModifier modifier)
+    public void AddModifierNoMerging(StatType type, StatModifier modifier)
     {
         Entries.Add(new Entry { Type = type, Modifier = modifier });
     }
@@ -38,7 +38,7 @@ public class SerializableStatModifiersContainer
             if (!seen.Add(entry.Type))
                 Debug.LogWarning($"StatType {entry.Type} appears multiple times in SerializableStatModifiersContainer");
 
-            container.Add(entry.Type, entry.Modifier);
+            container.Add(entry.Type, new(entry.Modifier));
         }
 
         return container;

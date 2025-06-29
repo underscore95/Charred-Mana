@@ -16,6 +16,8 @@ public class DamageOverTimeEffect : Effect
 
     public override void OnTurnChange()
     {
-        ILivingEntity.Damage(_entity, Amplification);
+        if (_entity == null) return;
+
+        ILivingEntity.Damage(_entity, Amplifier);
     }
 }
