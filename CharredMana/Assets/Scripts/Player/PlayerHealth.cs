@@ -37,9 +37,9 @@ public class PlayerHealth : PlayerValue
 
     private void Update()
     {
-        _value = Mathf.CeilToInt(_stats.CurrentHealth);
+        _value = Mathf.CeilToInt(_stats.CurrentHealth - 0.001f);
         if (_value < 0 && _debug.Options.CanDie) _value = 0; // don't show negative health to the player
-        _maxValue = Mathf.CeilToInt(_stats.Get(StatType.MaxHealth));
+        _maxValue = Mathf.CeilToInt(_stats.Get(StatType.MaxHealth) - 0.001f);
         UpdateText();
     }
 }

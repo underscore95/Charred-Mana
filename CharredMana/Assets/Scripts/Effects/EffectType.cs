@@ -1,5 +1,5 @@
 
 public enum EffectType
 {
-    Burn, DamageUp
+    Burn, DamageUp, HealthUp
 }

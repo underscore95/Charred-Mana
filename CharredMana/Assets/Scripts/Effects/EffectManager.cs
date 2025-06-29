@@ -74,6 +74,8 @@ public class EffectManager : MonoBehaviour
             // setup list
             _effectsOnObjects.Add(new(_capacityPerPool));
         }
+
+        Assert.IsTrue(_pools.Count == Enum.GetValues(typeof(EffectType)).Length, "Number of registered effects is different from number of values in EffectType enum");
     }
 
     private void OnValidate()
@@ -134,7 +136,6 @@ public class EffectManager : MonoBehaviour
             GameObject poolObj = _pools[(int)effectType].ActivateObject(obj =>
             {
                 obj.transform.SetParent(target.GetGameObject().transform, false);
-                obj.transform.position += Vector3.back * 0.1f;
             });
 
             effect = poolObj.GetComponent<Effect>();

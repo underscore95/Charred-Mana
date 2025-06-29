@@ -29,7 +29,7 @@ public class Player : MonoBehaviour, ILivingEntity
 
     private void Start()
     {
-        FindAnyObjectByType<EffectManager>().ApplyEffect(this, EffectType.DamageUp, 3, 2);
+
     }
 
     private void Update()
