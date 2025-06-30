@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private int _disableUntilTurn = 0;
+    [SerializeField] private IntRange _activeDuringTurns = new(0, 999999);
     [SerializeField] private int _spawnCooldown = 5;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private int _maxEnemies = 10;
@@ -22,7 +23,8 @@ public class EnemySpawner : MonoBehaviour
         _turnManager = FindAnyObjectByType<TurnManager>();
         _turnManager.OnTurnChange += TrySpawnEnemy;
 
-        Assert.IsTrue(_disableUntilTurn >= 0);
+        Assert.IsTrue(_activeDuringTurns.Begin >= 0);
+        Assert.IsTrue(_activeDuringTurns.End >= _activeDuringTurns.Begin);
         Assert.IsTrue(Mathf.Approximately(transform.position.x, 0));
         Assert.IsTrue(Mathf.Approximately(transform.position.y, 0));
         Assert.IsTrue(Mathf.Approximately(transform.position.z, 0));
@@ -30,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        if (_disableUntilTurn == 0)
+        if (_activeDuringTurns.Begin == 0)
         {
             // Start with one enemy
             _turnsSinceSpawn = _spawnCooldown;
@@ -38,10 +40,24 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        _turnManager.OnTurnChange -= TrySpawnEnemy;
+    }
+
     private void TrySpawnEnemy()
     {
         _turnsSinceSpawn++;
-        if (_turnManager.CurrentTurn < _disableUntilTurn) return;
+        if (_turnManager.CurrentTurn < _activeDuringTurns.Begin) return;
+        if (_turnManager.CurrentTurn > _activeDuringTurns.End)
+        {
+            if (GetAliveEnemies().Count() == 0)
+            {
+                // we're disabled and all our enemies are dead, we can safely remove game object
+                Destroy(gameObject);
+            }
+            return;
+        }
         if (_turnsSinceSpawn < _spawnCooldown) return;
         if (_pool.IsFull()) return;
 

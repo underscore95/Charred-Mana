@@ -1097,7 +1097,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableUntilTurn: 0
+  _activeDuringTurns:
+    Begin: 0
+    End: 10
   _spawnCooldown: 5
   _enemyPrefab: {fileID: 5190042482056591089, guid: 8fa2efd997cb1104d8e3b173c8dd45d3, type: 3}
   _maxEnemies: 10
@@ -2924,7 +2926,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableUntilTurn: 50
+  _activeDuringTurns:
+    Begin: 50
+    End: 999999
   _spawnCooldown: 12
   _enemyPrefab: {fileID: 5190042482056591089, guid: 2453c3c9663bba442a43fc093b7684a1, type: 3}
   _maxEnemies: 10
