@@ -5,15 +5,16 @@ using UnityEngine.Assertions;
 
 public class MusicPlayer : MonoBehaviour
 {
-    private static float _volume = 0.75f;
     [SerializeField] private AudioClip[] _music;
     private int _index = 0;
     private AudioSource _source;
     private bool _isFirstTrack = true;
     private readonly System.Random _random = Utils.CreateRandom();
+    private GameSettings _settings;
 
     private void Awake()
     {
+        _settings = FindAnyObjectByType<SettingsManager>().Settings;
         Assert.IsTrue(_music != null);
         Assert.IsTrue(_music.Length > 0);
         _source = GetComponent<AudioSource>();
@@ -22,7 +23,12 @@ public class MusicPlayer : MonoBehaviour
 
     private void OnEnable()
     {
-        _source.volume = _volume;
+        _source.volume = 0;
+    }
+
+    private void Update()
+    {
+        _source.volume = _settings.MusicVolume;
     }
 
     private IEnumerator PlayMusic()
@@ -39,19 +45,6 @@ public class MusicPlayer : MonoBehaviour
             _source.clip = _music[_index];
             _source.Play();
             yield return new WaitForSecondsRealtime(_music[_index].length);
-        }
-    }
-
-    public static void SetVolume(float volume)
-    {
-        Assert.IsTrue(volume >= 0);
-        Assert.IsTrue(volume <= 1);
-        _volume = volume;
-
-        MusicPlayer[] musicPlayers = FindObjectsByType<MusicPlayer>(FindObjectsSortMode.None);
-        foreach (MusicPlayer player in musicPlayers)
-        {
-            player._source.volume = volume;
         }
     }
 }

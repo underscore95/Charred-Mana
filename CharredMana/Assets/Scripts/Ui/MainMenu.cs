@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject _main;
     [SerializeField] private GameObject _credits;
     [SerializeField] private GameObject _tutorial;
+    [SerializeField] private GameObject _settings;
     [SerializeField] private string _gameScene;
 
     public void ShowMainWidget()
@@ -13,6 +14,7 @@ public class MainMenu : MonoBehaviour
         _main.SetActive(true);
         _credits.SetActive(false);
         _tutorial.SetActive(false);
+        _settings.SetActive(false);
     }
 
     public void ShowCreditsWidget()
@@ -24,6 +26,12 @@ public class MainMenu : MonoBehaviour
     public void ShowTutorialWidget()
     {
         _tutorial.SetActive(true);
+        _main.SetActive(false);
+    }
+
+    public void ShowSettingsWidget()
+    {
+        _settings.SetActive(true);
         _main.SetActive(false);
     }
 

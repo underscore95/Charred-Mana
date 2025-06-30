@@ -3544,6 +3544,50 @@ MonoBehaviour:
   _activeSpellsText: {fileID: 244187715}
   _activeSpellsTextText: 'Active: {0} / {1}'
   _closeUiInput: {fileID: 7727032971491509709, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+--- !u!1 &1669138265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1669138267}
+  - component: {fileID: 1669138266}
+  m_Layer: 0
+  m_Name: SettingsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1669138266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669138265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce62c3a56e454a42a058306f8ee6a9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1669138267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669138265}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 657.3373, y: 386.61932, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1734105812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4637,7 +4681,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2010861986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666565f6d6fcda049895597e3d63c275, type: 3}
+  m_Script: {fileID: 11500000, guid: bce58f0bd85cc984e951283e39549e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _music:
@@ -5701,3 +5745,4 @@ SceneRoots:
   - {fileID: 2010861989}
   - {fileID: 5575618765156251858}
   - {fileID: 214063695}
+  - {fileID: 1669138267}
