@@ -1627,7 +1627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9205094844818470103, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_Name
-      value: SelectSpell
+      value: SelectSpellUnused
       objectReference: {fileID: 0}
     - target: {fileID: 9205094844818470103, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_IsActive
@@ -2864,7 +2864,6 @@ MonoBehaviour:
     Select a reward.'
   _registeredRewardsParent: {fileID: 176574633}
   _availableRewardUisParent: {fileID: 1355847319}
-  _selectSpellUi: {fileID: 1642557436}
   _defaultReward: {fileID: 709871213}
 --- !u!4 &891771361
 Transform:

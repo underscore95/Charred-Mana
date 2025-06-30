@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class DisplayOverlay : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class DisplayOverlay : MonoBehaviour
 
     public void ApplyOverlay(Color color, float duration, float transitionIn, float transitionOut)
     {
-        float fadeInProgress = _active ? Mathf.Clamp01(_elapsed / _transitionIn) : 1f;
+        float fadeProgress = _active && _transitionIn != 0 ? 1 - Mathf.Clamp01(_elapsed / _transitionIn) : 1f;
 
         if (!_active)
         {
@@ -23,7 +24,7 @@ public class DisplayOverlay : MonoBehaviour
         }
         _targetColor = color;
 
-        _transitionIn = Mathf.Lerp(0, transitionIn, fadeInProgress);
+        _transitionIn =  Mathf.Lerp(0, transitionIn, fadeProgress);
         _duration = duration;
         _transitionOut = transitionOut;
 
@@ -64,8 +65,9 @@ public class DisplayOverlay : MonoBehaviour
         _sprite.color = Color.Lerp(_originalColor, _targetColor, Mathf.Clamp01(blend));
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
+        // Disable overlay if disabled because it is applied to pooled objects
         if (_active)
         {
             _active = false;
