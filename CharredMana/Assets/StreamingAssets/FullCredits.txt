@@ -1,5 +1,6 @@
 Developers:
 Jack Briggs - Programming, Game Design
+Nirahz - Game Design
 
 Assets:
 
