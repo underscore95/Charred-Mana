@@ -147,8 +147,7 @@ MonoBehaviour:
     HealthRegen: 2
     MaxMana: 100
   _experienceDropped: 10
-  _currentHealthInspector: 0
-  _maxHealthInspector: 0
+  _maxDistanceToPlayerBeforeTeleporting: 15
 --- !u!50 &1535381825471655550
 Rigidbody2D:
   serializedVersion: 5

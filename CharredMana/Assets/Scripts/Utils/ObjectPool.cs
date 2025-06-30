@@ -17,6 +17,8 @@ public class ObjectPool
     {
         _values = new GameObject[capacity];
 
+     Assert.IsTrue(prefab.activeSelf);
+            prefab.SetActive(false);
         for (int i = 0; i < capacity; i++)
         {
             var obj = parent == null ? UnityEngine.Object.Instantiate(prefab) : UnityEngine.Object.Instantiate(prefab, parent);
@@ -24,6 +26,7 @@ public class ObjectPool
             _values[i] = obj;
             _freeIndices.Push(i);
         }
+        prefab.SetActive(true);
     }
 
     public bool IsFull() => _freeIndices.Count == 0;

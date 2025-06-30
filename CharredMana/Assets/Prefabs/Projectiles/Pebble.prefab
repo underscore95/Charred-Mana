@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pebble
       objectReference: {fileID: 0}
+    - target: {fileID: 4261409250102769236, guid: aa210b41b9536eb46b69df43808b2de3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4808493538190937495, guid: aa210b41b9536eb46b69df43808b2de3, type: 3}
       propertyPath: _statModifiers.entries.Array.data[0].Modifier.Value
       value: -2

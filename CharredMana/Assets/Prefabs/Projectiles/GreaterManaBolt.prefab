@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreaterManaBolt
       objectReference: {fileID: 0}
+    - target: {fileID: 3646674538893050255, guid: 3cb0161cc2104f54dae8750b40c88624, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5405222711527946828, guid: 3cb0161cc2104f54dae8750b40c88624, type: 3}
       propertyPath: _speed
       value: 0.5

@@ -8,8 +8,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private float _experienceDropped = 10;
-    [SerializeField] private float _currentHealthInspector;
-    [SerializeField] private float _maxHealthInspector;
+    [SerializeField] private float _maxDistanceToPlayerBeforeTeleporting = 15.0f;
     private Stats _stats;
 
     private Player _player;
@@ -41,6 +40,8 @@ public class Enemy : MonoBehaviour, ILivingEntity
 
     private void OnEnable()
     {
+        transform.position = PickSpawnLocation();
+
         _turnManager.OnTurnChange += PlayTurn;
         _stats = new(_baseStats);
         _stats.ApplyModifiers(_turnManager.CurrentEnemyStatBoost);
@@ -54,18 +55,15 @@ public class Enemy : MonoBehaviour, ILivingEntity
 
     private void PlayTurn()
     {
+        float distToPlayerSquared = Vector3.SqrMagnitude((Vector2)transform.position - (Vector2)_player.transform.position);
+        if (distToPlayerSquared > _maxDistanceToPlayerBeforeTeleporting * _maxDistanceToPlayerBeforeTeleporting)
+        {
+            transform.position = PickSpawnLocation();
+        }
+
         CurrentTarget = _targeter.GetTarget();
         Controller.HandleMovement();
         _attack.HandleAttack();
-    }
-
-    private void Update()
-    {
-        if (_stats != null)
-        {
-            _currentHealthInspector = _stats.CurrentHealth;
-            _maxHealthInspector = _stats.MaxHealth;
-        }
     }
 
     private void OnDamage(float damage)
@@ -97,5 +95,21 @@ public class Enemy : MonoBehaviour, ILivingEntity
     {
         Assert.IsTrue(LayerMask.NameToLayer("Enemy") != -1);
         return Physics2D.OverlapCircleAll(position, range, LayerMask.GetMask("Enemy"));
+    }
+
+    private Vector3 PickSpawnLocation()
+    {
+        Vector3 location = _player.transform.position;
+        Vector2 cameraSize = _player.Camera.orthographicSize * new Vector2(Screen.width / Screen.height, 1);
+        Vector3 offset = new Vector3(
+            Random.Range(-cameraSize.x, cameraSize.x),
+            Random.Range(-cameraSize.y, cameraSize.y),
+            0) * 0.25f;
+        if (offset.x < 0) offset.x -= cameraSize.x * 1.1f;
+        else offset.x += cameraSize.x * 1.1f;
+        if (offset.y < 0) offset.y -= cameraSize.y * 1.1f;
+        else offset.y += cameraSize.y * 1.1f;
+
+        return location + offset;
     }
 }
