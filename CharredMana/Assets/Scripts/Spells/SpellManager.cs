@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class SpellManager : MonoBehaviour
 {
+    public static readonly int MAX_UNLOCKED_SPELLS = 4;
+
     // Parent object to all the spells
     [SerializeField] private Transform _spellsContainer;
     [SerializeField] private Transform _spellUisContainer;

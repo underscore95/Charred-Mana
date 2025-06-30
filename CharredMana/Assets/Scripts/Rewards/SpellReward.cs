@@ -22,11 +22,12 @@ public class SpellReward : Reward
     public override void Give()
     {
         _spellManager.UnlockSpell(_spellManager.GetSpellIndex(_spell));
+        _spellManager.SelectSpell(_spellManager.GetUnlockedSpellsIndices().Count - 1, _spell);
     }
 
     public override bool CanGive()
     {
         bool unlocked = _spellManager.IsSpellUnlocked(_spell);
-        return !unlocked;
+        return !unlocked && _spellManager.GetUnlockedSpellsIndices().Count < SpellManager.MAX_UNLOCKED_SPELLS;
     }
 }

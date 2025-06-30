@@ -13,7 +13,6 @@ public class LevelRewardManager : MonoBehaviour
     [SerializeField] private string _levelUpMessage = "You levelled up to Level {0}!\nSelect a reward.";
     [SerializeField] private Transform _registeredRewardsParent;
     [SerializeField] private Transform _availableRewardUisParent;
-    [SerializeField] private SelectSpellUi _selectSpellUi;
     [SerializeField] private Reward _defaultReward; // Reward to be used if we fail to find one that we can give
 
     private List<AvailableRewardUi> _availableRewardUis = new();
@@ -148,7 +147,6 @@ public class LevelRewardManager : MonoBehaviour
 
         if (_levelUpsRemaining <= 0 && _unlockedSpell)
         {
-            _selectSpellUi.OpenUi();
             _unlockedSpell = false;
         }
     }
