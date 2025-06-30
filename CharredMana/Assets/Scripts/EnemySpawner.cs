@@ -4,9 +4,10 @@ using UnityEngine.Assertions;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private int _disableUntilTurn = 0;
     [SerializeField] private int _spawnCooldown = 5;
     [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private GameObject _enemyPrefab2;
+    [SerializeField] private int _maxEnemies = 10;
 
     private Player _player;
     private ObjectPool _pool;
@@ -16,27 +17,31 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
-        _pool = new(_enemyPrefab, 10, transform);
+        _pool = new(_enemyPrefab, _maxEnemies, transform);
 
         _turnManager = FindAnyObjectByType<TurnManager>();
         _turnManager.OnTurnChange += TrySpawnEnemy;
+
+        Assert.IsTrue(_disableUntilTurn >= 0);
+        Assert.IsTrue(Mathf.Approximately(transform.position.x, 0));
+        Assert.IsTrue(Mathf.Approximately(transform.position.y, 0));
+        Assert.IsTrue(Mathf.Approximately(transform.position.z, 0));
     }
 
     private void Start()
     {
-        // Start with one enemy
-        _turnsSinceSpawn = _spawnCooldown;
-        TrySpawnEnemy();
-
-        var pool = new ObjectPool(_enemyPrefab2, 1, transform);
-        GameObject obj=pool.ActivateObject();
-        obj.transform.position += Vector3.right * 4;
-        obj.GetComponent<Enemy>().Pool = _pool;
+        if (_disableUntilTurn == 0)
+        {
+            // Start with one enemy
+            _turnsSinceSpawn = _spawnCooldown;
+            TrySpawnEnemy();
+        }
     }
 
     private void TrySpawnEnemy()
     {
         _turnsSinceSpawn++;
+        if (_turnManager.CurrentTurn < _disableUntilTurn) return;
         if (_turnsSinceSpawn < _spawnCooldown) return;
         if (_pool.IsFull()) return;
 
