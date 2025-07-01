@@ -28,19 +28,19 @@ public class Chunk : MonoBehaviour
         ChunkCoords = new(x, y);
         transform.position = new(x * CHUNK_SIZE, y * CHUNK_SIZE, transform.position.z);
     }
-    public float Noise(int localX, int localY)
+    public float PerlinNoise(int localX, int localY)
     {
         Vector2Int world = LocalCoordsToWorldCoords(new(localX, localY));
-        float noise= Mathf.PerlinNoise(world.x / PERLIN_NOISE_FREQUENCY, world.y / PERLIN_NOISE_FREQUENCY);
+        float noise = Mathf.PerlinNoise(world.x / PERLIN_NOISE_FREQUENCY, world.y / PERLIN_NOISE_FREQUENCY);
         noise = Mathf.Clamp01(noise);
         Assert.IsTrue(noise >= 0);
-        Assert.IsTrue(noise <=1);
+        Assert.IsTrue(noise <= 1);
         return noise;
     }
-    public float Random(int localX, int localY)
+    public float WhiteNoise(int localX, int localY)
     {
         Vector2Int world = LocalCoordsToWorldCoords(new(localX, localY));
-        float noise= Utils.DeterministicRandom(world.x, world.y); 
+        float noise = Utils.WhiteNoise(world.x, world.y);
         Assert.IsTrue(noise >= 0);
         Assert.IsTrue(noise <= 1);
         return noise;

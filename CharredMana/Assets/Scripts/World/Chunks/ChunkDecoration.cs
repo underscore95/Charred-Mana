@@ -10,13 +10,13 @@ public class ChunkDecoration : ChunkTilemap
         {
             for (int y = 0; y < Chunk.CHUNK_SIZE; y++)
             {
-                if (_chunk.Noise(x, y) < 0.15f) continue;
-                if (_chunk.Random(x, y) < 0.85f) continue;
+                if (_chunk.PerlinNoise(x, y) < 0.15f) continue;
+                if (_chunk.WhiteNoise(x, y) < 0.925f) continue;
 
                 Biome biome = _chunk.GetBiome(new(x, y));
                 if (biome.Decoration.Count < 1) return;
 
-                int decoIndex = (int)(biome.Decoration.Count * _chunk.Noise(x,y));
+                int decoIndex = (int)(biome.Decoration.Count * _chunk.PerlinNoise(x,y));
                 _tilemap.SetTile(new(x, y, 0), biome.Decoration[decoIndex]);
             }
         }
