@@ -6,11 +6,13 @@ public class ProjectileSpell : PlayerSpell
     [SerializeField] private GameObject _targetParticlePrefab;
     private ProjectileManager _projManager;
     private Player _player;
+    private ParticleManager _particleManager;
 
     protected new void Awake()
     {
         base.Awake();
 
+        _particleManager = FindAnyObjectByType<ParticleManager>();
         _projManager = gameObject.AddComponent<ProjectileManager>();
         _projManager.Init(_prefab);
         foreach (var obj in _projManager.InternalPool().AliveAndDead)
@@ -43,6 +45,6 @@ public class ProjectileSpell : PlayerSpell
     {
         Vector3 mouseScreenPos = _player.Camera.ScreenToWorldPoint(info.MousePos);
         mouseScreenPos.z = -1;
-        Instantiate(_targetParticlePrefab).transform.position = mouseScreenPos;
+        _particleManager.SpawnParticle(ParticleType.Target, mouseScreenPos);
     }
 }

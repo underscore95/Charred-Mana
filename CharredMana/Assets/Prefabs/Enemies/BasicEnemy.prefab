@@ -162,7 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackRange: 1.0488088
-  _swipeAnimationPrefab: {fileID: 5157984295010700313, guid: 094f308736b91d04494362fdcd70485b, type: 3}
 --- !u!50 &1535381825471655550
 Rigidbody2D:
   serializedVersion: 5

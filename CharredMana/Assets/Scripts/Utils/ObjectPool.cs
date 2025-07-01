@@ -22,7 +22,7 @@ public class ObjectPool
         for (int i = 0; i < capacity; i++)
         {
             var obj = parent == null ? UnityEngine.Object.Instantiate(prefab) : UnityEngine.Object.Instantiate(prefab, parent);
-            obj.SetActive(false);
+            obj.AddComponent<ObjectPoolRef>().Pool = this;
             _values[i] = obj;
             _freeIndices.Push(i);
         }

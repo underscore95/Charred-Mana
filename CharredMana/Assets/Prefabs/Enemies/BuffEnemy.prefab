@@ -251,7 +251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 2
-  _buffAnimationPrefab: {fileID: 5157984295010700313, guid: 44a4062f01bb3d44db0ed6363fd57d2d, type: 3}
   _effects:
   - Type: 1
     Duration: 5

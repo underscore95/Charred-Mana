@@ -3,12 +3,13 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour, IEnemyAttack
 {
     [SerializeField] private float _attackRange = Mathf.Sqrt(1.1f);
-    [SerializeField] private GameObject _swipeAnimationPrefab;
     private Player _player;
+    private ParticleManager _particleManager;
 
     private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
+        _particleManager = FindAnyObjectByType<ParticleManager>();
     }
 
     public void HandleAttack()
@@ -19,10 +20,12 @@ public class EnemyAttack : MonoBehaviour, IEnemyAttack
             toPlayer.z = 0;
             toPlayer = toPlayer.normalized;
 
-            Transform swipe = Instantiate(_swipeAnimationPrefab).transform;
-            swipe.position = transform.position + toPlayer * 0.5f;
             float dotProduct = Vector3.Dot(toPlayer, Vector3.left); // both of these are normalised, so we have cos(a) here
-            swipe.rotation = Quaternion.Euler(0, 0, Mathf.Acos(dotProduct) * Mathf.Rad2Deg);
+            _particleManager.SpawnParticle(
+                ParticleType.Swipe,
+                transform.position + toPlayer * 0.5f + Vector3.back,
+                Quaternion.Euler(0, 0, Mathf.Acos(dotProduct) * Mathf.Rad2Deg)
+                );
 
             ILivingEntity.Damage(_player, Random.Range(3.0f, 9.0f));
         }

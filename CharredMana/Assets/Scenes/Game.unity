@@ -1015,6 +1015,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244187713}
   m_CullTransparentMesh: 1
+--- !u!1 &262610369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 262610371}
+  - component: {fileID: 262610370}
+  m_Layer: 0
+  m_Name: ParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &262610370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262610369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bc4af97b20e294489180d7d8117c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxParticlesPerType: 15
+  _registeredParticles:
+    _values:
+    - First: 0
+      Second: {fileID: 5157984295010700313, guid: 094f308736b91d04494362fdcd70485b, type: 3}
+    - First: 1
+      Second: {fileID: 2440388646761163849, guid: 30d17d6c9ca6a1f43ae3755088328877, type: 3}
+    - First: 2
+      Second: {fileID: 5157984295010700313, guid: 44a4062f01bb3d44db0ed6363fd57d2d, type: 3}
+--- !u!4 &262610371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262610369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &264552643
 GameObject:
   m_ObjectHideFlags: 0
@@ -5835,3 +5888,4 @@ SceneRoots:
   - {fileID: 214063695}
   - {fileID: 1669138267}
   - {fileID: 622747382}
+  - {fileID: 262610371}

@@ -5,13 +5,14 @@ using UnityEngine.Assertions;
 public class BuffEnemiesAttack : MonoBehaviour, IEnemyAttack
 {
     [SerializeField] private float _range = 1.5f;
-    [SerializeField] private GameObject _buffAnimationPrefab;
     [SerializeField] private List<SerializableEffect> _effects = new();
     private EffectManager _effectManager;
+    private ParticleManager _particleManager;
 
     private void Awake()
     {
         _effectManager = FindAnyObjectByType<EffectManager>();
+        _particleManager = FindAnyObjectByType<ParticleManager>();
         Assert.IsTrue(_effects.Count > 0);
     }
 
@@ -30,8 +31,10 @@ public class BuffEnemiesAttack : MonoBehaviour, IEnemyAttack
         }
         if (!appliedToEnemy) return;
 
-        Transform animationTransform = Instantiate(_buffAnimationPrefab).transform;
-        animationTransform.position = transform.position + Vector3.forward * 0.1f/*render slightly behind*/;
-        animationTransform.localScale = _range * 2 * Vector3.one;
+        GameObject particle = _particleManager.SpawnParticle(
+                ParticleType.BuffRadius,
+                transform.position + Vector3.forward * 0.1f /*render slightly behind*/
+                );
+        if (particle != null) particle.transform.localScale = _range * 2 * Vector3.one;
     }
 }

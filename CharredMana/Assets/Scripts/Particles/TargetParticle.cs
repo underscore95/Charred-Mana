@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class TargetParticle : MonoBehaviour
 {
@@ -15,10 +16,14 @@ public class TargetParticle : MonoBehaviour
     [SerializeField] private float _circleMargin = 0.2f;
     [SerializeField] private Color _color = Color.white;
     private float _secondsElapsed = 0.0f;
-    private List<Circle> _circles = new();
+    private  readonly List<Circle> _circles = new();
+    private ObjectPoolRef _pool;
 
     private void Awake()
     {
+        _pool= GetComponent<ObjectPoolRef>();
+        Assert.IsNotNull(_pool);
+
         foreach (Transform child in transform)
         {
             Circle circle = new()
@@ -46,7 +51,7 @@ public class TargetParticle : MonoBehaviour
         _secondsElapsed += Time.deltaTime;
         if (_secondsElapsed >= _duration)
         {
-            Destroy(gameObject);
+            _pool.Pool.ReleaseObject(gameObject);
             return;
         }
 

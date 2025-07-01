@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 // Dictionary where keys are enums, all values in the enum must be consecutive, stored in a list rather than using hashing
-public class EnumDictionary<K, V> where K : Enum
+public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : Enum
 {
     private readonly List<V> _values;
     private readonly List<bool> _hasValues;
@@ -127,5 +127,20 @@ public class EnumDictionary<K, V> where K : Enum
                 if (_hasValues[i])
                     yield return _values[i];
         }
+    }
+
+    public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
+    {
+        foreach (K key in Enum.GetValues(typeof(K)))
+        {
+            int idx = Index(key);
+            if (_hasValues[idx])
+                yield return new KeyValuePair<K, V>(key, _values[idx]);
+        }
+    }
+
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
