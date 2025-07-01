@@ -148,6 +148,7 @@ MonoBehaviour:
     MaxMana: 100
   _experienceDropped: 10
   _maxDistanceToPlayerBeforeTeleporting: 15
+  _shouldBeIgnoredBySupportiveEnemies: 1
 --- !u!50 &1535381825471655550
 Rigidbody2D:
   serializedVersion: 5

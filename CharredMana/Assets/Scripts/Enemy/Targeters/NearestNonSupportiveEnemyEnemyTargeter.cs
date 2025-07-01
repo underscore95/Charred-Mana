@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NearestEnemyEnemyTargeter : MonoBehaviour, IEnemyTargeter
+public class NearestNonSupportiveEnemyEnemyTargeter : MonoBehaviour, IEnemyTargeter
 {
     public ILivingEntity GetTarget()
     {
@@ -11,6 +11,7 @@ public class NearestEnemyEnemyTargeter : MonoBehaviour, IEnemyTargeter
         foreach (Enemy enemy in enemies)
         {
             if (enemy.gameObject == gameObject) continue;
+            if (enemy.ShouldBeIgnoredBySupportiveEnemies()) continue;
             float distance = Vector3.SqrMagnitude((Vector2)enemy.transform.position - xy);
             if (distance < closestDistance)
             {

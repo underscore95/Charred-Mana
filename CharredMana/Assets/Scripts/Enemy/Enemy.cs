@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour, ILivingEntity
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private float _experienceDropped = 10;
     [SerializeField] private float _maxDistanceToPlayerBeforeTeleporting = 15.0f;
+    [SerializeField] private bool _shouldBeIgnoredBySupportiveEnemies = false;
+
     private Stats _stats;
 
     private Player _player;
@@ -111,5 +113,10 @@ public class Enemy : MonoBehaviour, ILivingEntity
         else offset.y += cameraSize.y * 1.1f;
 
         return location + offset;
+    }
+
+    public bool ShouldBeIgnoredBySupportiveEnemies()
+    {
+        return _shouldBeIgnoredBySupportiveEnemies;
     }
 }

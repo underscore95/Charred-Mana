@@ -148,6 +148,7 @@ MonoBehaviour:
     MaxMana: 100
   _experienceDropped: 10
   _maxDistanceToPlayerBeforeTeleporting: 15
+  _shouldBeIgnoredBySupportiveEnemies: 0
 --- !u!114 &7953354953284377577
 MonoBehaviour:
   m_ObjectHideFlags: 0
