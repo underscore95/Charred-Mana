@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class BiomeManager : MonoBehaviour
 {
-    private readonly float NOISE_FREQUENCY = 128;
+    private readonly float NOISE_FREQUENCY = 96;
     private EnumDictionary<BiomeType, Biome> _biomes = new();
 
     private void Awake()
@@ -25,7 +25,7 @@ public class BiomeManager : MonoBehaviour
     {
         Assert.IsTrue(_biomes.Count > 0);
 
-        if (temp > 0.6 && moisture < 0.35)
+        if (temp > 0.4 && moisture < 0.35)
         {
             return BiomeType.Desert;
         }
