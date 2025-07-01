@@ -1099,7 +1099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeDuringTurns:
     Begin: 0
-    End: 10
+    End: 999999
   _spawnCooldown: 5
   _enemyPrefab: {fileID: 5190042482056591089, guid: 8fa2efd997cb1104d8e3b173c8dd45d3, type: 3}
   _maxEnemies: 10
