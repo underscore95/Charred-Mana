@@ -4,8 +4,6 @@ using UnityEngine.Tilemaps;
 
 public class ChunkDecoration : ChunkTilemap
 {
-    [SerializeField] private TileBase _grass;
-
     protected void OnEnable()
     {
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
@@ -15,7 +13,11 @@ public class ChunkDecoration : ChunkTilemap
                 if (_chunk.Noise(x, y) < 0.15f) continue;
                 if (_chunk.Random(x, y) < 0.85f) continue;
 
-                _tilemap.SetTile(new(x, y, 0), _grass);
+                Biome biome = _chunk.GetBiome(new(x, y));
+                if (biome.Decoration.Count < 1) return;
+
+                int decoIndex = (int)(biome.Decoration.Count * _chunk.Noise(x,y));
+                _tilemap.SetTile(new(x, y, 0), biome.Decoration[decoIndex]);
             }
         }
     }

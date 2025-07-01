@@ -354,7 +354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilemap: {fileID: 5444017377032965976}
-  _grass: {fileID: 11400000, guid: b0fef77fbdec9b246b99c619d209e60b, type: 2}
 --- !u!114 &4420761307805230419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +367,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilemap: {fileID: 8279329627780447883}
-  _grass: {fileID: 11400000, guid: 7d6091dc7ee36824493408cdb9f79a97, type: 2}
 --- !u!1 &9104135582022533222
 GameObject:
   m_ObjectHideFlags: 0

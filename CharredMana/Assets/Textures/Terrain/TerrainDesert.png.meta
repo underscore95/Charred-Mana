@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8e405b99f8ff65f49bdbc28f0827307d
+guid: 0df0002c4af156942973d6aff2e833b3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6693458829433095994
-    second: TerrainGrass_0
+      213: -3871660187838059883
+    second: TerrainDesert_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:

@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 
 // Dictionary where keys are enums, all values in the enum must be consecutive, stored in a list rather than using hashing
 public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : Enum
@@ -97,6 +98,14 @@ public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : En
         }
     }
 
+    public bool IsFull()
+    {
+        return _capacity <= Count;
+    }
+
+    private int _capacity = Enum.GetValues(typeof(K)).Length;
+    public int Capacity { get {  return _capacity; } }  
+
     public int Count
     {
         get
@@ -128,6 +137,7 @@ public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : En
                     yield return _values[i];
         }
     }
+
 
     public IEnumerator<KeyValuePair<K, V>> GetEnumerator()
     {

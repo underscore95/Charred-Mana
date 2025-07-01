@@ -55,6 +55,7 @@ public static class Utils
         return (uhash & 0xFFFFFF) / (float)(1 << 24);
     }
 
+    // todo fix non uniform distribution
     private static int StableHash(int x)
     {
         unchecked

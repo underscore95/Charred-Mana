@@ -20,4 +20,9 @@ public struct FloatRange
 {
     public float Begin;
     public float End;
+
+    public readonly bool Contains(float v)
+    {
+        return v >= Begin && v <= End;
+    }
 }
