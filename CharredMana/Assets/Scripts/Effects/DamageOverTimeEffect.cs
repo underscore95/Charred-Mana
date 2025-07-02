@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class DamageOverTimeEffect : Effect
 {
-    private ILivingEntity _entity;
+    private LivingEntity _entity;
 
     public override void OnPoolEnter()
     {
-        _entity = transform.parent.GetComponent<ILivingEntity>();   
+        _entity = transform.parent.GetComponent<LivingEntity>();   
     }
 
     public override void OnPoolLeave()
@@ -18,6 +18,6 @@ public class DamageOverTimeEffect : Effect
     {
         if (_entity == null) return;
 
-        ILivingEntity.Damage(_entity, Amplifier);
+        LivingEntity.Damage(_entity, Amplifier);
     }
 }

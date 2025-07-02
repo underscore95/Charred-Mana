@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float _speed = 1.0f;
     [SerializeField] private int _pierce = 1;
     [SerializeField] private SerializableStatModifiersContainer _statModifiers;
-    public ILivingEntity Shooter;
+    public LivingEntity Shooter;
     public List<SerializableEffect> Effects = new(); // applies when it hits an entity, before the damage
 
     private Rigidbody2D _rigidBody;
@@ -52,12 +52,12 @@ public class Projectile : MonoBehaviour
         if (_enemiesHit >= _pierce) return; // Hitting multiple enemies in the same frame can cause this
 
         // Damage the entity they hit (if they hit an entity)
-        if (collision.gameObject.TryGetComponent<ILivingEntity>(out var entity))
+        if (collision.gameObject.TryGetComponent<LivingEntity>(out var entity))
         {
-            Stats stats = Shooter.GetStats().DuplicateAndAddModifiers(_statModifiers);
-            float dmg = entity.GetStats().GetDamageWhenAttackedBy(stats);
+            Stats stats = Shooter.EntityStats.DuplicateAndAddModifiers(_statModifiers);
+            float dmg = entity.EntityStats.GetDamageWhenAttackedBy(stats);
             _effectManager.ApplyEffects(entity, Effects);
-            ILivingEntity.Damage(entity, dmg);
+            LivingEntity.Damage(entity, dmg);
         }
 
         // Kill if at pierce cap now

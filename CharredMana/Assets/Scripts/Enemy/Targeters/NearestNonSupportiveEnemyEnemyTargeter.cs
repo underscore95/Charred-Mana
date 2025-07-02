@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class NearestNonSupportiveEnemyEnemyTargeter : MonoBehaviour, IEnemyTargeter
 {
-    public ILivingEntity GetTarget()
+    public LivingEntity GetTarget()
     {
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         float closestDistance = float.MaxValue;
-        ILivingEntity closest = null;
+        LivingEntity closest = null;
         Vector2 xy = transform.position;
         foreach (Enemy enemy in enemies)
         {

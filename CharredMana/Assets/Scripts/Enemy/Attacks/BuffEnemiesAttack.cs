@@ -27,7 +27,7 @@ public class BuffEnemiesAttack : MonoBehaviour, IEnemyAttack
             Assert.IsTrue(col.gameObject.activeInHierarchy);
             if (Vector3.Magnitude((Vector2)transform.position - (Vector2)col.gameObject.transform.position) > _range + 0.01f) continue;
 
-            appliedToEnemy |= EffectManager.AppliedAnyNewEffect(_effectManager.ApplyEffects(col.GetComponent<ILivingEntity>(), _effects));
+            appliedToEnemy |= EffectManager.AppliedAnyNewEffect(_effectManager.ApplyEffects(col.GetComponent<LivingEntity>(), _effects));
         }
         if (!appliedToEnemy) return;
 

@@ -36,11 +36,11 @@ public class PlayerMana : PlayerValue
         base.Awake();
 
         _player = FindAnyObjectByType<Player>();
-        FindAnyObjectByType<TurnManager>().OnTurnChange += () => Mana = Mathf.Min(MaxMana, Mana + _player.Stats.ManaRegen);
+        FindAnyObjectByType<TurnManager>().OnTurnChange += () => Mana = Mathf.Min(MaxMana, Mana + _player.EntityStats.ManaRegen);
     }
 
     private void Update()
     {
-        _maxValue = _player.Stats.MaxMana;
+        _maxValue = _player.EntityStats.MaxMana;
     }
 }

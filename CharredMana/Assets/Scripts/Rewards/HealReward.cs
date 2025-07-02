@@ -6,7 +6,7 @@ public class HealReward : Reward
 
     private void Start()
     {
-        _playerStats = FindAnyObjectByType<Player>().Stats;
+        _playerStats = FindAnyObjectByType<Player>().EntityStats;
     }
 
     public override void Give()

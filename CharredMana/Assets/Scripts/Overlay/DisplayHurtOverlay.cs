@@ -9,6 +9,6 @@ public class DisplayHurtOverlay : DisplayOverlay
 
     private void Awake()
     {
-        GetComponent<ILivingEntity>().OnDamaged() += _ => ApplyOverlay(COLOR, DURATION, TRANSITION_DURATION, TRANSITION_DURATION);
+        GetComponent<LivingEntity>().OnDamaged() += _ => ApplyOverlay(COLOR, DURATION, TRANSITION_DURATION, TRANSITION_DURATION);
     }
 }

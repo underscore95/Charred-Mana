@@ -42,7 +42,7 @@ public class ProjectileManager : MonoBehaviour
         }
     }
 
-    public Projectile SpawnProjectile(ILivingEntity shooter)
+    public Projectile SpawnProjectile(LivingEntity shooter)
     {
         if (_projectiles.IsFull())
         {

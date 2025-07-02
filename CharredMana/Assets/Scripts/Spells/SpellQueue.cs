@@ -33,7 +33,7 @@ public class SpellQueue : MonoBehaviour
 
     public void QueueTrigger(PlayerSpell spell)
     {
-        if (_queuedSpells.Count >= _player.Stats.Focus) return;
+        if (_queuedSpells.Count >= _player.EntityStats.Focus) return;
         if (spell.IsOnCooldown()) return;
         if (_mana.Mana < spell.ManaCost) return;
 
@@ -65,7 +65,7 @@ public class SpellQueue : MonoBehaviour
 
     private void UpdateText()
     {
-        StringBuilder sb = new(string.Format("{0} / {1} Queued Spells{2}", _queuedSpells.Count, _player.Stats.Focus, _queuedSpells.Count > 0 ? ":\n" : ""));
+        StringBuilder sb = new(string.Format("{0} / {1} Queued Spells{2}", _queuedSpells.Count, _player.EntityStats.Focus, _queuedSpells.Count > 0 ? ":\n" : ""));
         foreach (var spell in _queuedSpells)
         {
             sb.AppendLine(spell.Spell.name);

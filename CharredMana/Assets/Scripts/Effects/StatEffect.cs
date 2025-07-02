@@ -5,12 +5,12 @@ using UnityEngine;
 
 public abstract class StatEffect : Effect
 {
-    private ILivingEntity _entity;
+    private LivingEntity _entity;
     private StatModifiersContainer _appliedLastTurn = null;
 
     public override void OnPoolEnter()
     {
-        _entity = transform.parent.GetComponent<ILivingEntity>();
+        _entity = transform.parent.GetComponent<LivingEntity>();
         StartCoroutine(UpdateStats());
     }
 
@@ -36,7 +36,7 @@ public abstract class StatEffect : Effect
 
         RemoveStatsAppliedLastTurn();
         _appliedLastTurn = GetStatsForCurrentAmplifier();
-        _entity.GetStats().ApplyModifiers(_appliedLastTurn);
+        _entity.EntityStats.ApplyModifiers(_appliedLastTurn);
     }
 
     protected abstract StatModifiersContainer GetStatsForCurrentAmplifier();
@@ -46,7 +46,7 @@ public abstract class StatEffect : Effect
         if (_appliedLastTurn != null)
         {
             _appliedLastTurn.Invert();
-            _entity.GetStats().ApplyModifiers(_appliedLastTurn);
+            _entity.EntityStats.ApplyModifiers(_appliedLastTurn);
             _appliedLastTurn = null;
         }
     }

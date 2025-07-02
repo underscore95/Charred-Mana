@@ -32,7 +32,7 @@ public class PlayerHealth : PlayerValue
 
     private void Start()
     {
-        _stats = transform.parent.GetComponent<ILivingEntity>().GetStats();
+        _stats = transform.parent.GetComponent<LivingEntity>().EntityStats;
     }
 
     private void Update()

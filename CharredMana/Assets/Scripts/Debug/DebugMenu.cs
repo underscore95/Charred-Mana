@@ -50,7 +50,7 @@ public class DebugMenu : MonoBehaviour
                 });
         }
 
-        _killPlayerButton.onClick.AddListener(() => ILivingEntity.Damage(player, player.Stats.MaxHealth));
+        _killPlayerButton.onClick.AddListener(() => LivingEntity.Damage(player, player.EntityStats.MaxHealth));
     }
 
     private void OnDestroy()

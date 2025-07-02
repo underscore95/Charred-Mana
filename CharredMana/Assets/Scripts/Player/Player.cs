@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour, ILivingEntity
+public class Player :  LivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private TextMeshProUGUI _playerStatsText;
@@ -11,49 +11,27 @@ public class Player : MonoBehaviour, ILivingEntity
     public PlayerLevel PlayerLevel { get; private set; }
     public Camera Camera { get; private set; }
     public Vector3 PositionAtFrameStart { get; set; }
-    public Stats Stats { get; private set; }
     public int MonstersKilled { get; set; } = 0;
     public int SpellsCast { get; set; } = 0;
-    private UnityAction<float> _onDamaged = (dmg) => { };
     private DebugMenu _debugMenu;
 
     private void Awake()
     {
         Camera = GetComponentInChildren<Camera>();
         PlayerMana = GetComponentInChildren<PlayerMana>();
-        Stats = new(_baseStats);
+        EntityStats = new(_baseStats);
         PlayerLevel = GetComponentInChildren<PlayerLevel>();
-        _onDamaged += _ => Sfx.PlayPlayerDamaged();
+        OnDamaged() += _ => Sfx.PlayPlayerDamaged();
         _debugMenu=FindAnyObjectByType<DebugMenu>();
-    }
-
-    private void Start()
-    {
-
     }
 
     private void Update()
     {
-        _playerStatsText.text = string.Format("DMG: {0:0.0}\nDEF: {1:0.0}\nMP RGN: {2:0.0}", Stats.Damage, Stats.Defense, Stats.ManaRegen);
-    }
-
-    public Stats GetStats()
-    {
-        return Stats;
-    }
-
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-
-    public ref UnityAction<float> OnDamaged()
-    {
-        return ref _onDamaged;
+        _playerStatsText.text = string.Format("DMG: {0:0.0}\nDEF: {1:0.0}\nMP RGN: {2:0.0}", EntityStats.Damage, EntityStats.Defense, EntityStats.ManaRegen);
     }
 
     public bool IsDead()
     {
-        return Stats.CurrentHealth <= 0 && _debugMenu.Options.CanDie;
+        return EntityStats.CurrentHealth <= 0 && _debugMenu.Options.CanDie;
     }
 }

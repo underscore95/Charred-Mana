@@ -63,7 +63,7 @@ public class BoidsEnemyController : MonoBehaviour, IEnemyController
         }
 
         // Move to target
-        deltaPos = ((Vector2)_enemy.CurrentTarget.GetGameObject().transform.position - (Vector2)transform.position).normalized + deltaPos.normalized * _boidsWeight;
+        deltaPos = ((Vector2)_enemy.CurrentTarget.gameObject.transform.position - (Vector2)transform.position).normalized + deltaPos.normalized * _boidsWeight;
 
         _deltaPosLastTurn = transform.position;
         StartCoroutine(Utils.MoveRigidBody(_rigidBody, deltaPos.normalized * _speed));

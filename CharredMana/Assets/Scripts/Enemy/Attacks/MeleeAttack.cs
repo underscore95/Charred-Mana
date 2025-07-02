@@ -27,7 +27,7 @@ public class EnemyAttack : MonoBehaviour, IEnemyAttack
                 Quaternion.Euler(0, 0, Mathf.Acos(dotProduct) * Mathf.Rad2Deg)
                 );
 
-            ILivingEntity.Damage(_player, Random.Range(3.0f, 9.0f));
+            LivingEntity.Damage(_player, Random.Range(3.0f, 9.0f));
         }
     }
 }

@@ -103,7 +103,7 @@ public class EffectManager : MonoBehaviour
 
     // Apply effect to entity, this does nothing if the entity already has the same effect with higher amplifier, this overwrites effects with lower amplifiers. Equal amplifiers will use the maximum duration.
     // duration in turns
-    public EffectResult ApplyEffect(ILivingEntity target, EffectType effectType, int duration, int amplifier = 1)
+    public EffectResult ApplyEffect(LivingEntity target, EffectType effectType, int duration, int amplifier = 1)
     {
         Assert.IsNotNull(target);
         Assert.IsTrue(duration > 0);
@@ -112,7 +112,7 @@ public class EffectManager : MonoBehaviour
         // Does the entity already have the effect?
         Dictionary<GameObject, Effect> objectsWithEffect = _effectsOnObjects[(int)effectType];
         bool effectAlreadyExisted = false;
-        if (objectsWithEffect.TryGetValue(target.GetGameObject(), out Effect effect))
+        if (objectsWithEffect.TryGetValue(target.gameObject, out Effect effect))
         {
             effectAlreadyExisted = true;
 
@@ -135,11 +135,11 @@ public class EffectManager : MonoBehaviour
             // Create a new effect game object
             GameObject poolObj = _pools[(int)effectType].ActivateObject(obj =>
             {
-                obj.transform.SetParent(target.GetGameObject().transform, false);
+                obj.transform.SetParent(target.gameObject.transform, false);
             });
 
             effect = poolObj.GetComponent<Effect>();
-            objectsWithEffect.Add(target.GetGameObject(), effect);
+            objectsWithEffect.Add(target.gameObject, effect);
         }
 
         // Set amplification and duration
@@ -148,12 +148,12 @@ public class EffectManager : MonoBehaviour
         return effectAlreadyExisted ? EffectResult.OverwroteWeakerEffect : EffectResult.Applied;
     }
 
-    public EffectResult ApplyEffect(ILivingEntity target, SerializableEffect effect)
+    public EffectResult ApplyEffect(LivingEntity target, SerializableEffect effect)
     {
         return ApplyEffect(target, effect.Type, effect.Duration, effect.Amplifier);
     }
 
-    public EffectResult[] ApplyEffects(ILivingEntity entity, List<SerializableEffect> effects)
+    public EffectResult[] ApplyEffects(LivingEntity entity, List<SerializableEffect> effects)
     {
         EffectResult[] results = new EffectResult[effects.Count];
         for (int i = 0; i < effects.Count; ++i)

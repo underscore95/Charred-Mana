@@ -4,24 +4,21 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour, ILivingEntity
+public class Enemy :  LivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private float _experienceDropped = 10;
     [SerializeField] private float _maxDistanceToPlayerBeforeTeleporting = 15.0f;
     [SerializeField] private bool _shouldBeIgnoredBySupportiveEnemies = false;
 
-    private Stats _stats;
-
     private Player _player;
     private IEnemyAttack _attack;
     private IEnemyTargeter _targeter;
     public IEnemyController Controller { get; private set; }
-    public ILivingEntity CurrentTarget { get; private set; }
+    public LivingEntity CurrentTarget { get; private set; }
     public EnemySpawner Spawner { get; private set; }
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
-    private UnityAction<float> _onDamaged = (dmg) => { };
 
     private void Awake()
     {
@@ -32,7 +29,7 @@ public class Enemy : MonoBehaviour, ILivingEntity
         Controller = GetComponent<IEnemyController>();
         _targeter = GetComponent<IEnemyTargeter>();
 
-        _onDamaged += OnDamage;
+        OnDamaged() += OnDamage;
     }
 
     private void Start()
@@ -45,9 +42,9 @@ public class Enemy : MonoBehaviour, ILivingEntity
         transform.position = PickSpawnLocation();
 
         _turnManager.OnTurnChange += PlayTurn;
-        _stats = new(_baseStats);
-        _stats.ApplyModifiers(_turnManager.CurrentEnemyStatBoost);
-        _stats.Heal();
+        EntityStats = new(_baseStats);
+        EntityStats.ApplyModifiers(_turnManager.CurrentEnemyStatBoost);
+        EntityStats.Heal();
     }
 
     private void OnDisable()
@@ -70,27 +67,12 @@ public class Enemy : MonoBehaviour, ILivingEntity
 
     private void OnDamage(float damage)
     {
-        if (_stats.IsDead())
+        if (EntityStats.IsDead())
         {
             _player.MonstersKilled++;
             _player.PlayerLevel.Experience += _experienceDropped;
             Pool.ReleaseObject(gameObject);
         }
-    }
-
-    public Stats GetStats()
-    {
-        return _stats;
-    }
-
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
-
-    public ref UnityAction<float> OnDamaged()
-    {
-        return ref _onDamaged;
     }
 
     public static Collider2D[] GetNearbyEnemies(Vector2 position, float range)

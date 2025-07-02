@@ -8,7 +8,7 @@ public class PlayerEnemyTargeter : MonoBehaviour, IEnemyTargeter
         _player = FindAnyObjectByType<Player>();
     }
 
-    public ILivingEntity GetTarget()
+    public LivingEntity GetTarget()
     {
         return _player;
     }
