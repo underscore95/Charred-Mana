@@ -10,6 +10,7 @@ public class Sfx : MonoBehaviour
     [SerializeField] private AudioClip _playerMove;
     [SerializeField] private AudioClip _spellCast;
     [SerializeField] private AudioClip _playerDamaged;
+    [SerializeField] private AudioClip _playerLevelUp;
 
     private static GameSettings _settings;
 
@@ -53,5 +54,11 @@ public class Sfx : MonoBehaviour
     {
         Assert.IsNotNull(_instance);
         AudioSource.PlayClipAtPoint(_instance._playerDamaged, Camera.main.transform.position, _settings.SoundVolume);
+    }
+
+    public static void PlayPlayerLevelUp()
+    {
+        Assert.IsNotNull(_instance);
+        AudioSource.PlayClipAtPoint(_instance._playerLevelUp, Camera.main.transform.position, _settings.SoundVolume);
     }
 }

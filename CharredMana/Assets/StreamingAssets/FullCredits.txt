@@ -12,3 +12,4 @@ Button Click: https://pixabay.com/sound-effects/click-21156/
 Player Move: https://pixabay.com/sound-effects/rustling-grass-1-101282/
 Spell Cast: https://pixabay.com/sound-effects/click-21156/
 Player Damaged: https://pixabay.com/sound-effects/whipslapbeltpunch-6949/
+Player Level Up: https://pixabay.com/sound-effects/level-up-05-326133/

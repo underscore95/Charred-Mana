@@ -131,6 +131,8 @@ public class LevelRewardManager : MonoBehaviour
 
     private void OpenUi()
     {
+        Sfx.PlayPlayerLevelUp();
+
         int levelWhenOpened = _playerLevel.Level - _levelUpsRemaining + 1;
         _levelUpText.text = string.Format(_levelUpMessage, levelWhenOpened);
 
