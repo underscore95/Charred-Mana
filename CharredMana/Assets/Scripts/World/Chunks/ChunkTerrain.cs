@@ -1,10 +1,11 @@
 using NUnit.Framework.Constraints;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Tilemaps;
 
 public class ChunkTerrain : ChunkTilemap
 {
-    protected void OnEnable()
+    public override void OnLoad()
     {
         for (int x = 0; x < Chunk.CHUNK_SIZE; x++)
         {

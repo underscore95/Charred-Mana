@@ -49,12 +49,13 @@ public static class Utils
         return new((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
     }
 
-    // Returns a float between 0 and 1, deterministic.
-   public static float WhiteNoise(float x, float y)
+    // Returns a uniform float between 0 and 1, deterministic.
+    public static float WhiteNoise(int x, int y)
     {
-        int n = (int)(x * 1619 + y * 31337);
-        n = (n << 13) ^ n;
-        int nn = (n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff;
-        return nn / 1073741824.0f % 1.0f;
+        uint seed = (uint)(x * 374761393 + y * 668265263);
+        seed ^= seed >> 13;
+        seed *= 1274126177;
+        seed ^= seed >> 16;
+        return (seed & 0xFFFFFF) / (float)0x1000000;
     }
 }

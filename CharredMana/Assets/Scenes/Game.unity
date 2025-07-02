@@ -731,14 +731,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _moistureRange:
-    Begin: 0
-    End: 1
-  _temperatureRange:
-    Begin: 0.5
-    End: 1
   _decoration:
   - {fileID: 11400000, guid: 4a0fc33ef6b94064ebcdb98881dfa486, type: 2}
+  _collisionDecorations:
+  - {fileID: 11400000, guid: c6d904ee3b68e4b4bb64b66f9c5e3063, type: 2}
   _terrainTile: {fileID: 11400000, guid: 9d329d71f6a5f724c87774e1ffe7eb97, type: 2}
 --- !u!1001 &214063695
 PrefabInstance:
@@ -3178,14 +3174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _moistureRange:
-    Begin: 0
-    End: 1
-  _temperatureRange:
-    Begin: 0
-    End: 1
   _decoration:
   - {fileID: 11400000, guid: 7d6091dc7ee36824493408cdb9f79a97, type: 2}
+  _collisionDecorations:
+  - {fileID: 11400000, guid: c6d904ee3b68e4b4bb64b66f9c5e3063, type: 2}
   _terrainTile: {fileID: 11400000, guid: b0fef77fbdec9b246b99c619d209e60b, type: 2}
 --- !u!1 &1097880725
 GameObject:
@@ -5221,6 +5213,10 @@ PrefabInstance:
     - target: {fileID: 1126359473493726799, guid: a702d752b8ae30842b851f41ce9a6091, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708886028924419714, guid: a702d752b8ae30842b851f41ce9a6091, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3431910055207514291, guid: a702d752b8ae30842b851f41ce9a6091, type: 3}
       propertyPath: _text

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Tilemaps;
 
 public class Chunk : MonoBehaviour
 {
@@ -9,16 +11,34 @@ public class Chunk : MonoBehaviour
 
     public Vector2Int ChunkCoords { get; private set; } = Vector2Int.zero;
     private BiomeManager _biomeManager;
+    private readonly List<ChunkTilemap> _chunkTilemaps = new();
 
     private void Awake()
     {
         _biomeManager = FindAnyObjectByType<BiomeManager>();
+
+        // order to load the tilemaps
+        _chunkTilemaps.Add(GetComponent<ChunkTerrain>());
+        _chunkTilemaps.Add(GetComponent<ChunkDecoration>());
+        _chunkTilemaps.Add(GetComponent<ChunkCollisionDecorations>());
+        Assert.IsTrue(_chunkTilemaps.Count == GetComponentsInChildren<Tilemap>().Length);
+
+        foreach (var tilemap in _chunkTilemaps)
+        {
+            tilemap.OnFirstLoad();
+        }
+    }
+
+    private void OnEnable()
+    {
+        foreach (var tilemap in _chunkTilemaps)
+        {
+            tilemap.OnLoad();
+        }
     }
 
     public Vector2Int LocalCoordsToWorldCoords(Vector2Int local)
     {
-        Assert.IsTrue(local.x >= 0 && local.x < CHUNK_SIZE);
-        Assert.IsTrue(local.y >= 0 && local.y < CHUNK_SIZE);
         return new(ChunkCoords.x * CHUNK_SIZE + local.x, ChunkCoords.y * CHUNK_SIZE + local.y);
     }
 
