@@ -1,7 +1,6 @@
 
 using System;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 
 // Dictionary where keys are enums, all values in the enum must be consecutive, stored in a list rather than using hashing
 public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : Enum
