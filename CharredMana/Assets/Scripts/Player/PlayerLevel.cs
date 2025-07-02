@@ -67,14 +67,6 @@ public class PlayerLevel : PlayerValue
         base.UpdateText();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Experience = _maxValue;
-        }
-    }
-
     public void ForceLevelUp()
     {
         Experience += _maxValue;
