@@ -18,6 +18,7 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Button _levelUpButton;
     [SerializeField] private Button _levelUp10Button;
     [SerializeField] private Button _killPlayerButton;
+    [SerializeField] private Button _nextMusicButton;
 
     public DebugOptions Options { get; private set; }
 
@@ -38,19 +39,26 @@ public class DebugMenu : MonoBehaviour
 
         _canDie.isOn = Options.CanDie;
 
+        // Buttons
+        // Player
         Player player = FindAnyObjectByType<Player>();
         _levelUpButton.enabled = player != null;
         _levelUp10Button.enabled = player != null;
+        _killPlayerButton.enabled = player != null;
         if (player != null)
         {
-            _levelUpButton.onClick.AddListener(() => player.PlayerLevel.ForceLevelUp());
+            _levelUpButton.onClick.AddListener(() => { print("[DebugMenu] Levelled player up once"); player.PlayerLevel.ForceLevelUp(); });
             _levelUp10Button.onClick.AddListener(() =>
                 {
+                    print("[DebugMenu] Levelled player up 10 times");
                     for (int i = 0; i < 10; i++) player.PlayerLevel.ForceLevelUp();
                 });
+
+            _killPlayerButton.onClick.AddListener(() => { print("[DebugMenu] Damaged player for " + player.EntityStats.MaxHealth); LivingEntity.Damage(player, player.EntityStats.MaxHealth); });
         }
 
-        _killPlayerButton.onClick.AddListener(() => LivingEntity.Damage(player, player.EntityStats.MaxHealth));
+        // Music
+        _nextMusicButton.onClick.AddListener(() => { print("[DebugMenu] Next music track"); FindAnyObjectByType<MusicPlayer>().PlayNextMusic(); });
     }
 
     private void OnDestroy()
