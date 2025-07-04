@@ -7,6 +7,7 @@ public class DebugMenu : MonoBehaviour
 {
     private static readonly bool DEBUG = true;
     private static readonly string PATH = "DebugOptions.json";
+    private static bool _debugMenuWasOpenOnLastScene = false;
 
     public class DebugOptions
     {
@@ -24,6 +25,7 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Button _goToGameButton;
 
     public DebugOptions Options { get; private set; }
+    private bool _wasDebugMenuOpenLastFrame = false;
 
     private void Awake()
     {
@@ -72,14 +74,20 @@ public class DebugMenu : MonoBehaviour
     {
         if (DEBUG)
         {
+            _debugMenuWasOpenOnLastScene = _wasDebugMenuOpenLastFrame;
             JsonUtils.Save(PATH, Options);
         }
     }
 
     private void Update()
     {
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.H))
+        if (!DEBUG) return;
+        _wasDebugMenuOpenLastFrame = _canvas.activeInHierarchy;
+
+        bool isCtrlHPressed = (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.H);
+        if (_debugMenuWasOpenOnLastScene || isCtrlHPressed)
         {
+            _debugMenuWasOpenOnLastScene = false;
             _canvas.SetActive(!_canvas.activeInHierarchy);
         }
 
