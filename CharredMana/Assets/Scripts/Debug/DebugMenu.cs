@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DebugMenu : MonoBehaviour
@@ -19,6 +20,8 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Button _levelUp10Button;
     [SerializeField] private Button _killPlayerButton;
     [SerializeField] private Button _nextMusicButton;
+    [SerializeField] private Button _goToMenuButton;
+    [SerializeField] private Button _goToGameButton;
 
     public DebugOptions Options { get; private set; }
 
@@ -59,6 +62,10 @@ public class DebugMenu : MonoBehaviour
 
         // Music
         _nextMusicButton.onClick.AddListener(() => { print("[DebugMenu] Next music track"); FindAnyObjectByType<MusicPlayer>().PlayNextMusic(); });
+
+        // Scenes
+        _goToGameButton.onClick.AddListener(() => { print("[DebugMenu] Loaded game scene"); SceneManager.LoadScene("Game", LoadSceneMode.Single); });
+        _goToMenuButton.onClick.AddListener(() => { print("[DebugMenu] Loaded main menu scene"); SceneManager.LoadScene("MainMenu", LoadSceneMode.Single); });
     }
 
     private void OnDestroy()
