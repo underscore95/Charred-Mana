@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _speed = 1.0f;
     [SerializeField] private int _pierce = 1;
     [SerializeField] private SerializableStatModifiersContainer _statModifiers;
-    public LivingEntity Shooter;
     public List<SerializableEffect> Effects = new(); // applies when it hits an entity, before the damage
+
+    [HideInInspector] public LivingEntity Shooter;
 
     private Rigidbody2D _rigidBody;
     private ManagedProjectile _managed;

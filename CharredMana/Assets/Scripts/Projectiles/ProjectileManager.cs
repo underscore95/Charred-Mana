@@ -5,12 +5,32 @@ using UnityEngine.Assertions;
 
 public class ProjectileManager : MonoBehaviour
 {
+    [SerializeField] internal bool _shouldUseInspectorProperties = false;
+    [SerializeField] internal GameObject _prefab;
+    [SerializeField] private int _capacity = 10;
+
     private ObjectPool _projectiles;
+
+    private void Awake()
+    {
+        if (_shouldUseInspectorProperties)
+        {
+            Init(_prefab);
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (!_shouldUseInspectorProperties)
+        {
+            Assert.IsNull(_prefab, "Projectile manager is set to not use inspector properties, but a projectile prefab is set");
+        }
+    }
 
     public void Init(GameObject proj)
     {
         Assert.IsNull(_projectiles);
-        _projectiles = new(proj, 10, transform);
+        _projectiles = new(proj, _shouldUseInspectorProperties ? _capacity : 10, transform);
         foreach (var projectile in _projectiles.AliveAndDead)
         {
             projectile.AddComponent<ManagedProjectile>()._projManager = this;
