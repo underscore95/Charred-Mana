@@ -1322,7 +1322,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 622747382}
+  m_Father: {fileID: 1018918936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &270274206
 MonoBehaviour:
@@ -1342,6 +1342,7 @@ MonoBehaviour:
   _spawnCooldown: 5
   _enemyPrefab: {fileID: 5190042482056591089, guid: 8fa2efd997cb1104d8e3b173c8dd45d3, type: 3}
   _maxEnemies: 10
+  _floor: 1
 --- !u!1001 &451863109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1623,6 +1624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519300077}
+  - component: {fileID: 519300078}
   m_Layer: 0
   m_Name: FloorManager
   m_TagString: Untagged
@@ -1645,6 +1647,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519300078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519300076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388e7ee8c24518c41b1636fe33b09bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _floorText: {fileID: 132153419}
 --- !u!1001 &524285396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2105,11 +2120,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 270274205}
-  - {fileID: 908121077}
-  - {fileID: 1786949191}
-  - {fileID: 1747460920}
-  - {fileID: 1141862146}
+  - {fileID: 1018918936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &639475376
@@ -2939,7 +2950,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 622747382}
+  m_Father: {fileID: 1018918936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &908121078
 MonoBehaviour:
@@ -2959,6 +2970,7 @@ MonoBehaviour:
   _spawnCooldown: 12
   _enemyPrefab: {fileID: 5190042482056591089, guid: 2453c3c9663bba442a43fc093b7684a1, type: 3}
   _maxEnemies: 10
+  _floor: 1
 --- !u!1 &925560500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,6 +3149,42 @@ Transform:
   - {fileID: 1072876422}
   - {fileID: 181002234}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1018918935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018918936}
+  m_Layer: 0
+  m_Name: Floor1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1018918936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018918935}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 270274205}
+  - {fileID: 908121077}
+  - {fileID: 1786949191}
+  - {fileID: 1747460920}
+  - {fileID: 1141862146}
+  m_Father: {fileID: 622747382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1036129334 stripped
 SpriteRenderer:
@@ -3489,7 +3537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 622747382}
+  m_Father: {fileID: 1018918936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1141862147
 MonoBehaviour:
@@ -3509,6 +3557,7 @@ MonoBehaviour:
   _spawnCooldown: 10
   _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
   _maxEnemies: 10
+  _floor: 1
 --- !u!1 &1232652833
 GameObject:
   m_ObjectHideFlags: 0
@@ -3988,7 +4037,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 622747382}
+  m_Father: {fileID: 1018918936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1747460921
 MonoBehaviour:
@@ -4008,6 +4057,7 @@ MonoBehaviour:
   _spawnCooldown: 20
   _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
   _maxEnemies: 10
+  _floor: 1
 --- !u!1 &1754467238
 GameObject:
   m_ObjectHideFlags: 0
@@ -4189,7 +4239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 622747382}
+  m_Father: {fileID: 1018918936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1786949192
 MonoBehaviour:
@@ -4209,6 +4259,7 @@ MonoBehaviour:
   _spawnCooldown: 9
   _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
   _maxEnemies: 10
+  _floor: 1
 --- !u!1 &1826374771
 GameObject:
   m_ObjectHideFlags: 0

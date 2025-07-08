@@ -13,6 +13,12 @@ public struct IntRange
         Begin = begin;
         End = end;
     }
+
+    public void OffsetRangeBy(int v)
+    {
+        Begin += v;
+        End += v;
+    }
 }
 
 [Serializable]

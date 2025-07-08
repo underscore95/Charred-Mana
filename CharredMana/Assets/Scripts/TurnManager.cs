@@ -12,14 +12,24 @@ public class TurnManager : MonoBehaviour
     public UnityAction OnTurnChange { get; set; } = () => { }; // Invoked by PlayerController
     public UnityAction OnLateTurnChange { get; set; } = () => { };
     public int CurrentTurn { get; private set; } = 0;
+    public int FloorEnterTurn { get; private set; } = 0; // Turn when we entered the current floor
+
+    private FloorManager _floorManager;
 
     private void Awake()
     {
+        _floorManager = FindAnyObjectByType<FloorManager>();
+
         OnTurnChange += OnTurnChangeOrAwake;
         OnTurnChange += () => CurrentTurn++;
         OnTurnChange += Sfx.PlayPlayerMove;
-        
+
         OnTurnChangeOrAwake();
+    }
+
+    private void Start()
+    {
+        _floorManager.OnFloorChange += () => FloorEnterTurn = CurrentTurn;
     }
 
     private void OnTurnChangeOrAwake()

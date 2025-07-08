@@ -9,40 +9,58 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int _spawnCooldown = 5;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private int _maxEnemies = 10;
+    [SerializeField] private int _floor = 0;
 
-    private Player _player;
     private ObjectPool _pool;
     private int _turnsSinceSpawn = 0;
     private TurnManager _turnManager;
+    private FloorManager _floorManager;
 
     private void Awake()
     {
-        _player = FindAnyObjectByType<Player>();
-        _pool = new(_enemyPrefab, _maxEnemies, transform);
-
         _turnManager = FindAnyObjectByType<TurnManager>();
-        _turnManager.OnTurnChange += TrySpawnEnemy;
+
+        _floorManager = FindAnyObjectByType<FloorManager>();
+        _floorManager.OnFloorChange += OnFloorChange;
 
         Assert.IsTrue(_activeDuringTurns.Begin >= 0);
         Assert.IsTrue(_activeDuringTurns.End >= _activeDuringTurns.Begin);
         Assert.IsTrue(Mathf.Approximately(transform.position.x, 0));
         Assert.IsTrue(Mathf.Approximately(transform.position.y, 0));
         Assert.IsTrue(Mathf.Approximately(transform.position.z, 0));
+        Assert.IsTrue(_floor > 0, "Floor must be greater than 0");
+
+        if (transform.parent.name != "Floor" + _floor)
+        {
+            Debug.LogWarning($"Parent of enemy spawner {name} was not Floor{_floor}, is that correct? It will work, this warning just lets you know you could have the spawner as a child of the wrong parent. Parent is actually {transform.parent.name}");
+        }
     }
 
-    private void Start()
+    private void OnFloorChange()
     {
-        if (_activeDuringTurns.Begin == 0)
+        if (_floorManager.Floor == _floor)
         {
-            // Start with one enemy
-            _turnsSinceSpawn = _spawnCooldown;
-            TrySpawnEnemy();
+            _turnManager.OnTurnChange += TrySpawnEnemy;
+            _pool = new(_enemyPrefab, _maxEnemies, transform);
+
+            _activeDuringTurns.OffsetRangeBy(_turnManager.FloorEnterTurn);
+            if (_activeDuringTurns.Begin == _turnManager.FloorEnterTurn)
+            {
+                // Start with one enemy
+                _turnsSinceSpawn = _spawnCooldown;
+                TrySpawnEnemy();
+            }
+        }
+        else if (_floorManager.Floor > _floor)
+        {
+            Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
         _turnManager.OnTurnChange -= TrySpawnEnemy;
+        _floorManager.OnFloorChange -= OnFloorChange;
     }
 
     private void TrySpawnEnemy()
