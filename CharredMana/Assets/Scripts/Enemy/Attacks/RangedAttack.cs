@@ -13,17 +13,7 @@ public class RangedAttack : MonoBehaviour, IEnemyAttack
     private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
-        _projectileManager = GameObject.Find(_projectileManagerName).GetComponent<ProjectileManager>();
-        _enemy = GetComponent<Enemy>();
-        Assert.IsTrue(_projectileManager._shouldUseInspectorProperties);
 
-        int enemyProjectileLayer = LayerMask.NameToLayer("EnemyProjectile");
-        Assert.IsTrue(enemyProjectileLayer != -1);
-        Assert.IsTrue(enemyProjectileLayer == _projectileManager._prefab.layer, "Projectile shot by ranged enemy must be on enemy projectile layer");
-    }
-
-    private void OnValidate()
-    {
         GameObject projManager = GameObject.Find(_projectileManagerName);
         if (projManager == null)
         {
@@ -35,6 +25,14 @@ public class RangedAttack : MonoBehaviour, IEnemyAttack
         {
             Debug.LogError("Projectile manager object " + _projectileManagerName + "doesn't have a projectile manager component");
         }
+
+        _projectileManager = projManager.GetComponent<ProjectileManager>();
+        _enemy = GetComponent<Enemy>();
+        Assert.IsTrue(_projectileManager._shouldUseInspectorProperties);
+
+        int enemyProjectileLayer = LayerMask.NameToLayer("EnemyProjectile");
+        Assert.IsTrue(enemyProjectileLayer != -1);
+        Assert.IsTrue(enemyProjectileLayer == _projectileManager._prefab.layer, "Projectile shot by ranged enemy must be on enemy projectile layer");
     }
 
     public void HandleAttack()

@@ -275,7 +275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Charred Mana (Alpha v0.1.3)
+  m_text: Charred Mana (Alpha v0.1.4)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1941,6 +1941,8 @@ Transform:
   - {fileID: 270274205}
   - {fileID: 908121077}
   - {fileID: 1786949191}
+  - {fileID: 1747460920}
+  - {fileID: 1141862146}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &639475376
@@ -2785,7 +2787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeDuringTurns:
-    Begin: 50
+    Begin: 100
     End: 999999
   _spawnCooldown: 12
   _enemyPrefab: {fileID: 5190042482056591089, guid: 2453c3c9663bba442a43fc093b7684a1, type: 3}
@@ -3290,6 +3292,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1097880725}
   m_CullTransparentMesh: 1
+--- !u!1 &1141862145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1141862146}
+  - component: {fileID: 1141862147}
+  m_Layer: 0
+  m_Name: RangedEnemySpawner (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1141862146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141862145}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622747382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1141862147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141862145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activeDuringTurns:
+    Begin: 150
+    End: 999999
+  _spawnCooldown: 10
+  _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
+  _maxEnemies: 10
 --- !u!1 &1232652833
 GameObject:
   m_ObjectHideFlags: 0
@@ -3739,6 +3791,56 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4419299335272899014, guid: bc98ecebed18360428e60ee89d7097f3, type: 3}
   m_PrefabInstance: {fileID: 1734105812}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1747460919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1747460920}
+  - component: {fileID: 1747460921}
+  m_Layer: 0
+  m_Name: RangedEnemySpawner (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1747460920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747460919}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 622747382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1747460921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747460919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activeDuringTurns:
+    Begin: 100
+    End: 150
+  _spawnCooldown: 20
+  _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
+  _maxEnemies: 10
 --- !u!1 &1754467238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,9 +4037,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeDuringTurns:
-    Begin: 0
-    End: 999999
-  _spawnCooldown: 12
+    Begin: 50
+    End: 100
+  _spawnCooldown: 9
   _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
   _maxEnemies: 10
 --- !u!1 &1826374771
