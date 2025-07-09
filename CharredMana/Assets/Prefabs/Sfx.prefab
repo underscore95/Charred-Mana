@@ -48,3 +48,4 @@ MonoBehaviour:
   _playerMove: {fileID: 8300000, guid: 622d265ff60fa8842977adb2249799bc, type: 3}
   _spellCast: {fileID: 8300000, guid: c87d934ce739b7c4fbd01a564a1ab6e5, type: 3}
   _playerDamaged: {fileID: 8300000, guid: 1b53e703f274ea44385e7f11f9a70aaa, type: 3}
+  _playerLevelUp: {fileID: 8300000, guid: dbdf4b856c175b543aa07f537a6755ea, type: 3}
