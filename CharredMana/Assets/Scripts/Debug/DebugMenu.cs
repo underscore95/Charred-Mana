@@ -116,7 +116,7 @@ public class DebugMenu : MonoBehaviour
         if (DEBUG && Options.StartOnFloor && Options.StartingFloor != 0)
         {
             print("[DebugMenu] Starting on floor " + Options.StartingFloor);
-            while (_floorManager.Floor != Options.StartingFloor)
+            while (_floorManager.CurrentFloor != Options.StartingFloor)
             {
                 _floorManager.NextFloor();
             }

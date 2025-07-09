@@ -15,9 +15,9 @@ public class WorldFloorManager : MonoBehaviour
         _world = GetComponent<World>();
 
         FloorManager floorManager = FindAnyObjectByType<FloorManager>();
-        floorManager.OnFloorChange += () => UpdateWorld(floorManager.Floor);
+        floorManager.OnFloorChange += () => UpdateWorld(floorManager.CurrentFloor);
 
-        UpdateWorld(floorManager.Floor);
+        UpdateWorld(floorManager.CurrentFloor);
     }
 
     private void UpdateWorld(int newFloor)

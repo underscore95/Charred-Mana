@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnFloorChange()
     {
-        if (_floorManager.Floor == _floor)
+        if (_floorManager.CurrentFloor == _floor)
         {
             _turnManager.OnTurnChange += TrySpawnEnemy;
             _pool = new(_enemyPrefab, _maxEnemies, transform);
@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
                 TrySpawnEnemy();
             }
         }
-        else if (_floorManager.Floor > _floor)
+        else if (_floorManager.CurrentFloor > _floor)
         {
             Destroy(gameObject);
         }

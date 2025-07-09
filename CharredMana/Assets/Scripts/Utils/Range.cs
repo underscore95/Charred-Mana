@@ -19,6 +19,11 @@ public struct IntRange
         Begin += v;
         End += v;
     }
+
+    public readonly bool Contains(int v)
+    {
+        return v >= Begin && v <= End;
+    }
 }
 
 [Serializable]

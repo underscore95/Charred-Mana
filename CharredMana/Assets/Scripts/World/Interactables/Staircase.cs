@@ -6,6 +6,8 @@ public class Staircase : MonoBehaviour
     private FloorManager _floorManager;
     private Player _player;
 
+    private ObjectPoolRef _poolRefOptional;
+
     private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
@@ -13,10 +15,27 @@ public class Staircase : MonoBehaviour
         _floorManager.OnFloorChange += FloorChange;
     }
 
+    private void Start()
+    {
+        if (TryGetComponent<ObjectPoolRef>(out var r))
+        {
+            _poolRefOptional = r;
+        }
+    }
+
     private void FloorChange()
     {
         _floorManager.OnFloorChange -= FloorChange;
-        Destroy(gameObject);
+        if (_poolRefOptional != null)
+        {
+            // this object is pooled
+            Assert.IsNotNull(_poolRefOptional.Pool);
+            _poolRefOptional.Pool.ReleaseObject(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,3 +45,4 @@ public class Staircase : MonoBehaviour
         _floorManager.NextFloor();
     }
 }
+

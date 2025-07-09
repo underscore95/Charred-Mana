@@ -6,22 +6,22 @@ public class FloorManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _floorText;
 
-    public int Floor { get; private set; } = 0;
+    public int CurrentFloor { get; private set; } = 0;
     public UnityAction OnFloorChange { get; set; } = () => { };
 
     private void Awake()
     {
-        OnFloorChange += () => _floorText.text = "Floor " + Floor;
+        OnFloorChange += () => _floorText.text = "Floor " + CurrentFloor;
     }
 
     public void NextFloor()
     {
-        Floor++;
+        CurrentFloor++;
         OnFloorChange.Invoke();
     }
 
     public bool IsHubFloor()
     {
-        return Floor == 0;
+        return CurrentFloor == 0;
     }
 }
