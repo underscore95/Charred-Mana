@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 
-public class Enemy :  LivingEntity
+public class Enemy : LivingEntity
 {
     [SerializeField] private StatContainer _baseStats = new();
     [SerializeField] private float _experienceDropped = 10;
@@ -19,6 +19,7 @@ public class Enemy :  LivingEntity
     public EnemySpawner Spawner { get; private set; }
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
+    private bool _isDead = false;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class Enemy :  LivingEntity
 
     private void OnEnable()
     {
+        _isDead = false;
         transform.position = PickSpawnLocation();
 
         _turnManager.OnTurnChange += PlayTurn;
@@ -69,6 +71,11 @@ public class Enemy :  LivingEntity
     {
         if (EntityStats.IsDead())
         {
+            if (_isDead)
+            {
+                return;
+            }
+            _isDead = true;
             _player.MonstersKilled++;
             _player.PlayerLevel.Experience += _experienceDropped;
             Pool.ReleaseObject(gameObject);
