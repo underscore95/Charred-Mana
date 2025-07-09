@@ -46,8 +46,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(StartNextTurnCooldown());
 
         StartCoroutine(Utils.MoveRigidBody(_rigidBody, displacement));
-        _turnManager.OnTurnChange.Invoke();
-        _turnManager.OnLateTurnChange.Invoke();
+        _turnManager.NextTurn();
     }
 
     private IEnumerator StartNextTurnCooldown()
