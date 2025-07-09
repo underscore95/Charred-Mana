@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// Decoration without collisions, e.g. grass, flowers
 public class ChunkDecoration : ChunkTilemap
 {
     public override void OnLoad()

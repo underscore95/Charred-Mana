@@ -5607,6 +5607,7 @@ GameObject:
   - component: {fileID: 2123784264}
   - component: {fileID: 2123784265}
   - component: {fileID: 2123784266}
+  - component: {fileID: 2123784267}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -5654,8 +5655,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a6c2f9e5f9c5449b9084ae3264e7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GenerateWorldOnStart: 0
   _worldGenSettings:
     _biomes: 0
+    _noiseFrequency: 96
+    _seed: 0
+--- !u!114 &2123784267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123784263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01020ef3fed341469da2d382f8a970c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _worldGenSettingsPerFloor:
+  - _biomes: 0
+    _noiseFrequency: 96
+    _seed: 1
+  - _biomes: 0
     _noiseFrequency: 96
     _seed: 0
 --- !u!1001 &3210242718502637803

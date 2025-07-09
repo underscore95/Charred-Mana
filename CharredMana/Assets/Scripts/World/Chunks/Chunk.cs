@@ -36,6 +36,7 @@ public class Chunk : MonoBehaviour
     {
         foreach (var tilemap in _chunkTilemaps)
         {
+            tilemap.Tilemap.ClearAllTiles();
             tilemap.OnLoad();
         }
     }

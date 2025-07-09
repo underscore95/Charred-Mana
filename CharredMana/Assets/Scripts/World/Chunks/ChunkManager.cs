@@ -19,8 +19,15 @@ public class ChunkManager : MonoBehaviour
         FindAnyObjectByType<TurnManager>().OnTurnChange += LoadAndUnloadChunksIfNecessary;
     }
 
-    private void Start()
+    // Reload all chunks, regenerating them
+    public void ReloadChunks()
     {
+        _centerChunk = null;
+        foreach (var (_, chunk) in _loadedChunks)
+        {
+            _pool.ReleaseObject(chunk.gameObject);
+        }
+        _loadedChunks.Clear();
         LoadAndUnloadChunksIfNecessary();
     }
 

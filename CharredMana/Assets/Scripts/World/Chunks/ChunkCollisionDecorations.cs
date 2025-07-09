@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// Decoration with collisions, e.g. rocks
 public class ChunkCollisionDecorations : ChunkTilemap
 {
     private ChunkDecoration _decoration;
