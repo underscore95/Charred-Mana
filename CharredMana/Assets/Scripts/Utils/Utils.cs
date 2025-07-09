@@ -58,4 +58,14 @@ public static class Utils
         seed ^= seed >> 16;
         return (seed & 0xFFFFFF) / (float)0x1000000;
     }
+
+    // Returns a uniform float between 0 and 1, deterministic.
+    public static float WhiteNoise(int x)
+    {
+        uint seed = (uint)(x * 374761393);
+        seed ^= seed >> 13;
+        seed *= 1274126177;
+        seed ^= seed >> 16;
+        return (seed & 0xFFFFFF) / (float)0x1000000;
+    }
 }

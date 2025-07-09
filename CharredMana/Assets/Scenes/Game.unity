@@ -5654,6 +5654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a6c2f9e5f9c5449b9084ae3264e7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _worldGenSettings:
+    _biomes: 0
+    _noiseFrequency: 96
+    _seed: 0
 --- !u!1001 &3210242718502637803
 PrefabInstance:
   m_ObjectHideFlags: 0
