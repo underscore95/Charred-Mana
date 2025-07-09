@@ -11,10 +11,14 @@ public class Chunk : MonoBehaviour
     public Vector2Int ChunkCoords { get; private set; } = Vector2Int.zero;
     private BiomeManager _biomeManager;
     private readonly List<ChunkTilemap> _chunkTilemaps = new();
+    private World _world;
 
     private void Awake()
     {
         _biomeManager = FindAnyObjectByType<BiomeManager>();
+
+        _world = GetComponentInParent<World>();
+        Assert.IsNotNull(_world);
 
         // order to load the tilemaps
         _chunkTilemaps.Add(GetComponent<ChunkTerrain>());
@@ -67,7 +71,8 @@ public class Chunk : MonoBehaviour
 
     public Biome GetBiome(Vector2Int localCoords)
     {
-        Vector2Int world = LocalCoordsToWorldCoords(localCoords);
-        return _biomeManager.GetBiome(world);
+        Vector2Int worldCoords = LocalCoordsToWorldCoords(localCoords);
+        BiomeType biomeType = _world.WorldGenSettings.WorldBiomes.BiomeTypeAt(_world, worldCoords);
+        return _biomeManager.GetBiome(biomeType);
     }
 }
