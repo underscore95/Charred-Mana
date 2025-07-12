@@ -68,4 +68,10 @@ public static class Utils
         seed ^= seed >> 16;
         return (seed & 0xFFFFFF) / (float)0x1000000;
     }
+
+    public static float XYDistanceSquared(Vector3 position1, Vector3 position2)
+    {
+        Vector2 delta = (Vector2)position2 - (Vector2)position1;
+        return delta.sqrMagnitude;
+    }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class InteractableSpawner : ObjectPoolMonoBehaviour
 {
@@ -10,8 +11,10 @@ public class InteractableSpawner : ObjectPoolMonoBehaviour
     [SerializeField] private Vector2 _maxDistanceFromPlayer = new(6, 9);
     [SerializeField] private int _waitBeforeFirstSpawn = 0;
     [SerializeField] private bool _resetFirstSpawnWaitEveryFloor = true;
-    private int _turnsSinceSpawn;
 
+    public UnityAction<GameObject> OnEntitySpawn { get; set; } = ent => { };
+
+    private int _turnsSinceSpawn;
     private TurnManager _turnManager;
     private FloorManager _floorManager;
     private Player _player;
@@ -68,7 +71,8 @@ public class InteractableSpawner : ObjectPoolMonoBehaviour
             _pool.ReleaseOldestObject();
         }
 
-        _pool.ActivateObject().transform.position = GetRandomPosition();
+        GameObject ent = _pool.ActivateObject(); ent.transform.position = GetRandomPosition();
+        OnEntitySpawn.Invoke(ent);
     }
 
     private Vector3 GetRandomPosition()

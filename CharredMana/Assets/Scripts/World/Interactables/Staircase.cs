@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class Staircase : MonoBehaviour
 {
+    public static List<Staircase> StaircasesInWorld { get; private set; } = new();
+
     private FloorManager _floorManager;
     private Player _player;
 
@@ -21,6 +25,16 @@ public class Staircase : MonoBehaviour
         {
             _poolRefOptional = r;
         }
+    }
+
+    private void OnEnable()
+    {
+        StaircasesInWorld.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        StaircasesInWorld.Remove(this);
     }
 
     private void FloorChange()
