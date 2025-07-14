@@ -2518,7 +2518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862c7f20dc9381e4988da004802616ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainMenu: MainMenu
+  _hubScene: Game
 --- !u!1 &737669372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3023,6 +3023,7 @@ Transform:
   - {fileID: 622747382}
   - {fileID: 262610371}
   - {fileID: 495128865}
+  - {fileID: 868623236}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &829063945
@@ -3183,7 +3184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868623235}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3192,7 +3193,7 @@ Transform:
   - {fileID: 986046004}
   - {fileID: 1056847052}
   - {fileID: 2132972836}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 821079318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &891771359
 GameObject:
@@ -3311,7 +3312,7 @@ GameObject:
   - component: {fileID: 925560503}
   - component: {fileID: 925560502}
   m_Layer: 5
-  m_Name: MainMenuButton
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3383,7 +3384,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 710604242}
         m_TargetAssemblyTypeName: StatsText, Assembly-CSharp
-        m_MethodName: GoToMainMenu
+        m_MethodName: GoToHub
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5659,7 +5660,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Menu
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5984,11 +5985,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3722583307212336587, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 3840
       objectReference: {fileID: 0}
     - target: {fileID: 3722583307212336587, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 2160
       objectReference: {fileID: 0}
     - target: {fileID: 3722583307212336587, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6977,11 +6978,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3722583307212336587, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 3840
       objectReference: {fileID: 0}
     - target: {fileID: 3722583307212336587, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 2160
       objectReference: {fileID: 0}
     - target: {fileID: 3722583307212336587, guid: 2bd5a13559cfda74c8c29d2c69066ef1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7046,7 +7047,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 3210242718502637803}
   - {fileID: 1351227822}
-  - {fileID: 868623236}
   - {fileID: 1964902279}
   - {fileID: 821079318}
   - {fileID: 800884771}

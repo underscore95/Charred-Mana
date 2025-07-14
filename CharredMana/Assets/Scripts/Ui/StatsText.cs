@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class StatsText : MonoBehaviour
 {
-    [SerializeField] private string _mainMenu = "MainMenu";
+    [SerializeField] private string _hubScene = "Game";
     private TextMeshProUGUI _statsText;
     private string _statsTextOriginalContents;
 
@@ -38,8 +38,8 @@ public class StatsText : MonoBehaviour
         );
     }
 
-    public void GoToMainMenu()
+    public void GoToHub()
     {
-        SceneManager.LoadScene(_mainMenu, LoadSceneMode.Single);
+        SceneManager.LoadScene(_hubScene, LoadSceneMode.Single);
     }
 }
