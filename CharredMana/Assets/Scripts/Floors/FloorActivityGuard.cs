@@ -37,4 +37,9 @@ public class FloorActivityGuard : FloorRange
 
         MonoBehaviour.Destroy(_gameObject);
     }
+
+    internal bool HasGameObject()
+    {
+        return _gameObject != null;
+    }
 }

@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -42,5 +43,11 @@ public class TurnManager : MonoBehaviour
     {
         OnTurnChange.Invoke();
         OnLateTurnChange.Invoke();
+    }
+
+    public void ResetTurn()
+    {
+        CurrentTurn = 0;
+        NextTurn();
     }
 }

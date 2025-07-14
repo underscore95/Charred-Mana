@@ -14,6 +14,18 @@ public class FloorRange
     public void Init()
     {
         _floorManager = MonoBehaviour.FindAnyObjectByType<FloorManager>();
+
+        Assert.IsFalse(WasWrongInitCalled(), "You need to call Init(GameObject) on FloorActivityGuard");
+    }
+
+    private bool WasWrongInitCalled()
+    {
+        // check if we called Init on a FloorActivityGuard
+        if (this is FloorActivityGuard g)
+        {
+            return !g.HasGameObject();
+        }
+        return false;
     }
 
     public bool IsInRange()

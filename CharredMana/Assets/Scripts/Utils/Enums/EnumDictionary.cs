@@ -1,12 +1,14 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 // Dictionary where keys are enums, all values in the enum must be consecutive, stored in a list rather than using hashing
+[Serializable]
 public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : Enum
 {
-    private readonly List<V> _values;
-    private readonly List<bool> _hasValues;
+    [SerializeField] private List<V> _values;
+    [SerializeField] private List<bool> _hasValues;
 
     public EnumDictionary()
     {
@@ -103,7 +105,7 @@ public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : En
     }
 
     private int _capacity = Enum.GetValues(typeof(K)).Length;
-    public int Capacity { get {  return _capacity; } }  
+    public int Capacity { get { return _capacity; } }
 
     public int Count
     {
