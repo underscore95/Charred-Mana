@@ -1,3 +1,6 @@
+using System;
+using UnityEngine.Assertions;
+
 public static class UIState
 {
     public static bool IsLevelUpRewardsUiOpen = false;
@@ -6,11 +9,19 @@ public static class UIState
 
     public static bool IsAnyUiOpen()
     {
-        return 
+        return
             IsLevelUpRewardsUiOpen ||
             IsSpellSelectUiOpen ||
             IsDeathStateUiOpen ||
             false
             ;
+    }
+
+    public static void MarkAllUiClosed()
+    {
+        IsLevelUpRewardsUiOpen = false;
+        IsSpellSelectUiOpen = false;
+        IsDeathStateUiOpen = false;
+        Assert.IsFalse(IsAnyUiOpen());
     }
 }

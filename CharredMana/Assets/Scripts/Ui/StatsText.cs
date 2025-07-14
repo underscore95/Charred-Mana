@@ -40,6 +40,7 @@ public class StatsText : MonoBehaviour
 
     public void GoToHub()
     {
+        UIState.MarkAllUiClosed();
         SceneManager.LoadScene(_hubScene, LoadSceneMode.Single);
     }
 }
