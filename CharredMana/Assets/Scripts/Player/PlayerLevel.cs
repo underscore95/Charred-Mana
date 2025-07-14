@@ -19,7 +19,7 @@ public class PlayerLevel : PlayerValue
         set
         {
             Assert.IsTrue(_hasStarted); // Some listeners might not be registered yet
-            if (_value > value) TotalExperienceGained += (int) (_value - value);
+            if (value > _value) TotalExperienceGained += (int)(value - _value);
             _value = value;
             while (_value >= _maxValue)
             {
