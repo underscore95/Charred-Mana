@@ -17,6 +17,7 @@ public class SpellManager : MonoBehaviour
     private List<SpellSlotUi> _spellUis = new();
     private List<PlayerSpell> _spells = new();
     private readonly List<Vector3> _originalSpellUiPositions = new();
+    private bool _gotAllOriginalPositions = false;
     public UnityAction OnSpellUnlock = delegate () { };
 
     private void Awake()
@@ -25,11 +26,11 @@ public class SpellManager : MonoBehaviour
         TransformUtils.GetChildrenWithComponent(ref _spellUis, _spellUisContainer);
 
         Assert.IsTrue(_spells.Count > 0);
-
+        Assert.IsTrue(_spellUis.Count > 0); 
+        
         for (int i = 0; i < _spellUis.Count; i++)
         {
-            _spellUis[i].Spell = null;
-            _originalSpellUiPositions.Add(_spellUis[i].transform.position);
+            _originalSpellUiPositions.Add(_spellUis[i].PositionWhenAwakeCalled);
         }
     }
 
@@ -41,6 +42,27 @@ public class SpellManager : MonoBehaviour
 
     private void Update()
     {
+        // Get all positions before we moved them
+        if (!_gotAllOriginalPositions)
+        {
+            _gotAllOriginalPositions = true;
+            for (int i = 0; i < _spellUis.Count; i++)
+            {
+                _originalSpellUiPositions.Add(_spellUis[i].PositionWhenAwakeCalled);
+                if (_originalSpellUiPositions[i] == Vector3.zero) _gotAllOriginalPositions = false;
+            }
+            return;
+        }
+
+        // User input
+        foreach (SpellSlotUi ui in _spellUis)
+        {
+            if (ui.enabled)
+            {
+                ui.CastSpellIfInputPressed();
+            } 
+        }
+
         // if () return; // if spells not changed
 
         // set y positions so no gaps if some middle slots aren't used
@@ -104,7 +126,7 @@ public class SpellManager : MonoBehaviour
     public void UnlockSpell(int spellIndex)
     {
         _unlockedSpells.Add(spellIndex);
-        OnSpellUnlock();
+        OnSpellUnlock.Invoke();
     }
 
     // Returns the first slot which has no spell, returns -1 if every slot is used

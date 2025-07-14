@@ -5335,7 +5335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guard:
     _floors:
-      Begin: 0
+      Begin: 1
       End: 2147483647
 --- !u!1 &1844475615
 GameObject:

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
 public class SpellSlotUi : MonoBehaviour
@@ -19,7 +20,6 @@ public class SpellSlotUi : MonoBehaviour
         set
         {
             _spell = value;
-            _uiParent.SetActive(_spell != null);
             if (_spell != null)
             {
                 _manaCostText.text = "Mana: " + _spell.ManaCost;
@@ -29,11 +29,14 @@ public class SpellSlotUi : MonoBehaviour
     }
 
     private SpellQueue _spellQueue;
+    public Vector3 PositionWhenAwakeCalled { get; private set; } = Vector3.zero;
 
     private void Awake()
     {
+        PositionWhenAwakeCalled = transform.position;
+
         _spellQueue = FindAnyObjectByType<SpellQueue>();
-        Spell = null;
+        if (_spell == null) Spell = null; // Make sure ui is correct, if _spell isn't null then it has already been set and must be correct
 
         _cooldownParent.SetActive(false);
 
@@ -44,6 +47,12 @@ public class SpellSlotUi : MonoBehaviour
 
     private void Update()
     {
+        _uiParent.SetActive(enabled && _spell != null);
+    }
+
+    public void CastSpellIfInputPressed()
+    {
+        Assert.IsTrue(enabled);
         if (Spell == null) return;
 
         if (_triggerInput.ToInputAction().WasPressedThisFrame())
@@ -55,6 +64,8 @@ public class SpellSlotUi : MonoBehaviour
 
     private void UpdateCooldownDisplay()
     {
+        if (!enabled) return;
+
         if (_spell == null)
         {
             _cooldownParent.SetActive(false);
