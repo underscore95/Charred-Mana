@@ -13,6 +13,10 @@ public class CurrencyDisplay : MonoBehaviour
         get { return _currencyType; }
         set
         {
+            _currencyManager = FindAnyObjectByType<CurrencyManager>();
+            _image = GetComponentInChildren<Image>();
+            _text = GetComponentInChildren<TextMeshProUGUI>();
+
             _currencyType = value;
             _amountLastUpdate = float.MinValue;
             _currencyInfo = _currencyManager.GetCurrencyInfo(_currencyType);
@@ -26,13 +30,6 @@ public class CurrencyDisplay : MonoBehaviour
     private Image _image;
     private TextMeshProUGUI _text;
     private float _amountLastUpdate;
-
-    private void Awake()
-    {
-        _image = GetComponentInChildren<Image>();
-        _text = GetComponentInChildren<TextMeshProUGUI>();
-        _currencyManager = FindAnyObjectByType<CurrencyManager>();
-    }
 
     private void Start()
     {

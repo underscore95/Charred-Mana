@@ -14,10 +14,9 @@ public class SpellManager : MonoBehaviour
     [SerializeField] private Transform _spellsContainer;
     [SerializeField] private Transform _spellUisContainer;
     [SerializeField] private List<int> _unlockedSpells = new();
+    [SerializeField] private float _spellSlotUiHeight = 205;
     private List<SpellSlotUi> _spellUis = new();
     private List<PlayerSpell> _spells = new();
-    private readonly List<Vector3> _originalSpellUiPositions = new();
-    private bool _gotAllOriginalPositions = false;
     public UnityAction OnSpellUnlock = delegate () { };
 
     private void Awake()
@@ -26,12 +25,7 @@ public class SpellManager : MonoBehaviour
         TransformUtils.GetChildrenWithComponent(ref _spellUis, _spellUisContainer);
 
         Assert.IsTrue(_spells.Count > 0);
-        Assert.IsTrue(_spellUis.Count > 0); 
-        
-        for (int i = 0; i < _spellUis.Count; i++)
-        {
-            _originalSpellUiPositions.Add(_spellUis[i].PositionWhenAwakeCalled);
-        }
+        Assert.IsTrue(_spellUis.Count > 0);
     }
 
     private void Start()
@@ -42,25 +36,13 @@ public class SpellManager : MonoBehaviour
 
     private void Update()
     {
-        // Get all positions before we moved them
-        if (!_gotAllOriginalPositions)
-        {
-            _gotAllOriginalPositions = true;
-            for (int i = 0; i < _spellUis.Count; i++)
-            {
-                _originalSpellUiPositions.Add(_spellUis[i].PositionWhenAwakeCalled);
-                if (_originalSpellUiPositions[i] == Vector3.zero) _gotAllOriginalPositions = false;
-            }
-            return;
-        }
-
         // User input
         foreach (SpellSlotUi ui in _spellUis)
         {
             if (ui.enabled)
             {
                 ui.CastSpellIfInputPressed();
-            } 
+            }
         }
 
         // if () return; // if spells not changed
@@ -70,7 +52,7 @@ public class SpellManager : MonoBehaviour
         foreach (SpellSlotUi ui in _spellUis)
         {
             if (ui.Spell == null) continue;
-            ui.transform.position = _originalSpellUiPositions[numSelectedSpells];
+            ui.transform.localPosition = _spellSlotUiHeight * numSelectedSpells * Vector3.down;
             numSelectedSpells++;
         }
     }

@@ -29,12 +29,9 @@ public class SpellSlotUi : MonoBehaviour
     }
 
     private SpellQueue _spellQueue;
-    public Vector3 PositionWhenAwakeCalled { get; private set; } = Vector3.zero;
 
     private void Awake()
     {
-        PositionWhenAwakeCalled = transform.position;
-
         _spellQueue = FindAnyObjectByType<SpellQueue>();
         if (_spell == null) Spell = null; // Make sure ui is correct, if _spell isn't null then it has already been set and must be correct
 
