@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -131,14 +132,7 @@ public class DebugMenu : MonoBehaviour
             }
         });
 
-        if (DEBUG && Options.StartOnFloor && Options.StartingFloor != 0)
-        {
-            print("[DebugMenu] Starting on floor " + Options.StartingFloor);
-            while (_floorManager.CurrentFloor != Options.StartingFloor)
-            {
-                _floorManager.NextFloor();
-            }
-        }
+        StartCoroutine(GoToStartingFloorIfUsing());
 
         // Currency
         List<TMP_Dropdown.OptionData> currencyDropdownOptions = new();
@@ -222,6 +216,20 @@ public class DebugMenu : MonoBehaviour
 
         #endregion
 
+    }
+
+    private IEnumerator GoToStartingFloorIfUsing()
+    {
+        if (DEBUG && Options.StartOnFloor && Options.StartingFloor != 0)
+        {
+            yield return new WaitForEndOfFrame();
+            print("[DebugMenu] Starting on floor " + Options.StartingFloor);
+            while (_floorManager.CurrentFloor != Options.StartingFloor)
+            {
+                yield return new WaitForEndOfFrame();
+                _floorManager.NextFloor();
+            }
+        }
     }
 
     private void OnDestroy()
