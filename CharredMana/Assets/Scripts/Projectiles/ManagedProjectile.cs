@@ -24,7 +24,7 @@ class ManagedProjectile : MonoBehaviour
 
     public void ReleaseProjectile()
     {
-        _projManager.RemoveProjectile(gameObject);
+        _projManager.ReleaseProjectile(gameObject);
     }
 
     public bool IsPastLifespan()

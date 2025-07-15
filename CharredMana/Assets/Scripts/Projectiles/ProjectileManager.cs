@@ -8,14 +8,31 @@ public class ProjectileManager : MonoBehaviour
     [SerializeField] internal bool _shouldUseInspectorProperties = false;
     [SerializeField] internal GameObject _prefab;
     [SerializeField] private int _capacity = 10;
+    [SerializeField] private bool _releaseProjectilesOnFloorChange = true;
 
     private ObjectPool _projectiles;
+    private FloorManager _floorManager;
 
     private void Awake()
     {
+        _floorManager = FindAnyObjectByType<FloorManager>();
+
         if (_shouldUseInspectorProperties)
         {
             Init(_prefab);
+        }
+
+        if (!_shouldUseInspectorProperties || !_releaseProjectilesOnFloorChange)
+        {
+            _floorManager.OnFloorChange += FloorChange;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (!_shouldUseInspectorProperties || !_releaseProjectilesOnFloorChange)
+        {
+            _floorManager.OnFloorChange -= FloorChange;
         }
     }
 
@@ -25,6 +42,11 @@ public class ProjectileManager : MonoBehaviour
         {
             Assert.IsNull(_prefab, "Projectile manager is set to not use inspector properties, but a projectile prefab is set");
         }
+    }
+
+    private void FloorChange()
+    {
+        ReleaseAllProjectiles();
     }
 
     public void Init(GameObject proj)
@@ -73,9 +95,18 @@ public class ProjectileManager : MonoBehaviour
         return projectile;
     }
 
-    public void RemoveProjectile(GameObject proj)
+    public void ReleaseProjectile(GameObject proj)
     {
         _projectiles.ReleaseObject(proj);
+    }
+
+    public void ReleaseAllProjectiles()
+    {
+        for (int i = _projectiles.CurrentSize; i > 0; i--)
+        {
+            _projectiles.ReleaseOldestObject();
+        }
+        Assert.IsTrue(_projectiles.CurrentSize == 0);
     }
 
     public ObjectPool InternalPool() { return _projectiles; }
