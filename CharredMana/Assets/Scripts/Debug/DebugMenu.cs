@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -15,6 +17,7 @@ public class DebugMenu : MonoBehaviour
         public bool CanDie = true;
         public bool StartOnFloor = false;
         public int StartingFloor = 0;
+        public CurrencyType SelectedCurrency = CurrencyType.Essence;
     }
 
     [SerializeField] private GameObject _debugBuildText;
@@ -29,14 +32,29 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Toggle _startOnFloorToggle;
     [SerializeField] private TMP_InputField _startingFloorInput;
     [SerializeField] private Button _nextFloorButton;
+    [SerializeField] private CurrencyDisplay _currencyDisplay;
+    [SerializeField] private TMP_Dropdown _selectedCurrency;
+    [SerializeField] private Button _setCurrency0;
+    [SerializeField] private Button _addCurrency1;
+    [SerializeField] private Button _addCurrency10;
+    [SerializeField] private Button _addCurrency100;
+    [SerializeField] private Button _addCurrency1000;
+    [SerializeField] private Button _addCurrency10000;
+    [SerializeField] private Button _subtractCurrency1;
+    [SerializeField] private Button _subtractCurrency10;
+    [SerializeField] private Button _subtractCurrency100;
+    [SerializeField] private Button _subtractCurrency1000;
+    [SerializeField] private Button _subtractCurrency10000;
 
     public DebugOptions Options { get; private set; }
     private bool _wasDebugMenuOpenLastFrame = false;
     private FloorManager _floorManager;
+    private CurrencyManager _currencyManager;
 
     private void Awake()
     {
         _floorManager = FindAnyObjectByType<FloorManager>();
+        _currencyManager = FindAnyObjectByType<CurrencyManager>();
 
         if (_debugBuildText)
         {
@@ -121,6 +139,89 @@ public class DebugMenu : MonoBehaviour
                 _floorManager.NextFloor();
             }
         }
+
+        // Currency
+        List<TMP_Dropdown.OptionData> currencyDropdownOptions = new();
+        foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
+        {
+            currencyDropdownOptions.Add(new(currency.ToString()));
+        }
+        _selectedCurrency.AddOptions(currencyDropdownOptions);
+        _selectedCurrency.SetValueWithoutNotify((int)Options.SelectedCurrency);
+        _selectedCurrency.onValueChanged.AddListener(newCurrency =>
+        {
+            Options.SelectedCurrency = (CurrencyType)newCurrency;
+            _currencyDisplay.Currency = Options.SelectedCurrency;
+            print("[DebugMenu] Selected currency" + Options.SelectedCurrency);
+        });
+        _currencyDisplay.Currency = Options.SelectedCurrency;
+
+        #region Currency Buttons
+
+        _setCurrency0.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Set {Options.SelectedCurrency} to 0");
+            _currencyManager.Set(Options.SelectedCurrency, 0);
+        });
+
+        #region Add Currency
+        _addCurrency1.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Add 1 to {Options.SelectedCurrency}");
+            _currencyManager.Add(Options.SelectedCurrency, 1);
+        });
+        _addCurrency10.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Add 10 to {Options.SelectedCurrency}");
+            _currencyManager.Add(Options.SelectedCurrency, 10);
+        });
+        _addCurrency100.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Add 100 to {Options.SelectedCurrency}");
+            _currencyManager.Add(Options.SelectedCurrency, 100);
+        });
+        _addCurrency1000.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Add 1000 to {Options.SelectedCurrency}");
+            _currencyManager.Add(Options.SelectedCurrency, 1000);
+        });
+        _addCurrency10000.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Add 10000 to {Options.SelectedCurrency}");
+            _currencyManager.Add(Options.SelectedCurrency, 10000);
+        });
+        #endregion
+
+        #region Subtract Currency
+        _subtractCurrency1.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Subtract 1 from {Options.SelectedCurrency}");
+            _currencyManager.Remove(Options.SelectedCurrency, 1);
+        });
+        _subtractCurrency10.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Subtract 10 from {Options.SelectedCurrency}");
+            _currencyManager.Remove(Options.SelectedCurrency, 10);
+        });
+        _subtractCurrency100.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Subtract 100 from {Options.SelectedCurrency}");
+            _currencyManager.Remove(Options.SelectedCurrency, 100);
+        });
+        _subtractCurrency1000.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Subtract 1000 from {Options.SelectedCurrency}");
+            _currencyManager.Remove(Options.SelectedCurrency, 1000);
+        });
+        _subtractCurrency10000.onClick.AddListener(() =>
+        {
+            Debug.Log($"[DebugMenu] Subtract 10000 from {Options.SelectedCurrency}");
+            _currencyManager.Remove(Options.SelectedCurrency, 10000);
+        });
+        #endregion
+
+        #endregion
+
     }
 
     private void OnDestroy()

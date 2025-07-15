@@ -19,6 +19,13 @@ public class Sfx : MonoBehaviour
         Assert.IsNull(_instance);
         Assert.IsNull(_settings);
         _instance = this;
+
+        // If we play before settings are parsed, mute it
+        _settings = new()
+        {
+            MusicVolume = 0,
+            SoundVolume = 0
+        };
     }
 
     private void Start()

@@ -8,20 +8,35 @@ public class CurrencyDisplay : MonoBehaviour
     [SerializeField] private StringUtils.NumberFormat _format = StringUtils.NumberFormat.COMMA_SEPERATED;
     [SerializeField] private CurrencyType _currencyType;
 
+    public CurrencyType Currency
+    {
+        get { return _currencyType; }
+        set
+        {
+            _currencyType = value;
+            _amountLastUpdate = float.MinValue;
+            _currencyInfo = _currencyManager.GetCurrencyInfo(_currencyType);
+
+            if (_image != null) _image.sprite = _currencyInfo.Icon;
+        }
+    }
+
     private CurrencyManager _currencyManager;
     private CurrencyInfo _currencyInfo;
     private Image _image;
     private TextMeshProUGUI _text;
-    private float _amountLastUpdate = float.MinValue;
+    private float _amountLastUpdate;
 
-    private void Start()
+    private void Awake()
     {
         _image = GetComponentInChildren<Image>();
         _text = GetComponentInChildren<TextMeshProUGUI>();
         _currencyManager = FindAnyObjectByType<CurrencyManager>();
-        _currencyInfo = _currencyManager.GetCurrencyInfo(_currencyType);
+    }
 
-        _image.sprite = _currencyInfo.Icon;
+    private void Start()
+    {
+        Currency = _currencyType;
     }
 
     private void Update()

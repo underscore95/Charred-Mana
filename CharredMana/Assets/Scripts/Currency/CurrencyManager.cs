@@ -49,6 +49,11 @@ public class CurrencyManager : MonoBehaviour
 
     public void Set(CurrencyType currencyType, float amount)
     {
+        if (amount < 0)
+        {
+            amount = 0;
+            Debug.LogWarning($"Attempted to set {currencyType} to {amount}, had to clamp to 0.");
+        }
         Currencies[currencyType] = amount;
     }
 
