@@ -21,7 +21,7 @@ public class PlayerMana : PlayerValue
         set
         {
             _value = value;
-            if (_value > _maxValue) _value= _maxValue;  
+            if (_value > _maxValue) _value = _maxValue;
             UpdateText();
         }
     }

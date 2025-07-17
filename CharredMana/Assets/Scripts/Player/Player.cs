@@ -14,6 +14,7 @@ public class Player :  LivingEntity
     public int MonstersKilled { get; set; } = 0;
     public int SpellsCast { get; set; } = 0;
     private DebugMenu _debugMenu;
+    private PlayerValue[] _valueDisplays;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class Player :  LivingEntity
         PlayerLevel = GetComponentInChildren<PlayerLevel>();
         OnDamaged() += _ => Sfx.PlayPlayerDamaged();
         _debugMenu=FindAnyObjectByType<DebugMenu>();
+        _valueDisplays=GetComponentsInChildren<PlayerValue>();
     }
 
     private void Update()
@@ -33,5 +35,13 @@ public class Player :  LivingEntity
     public bool IsDead()
     {
         return EntityStats.CurrentHealth <= 0 && _debugMenu.Options.CanDie;
+    }
+
+    public void UpdateStatDisplayText()
+    {
+        foreach (PlayerValue item in _valueDisplays)
+        {
+            item.UpdateText();
+        }
     }
 }

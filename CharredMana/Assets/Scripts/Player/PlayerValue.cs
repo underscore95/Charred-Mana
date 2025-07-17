@@ -16,15 +16,7 @@ public abstract class PlayerValue : MonoBehaviour
         UpdateText();
     }
 
-    public void Remove(float amount)
-    {
-        Assert.IsTrue(amount > 0);
-        _value -= amount;
-
-        UpdateText();
-    }
-
-    protected void UpdateText()
+    public void UpdateText()
     { 
         _text.text = string.Format("{2}: {0} / {1}", Mathf.CeilToInt(_value - 0.001f), Mathf.CeilToInt(_maxValue - 0.001f), _unitName);
     }
