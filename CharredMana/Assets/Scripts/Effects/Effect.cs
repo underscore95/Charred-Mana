@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public abstract class Effect : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public abstract class Effect : MonoBehaviour
     private void Awake()
     {
         _turnManager = FindAnyObjectByType<TurnManager>();
-        _effectManager = FindAnyObjectByType <EffectManager>(); 
+        _effectManager = FindAnyObjectByType<EffectManager>();
     }
 
     private void OnEnable()
@@ -53,14 +54,21 @@ public abstract class Effect : MonoBehaviour
     {
         if (Duration <= 0)
         {
-            gameObject.SetActive(false);
+            RemoveEffect();
             return;
         }
         Duration--;
         OnTurnChange();
         if (Duration < 0)
         {
-            gameObject.SetActive(false);
+            RemoveEffect();
         }
+    }
+
+    private void RemoveEffect()
+    {
+        LivingEntity ent = GetComponentInParent<LivingEntity>();
+        Assert.IsNotNull(ent);
+        _effectManager.RemoveEffect(ent, _effectType);
     }
 }

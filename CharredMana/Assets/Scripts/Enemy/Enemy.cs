@@ -19,6 +19,7 @@ public class Enemy : LivingEntity
     public EnemySpawner Spawner { get; private set; }
     public ObjectPool Pool; // pool that contains this enemy
     private TurnManager _turnManager;
+    private EffectManager _effectManager;
     private bool _isDead = false;
 
     private void Awake()
@@ -29,6 +30,7 @@ public class Enemy : LivingEntity
         _turnManager = FindAnyObjectByType<TurnManager>();
         Controller = GetComponent<IEnemyController>();
         _targeter = GetComponent<IEnemyTargeter>();
+        _effectManager=FindAnyObjectByType<EffectManager>();
 
         OnDamaged() += OnDamage;
     }
@@ -71,13 +73,13 @@ public class Enemy : LivingEntity
     {
         if (EntityStats.IsDead())
         {
-            if (_isDead)
-            {
-                return;
-            }
+            if (_isDead)    return;
             _isDead = true;
             _player.MonstersKilled++;
             _player.PlayerLevel.Experience += _experienceDropped;
+
+            _effectManager.RemoveAllEffects(this);
+
             Pool.ReleaseObject(gameObject);
         }
     }

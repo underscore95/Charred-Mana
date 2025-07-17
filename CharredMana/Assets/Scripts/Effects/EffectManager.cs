@@ -63,11 +63,10 @@ public class EffectManager : MonoBehaviour
             foreach (EffectPrefab ep in _effectTypePrefabs)
             {
                 if (ep.EffectType != effectType) continue;
-                _pools.Add(new ObjectPool(ep.Prefab, _capacityPerPool));
+                _pools.Add(new ObjectPool(ep.Prefab, _capacityPerPool, transform));
                 foreach (var obj in _pools.Last().AliveAndDead)
                 {
                     obj.GetComponent<Effect>()._effectType = effectType;
-                    obj.transform.parent = transform;
                 }
             }
 
@@ -99,6 +98,22 @@ public class EffectManager : MonoBehaviour
                 Debug.LogErrorFormat("Effect prefab {0} for type {1} doesn't have Effect script", entry.Prefab, entry.EffectType);
             }
         }
+    }
+
+    public void RemoveAllEffects(LivingEntity target)
+    {
+        foreach (EffectType type in Enum.GetValues(typeof(EffectType)))
+        {
+            RemoveEffect(target, type); 
+        }
+    }
+
+    public void RemoveEffect(LivingEntity target, EffectType effectType)
+    {
+        Dictionary<GameObject, Effect> objectsWithEffect = _effectsOnObjects[(int)effectType];
+        if (!objectsWithEffect.TryGetValue(target.gameObject, out Effect effect)) return;
+        objectsWithEffect.Remove(target.gameObject);
+        _pools[(int)effectType].ReleaseObject(effect.gameObject);
     }
 
     // Apply effect to entity, this does nothing if the entity already has the same effect with higher amplifier, this overwrites effects with lower amplifiers. Equal amplifiers will use the maximum duration.
