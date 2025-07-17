@@ -12,13 +12,16 @@ public class ObjectPool
 
     public int Capacity => _values.Length;
     public int CurrentSize => _activeIndices.Count;
+    private Transform _parent;
 
     public ObjectPool(GameObject prefab, int capacity, Transform parent = null)
     {
         _values = new GameObject[capacity];
 
-     Assert.IsTrue(prefab.activeSelf);
-            prefab.SetActive(false);
+        _parent = parent;
+
+        Assert.IsTrue(prefab.activeSelf);
+        prefab.SetActive(false);
         for (int i = 0; i < capacity; i++)
         {
             var obj = parent == null ? UnityEngine.Object.Instantiate(prefab) : UnityEngine.Object.Instantiate(prefab, parent);
@@ -63,6 +66,8 @@ public class ObjectPool
         _activeIndices.Remove(obj);
         obj.SetActive(false);
         _freeIndices.Push(index);
+
+        obj.transform.SetParent(_parent);
     }
 
     public void ReleaseOldestObject()

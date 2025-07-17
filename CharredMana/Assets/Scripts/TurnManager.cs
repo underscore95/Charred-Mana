@@ -12,6 +12,8 @@ public class TurnManager : MonoBehaviour
     public StatModifiersContainer CurrentEnemyStatBoost { get; private set; } = new();
     public UnityAction OnTurnChange { get; set; } = () => { };
     public UnityAction OnLateTurnChange { get; set; } = () => { };
+    public UnityAction OnTurnReset { get; set;  } = () => { };
+    public UnityAction OnTurnChangeOrReset { get; set;  } = () => { };
     public int CurrentTurn { get; private set; } = 0;
     public int FloorEnterTurn { get; private set; } = 0; // Turn when we entered the current floor
 
@@ -21,11 +23,11 @@ public class TurnManager : MonoBehaviour
     {
         _floorManager = FindAnyObjectByType<FloorManager>();
 
-        OnTurnChange += OnTurnChangeOrAwake;
         OnTurnChange += () => CurrentTurn++;
-        OnTurnChange += Sfx.PlayPlayerMove;
 
-        OnTurnChangeOrAwake();
+        OnTurnChangeOrReset += UpdateTurn;
+
+        UpdateTurn();
     }
 
     private void Start()
@@ -33,7 +35,7 @@ public class TurnManager : MonoBehaviour
         _floorManager.OnFloorChange += () => FloorEnterTurn = CurrentTurn;
     }
 
-    private void OnTurnChangeOrAwake()
+    private void UpdateTurn()
     {
         _turnText.text = "Turn #" + (CurrentTurn + 1);
         CurrentEnemyStatBoost = DelayedStatBoost.GetMergedStatBoost(_enemyStatBoosts, CurrentTurn);
@@ -41,6 +43,7 @@ public class TurnManager : MonoBehaviour
 
     public void NextTurn()
     {
+        OnTurnChangeOrReset.Invoke();
         OnTurnChange.Invoke();
         OnLateTurnChange.Invoke();
     }
@@ -48,6 +51,7 @@ public class TurnManager : MonoBehaviour
     public void ResetTurn()
     {
         CurrentTurn = 0;
-        NextTurn();
+        OnTurnReset.Invoke();
+        OnTurnChangeOrReset.Invoke();
     }
 }

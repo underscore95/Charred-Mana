@@ -16,7 +16,7 @@ public class ChunkManager : MonoBehaviour
 
         _pool = new(_chunkPrefab, 9, transform);
 
-        FindAnyObjectByType<TurnManager>().OnTurnChange += LoadAndUnloadChunksIfNecessary;
+        FindAnyObjectByType<TurnManager>().OnTurnChangeOrReset += LoadAndUnloadChunksIfNecessary;
     }
 
     // Reload all chunks, regenerating them

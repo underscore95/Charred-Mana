@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
             displacement += moveDirection.y > 0 ? Vector3.up : Vector3.down;
         }
 
+        Sfx.PlayPlayerMove();
+
         Assert.IsTrue(_canGoToNextTurn);
         _canGoToNextTurn = false;
         StartCoroutine(StartNextTurnCooldown());

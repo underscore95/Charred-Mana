@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d544dcf4ba0f8e44b9281b88d57f2d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _soundEffectPrefab: {fileID: 5625067859539121039, guid: 9b1b5d6e7d16f5445a4988fb09889a23, type: 3}
+  _capacity: 10
   _click: {fileID: 8300000, guid: 574381be772abfd43a9097e3cc999587, type: 3}
   _playerMove: {fileID: 8300000, guid: 622d265ff60fa8842977adb2249799bc, type: 3}
   _spellCast: {fileID: 8300000, guid: c87d934ce739b7c4fbd01a564a1ab6e5, type: 3}

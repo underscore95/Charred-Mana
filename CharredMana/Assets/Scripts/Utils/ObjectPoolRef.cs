@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class ObjectPoolRef : MonoBehaviour
+public sealed class ObjectPoolRef : MonoBehaviour
 {
     public ObjectPool Pool;
 }

@@ -6,6 +6,10 @@ public class Sfx : MonoBehaviour
 {
     private static Sfx _instance;
 
+    [SerializeField] private GameObject _soundEffectPrefab;
+    [SerializeField] private int _capacity;
+
+    [Header("Sound Effect Clips")]
     [SerializeField] private AudioClip _click;
     [SerializeField] private AudioClip _playerMove;
     [SerializeField] private AudioClip _spellCast;
@@ -13,6 +17,7 @@ public class Sfx : MonoBehaviour
     [SerializeField] private AudioClip _playerLevelUp;
 
     private static GameSettings _settings;
+    private ObjectPool _sounds;
 
     private void Awake()
     {
@@ -26,6 +31,9 @@ public class Sfx : MonoBehaviour
             MusicVolume = 0,
             SoundVolume = 0
         };
+
+        Assert.IsTrue(_soundEffectPrefab.TryGetComponent<SoundEffect>(out var _));
+        _sounds = new(_soundEffectPrefab, _capacity, transform);
     }
 
     private void Start()
@@ -39,33 +47,21 @@ public class Sfx : MonoBehaviour
         _settings = null;
     }
 
-    public static void PlayClick()
+    private static void PlaySound(AudioClip clip)
     {
-        Assert.IsNotNull(_instance);
-        AudioSource.PlayClipAtPoint(_instance._click, Camera.main.transform.position, _settings.SoundVolume);
+        if (clip == null || Camera.main == null || _instance._sounds.IsFull()) return;
+
+        float volume = _settings.SoundVolume;
+        Transform cameraTransform = Camera.main.transform;
+
+        GameObject obj = _instance._sounds.ActivateObject();
+        obj.GetComponent<SoundEffect>().Play(clip, cameraTransform, Vector3.zero);
     }
 
-    public static void PlayPlayerMove()
-    {
-        Assert.IsNotNull(_instance);
-        AudioSource.PlayClipAtPoint(_instance._playerMove, Camera.main.transform.position, _settings.SoundVolume);
-    }
+    public static void PlayClick() => PlaySound(_instance._click);
+    public static void PlayPlayerMove() => PlaySound(_instance._playerMove);
+    public static void PlaySpellCast() => PlaySound(_instance._spellCast);
+    public static void PlayPlayerDamaged() => PlaySound(_instance._playerDamaged);
+    public static void PlayPlayerLevelUp() => PlaySound(_instance._playerLevelUp);
 
-    public static void PlaySpellCast()
-    {
-        Assert.IsNotNull(_instance);
-        AudioSource.PlayClipAtPoint(_instance._spellCast, Camera.main.transform.position, _settings.SoundVolume);
-    }
-
-    public static void PlayPlayerDamaged()
-    {
-        Assert.IsNotNull(_instance);
-        AudioSource.PlayClipAtPoint(_instance._playerDamaged, Camera.main.transform.position, _settings.SoundVolume);
-    }
-
-    public static void PlayPlayerLevelUp()
-    {
-        Assert.IsNotNull(_instance);
-        AudioSource.PlayClipAtPoint(_instance._playerLevelUp, Camera.main.transform.position, _settings.SoundVolume);
-    }
 }
