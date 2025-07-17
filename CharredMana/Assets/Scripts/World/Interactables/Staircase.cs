@@ -3,23 +3,22 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
 
-public class Staircase : MonoBehaviour
+public class Staircase : InteractableObject
 {
     public static List<Staircase> StaircasesInWorld { get; private set; } = new();
 
     private FloorManager _floorManager;
-    private Player _player;
 
     private ObjectPoolRef _poolRefOptional;
 
-    private void Awake()
+    protected new void Awake()
     {
-        _player = FindAnyObjectByType<Player>();
+        base.Awake();
         _floorManager = FindAnyObjectByType<FloorManager>();
         _floorManager.OnFloorChange += FloorChange;
     }
 
-    private void Start()
+    protected void Start()
     {
         if (TryGetComponent<ObjectPoolRef>(out var r))
         {
@@ -52,10 +51,8 @@ public class Staircase : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnInteract()
     {
-        Assert.IsTrue(collision.gameObject == _player.gameObject, "Should only collide with player");
-
         _floorManager.NextFloor();
     }
 }

@@ -4939,6 +4939,7 @@ MonoBehaviour:
   _shouldUseInspectorProperties: 1
   _prefab: {fileID: 4261409250102769236, guid: bc43d60e7a6326546a97d948d00d2515, type: 3}
   _capacity: 25
+  _releaseProjectilesOnFloorChange: 1
 --- !u!1 &1767654066
 GameObject:
   m_ObjectHideFlags: 0
@@ -7125,11 +7126,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 458019847610060954, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13
+      value: 9.76
       objectReference: {fileID: 0}
     - target: {fileID: 458019847610060954, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 7.73
       objectReference: {fileID: 0}
     - target: {fileID: 458019847610060954, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7162,6 +7163,26 @@ PrefabInstance:
     - target: {fileID: 458019847610060954, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970693323523074131, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
+      propertyPath: _interactUiOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970693323523074131, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
+      propertyPath: _interactUiOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970693323523074131, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
+      propertyPath: _interactUiFloatDuration
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970693323523074131, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
+      propertyPath: _interactUiYOffsetRange.End
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970693323523074131, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
+      propertyPath: _interactUiYOffsetRange.Begin
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8545847315921335065, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
       propertyPath: m_Name
