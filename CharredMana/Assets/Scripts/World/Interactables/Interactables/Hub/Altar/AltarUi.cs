@@ -11,6 +11,7 @@ public class AltarUi : MonoBehaviour
     [SerializeField] private float _paddingBetweenCards = 25;
     [SerializeField] private Vector3 _cardCenter = Vector3.zero;
     [SerializeField] private InputActionReference _scrollInput;
+    [SerializeField] private InputActionReference _closeUiInput;
 
     private readonly EnumDictionary<StatType, AltarCardUi> _altarCards = new();
     private readonly List<StatType> _statTypesWithPrayers = new();
@@ -54,6 +55,11 @@ public class AltarUi : MonoBehaviour
 
     private void Update()
     {
+        if (_closeUiInput.action.WasPerformedThisFrame())
+        {
+            gameObject.SetActive(false);
+        }
+
         var val = _scrollInput.action.ReadValue<Vector2>();
         if (val.y > 0) SwitchCardRight();
         else if (val.y < 0) SwitchCardLeft();
