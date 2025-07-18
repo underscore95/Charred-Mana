@@ -13,10 +13,10 @@ public class ParticleManager : MonoBehaviour
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         transform.localScale = Vector3.one;
 
-        EnumDictionary<ParticleType, GameObject> prefabs = _registeredParticles;
+        EnumDictionary<ParticleType, GameObject> prefabs = _registeredParticles.ToEnumDictionary();
         foreach (var (particleType, prefab) in prefabs)
         {
-            _pools.Add(particleType, new(prefab, _maxParticlesPerType, transform));
+            _pools.Set(particleType, new(prefab, _maxParticlesPerType, transform));
         }
     }
 

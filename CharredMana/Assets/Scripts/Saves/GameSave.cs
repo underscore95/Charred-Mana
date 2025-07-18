@@ -5,4 +5,5 @@ using UnityEngine;
 public class GameSave
 {
     public EnumDictionary<CurrencyType, float> Currencies = new();
+    public EnumDictionary<StatType, int> AltarPrayerLevels = new();
 }

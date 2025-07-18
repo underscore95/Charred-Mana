@@ -23,7 +23,7 @@ public class CurrencyManager : MonoBehaviour
         _saveManager = FindAnyObjectByType<SaveManager>();
         Assert.IsNotNull(_saveManager, "Save manager doesn't exist");
 
-        _currencyInfoDeserialized = _currencyInfo;
+        _currencyInfoDeserialized = _currencyInfo.ToEnumDictionary();
 
         _saveManager.RunAfterSaveLoaded(() =>
         {

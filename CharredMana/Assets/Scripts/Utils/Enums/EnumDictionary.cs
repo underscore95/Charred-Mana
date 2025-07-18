@@ -69,7 +69,7 @@ public class EnumDictionary<K, V> : IEnumerable<KeyValuePair<K, V>> where K : En
         return false;
     }
 
-    public void Add(K key, V value)
+    public void Set(K key, V value)
     {
         int idx = Index(key);
         if (_hasValues[idx])

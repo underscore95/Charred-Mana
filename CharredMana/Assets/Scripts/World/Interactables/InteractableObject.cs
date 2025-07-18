@@ -4,8 +4,6 @@ using UnityEngine.InputSystem;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-    [SerializeField] private InputActionReference _interactAction;
-    [SerializeField] private GameObject _interactUiPrefab;
     [SerializeField] private FloatRange _interactUiYOffsetRange = new(-0.05f, 0.05f);
     [SerializeField] private float _interactUiFloatDuration = 0.75f;
     [SerializeField] private Vector3 _interactUiOffset = Vector3.up + Vector3.back;
@@ -14,12 +12,14 @@ public abstract class InteractableObject : MonoBehaviour
     private GameObject _interactUi;
     private float _secondsVisible = 0;
     private bool _invertT = false;
+    private InteractableSettings _settings;
 
     protected virtual void Awake()
     {
         _player = FindAnyObjectByType<Player>();
+        _settings=FindAnyObjectByType<InteractableSettings>();
 
-        _interactUi = Instantiate(_interactUiPrefab, transform);
+        _interactUi = Instantiate(_settings.UiPrefab, transform);
         Assert.IsNotNull(_interactUi);
         _interactUi.SetActive(false);
 
@@ -31,6 +31,7 @@ public abstract class InteractableObject : MonoBehaviour
     {
         if (!IsPlayerInRange()) return;
 
+        // Floating animation
         _secondsVisible += Time.deltaTime;
         if (_secondsVisible > _interactUiFloatDuration)
         {
@@ -41,7 +42,8 @@ public abstract class InteractableObject : MonoBehaviour
         if (_invertT) t = 1 - t;
         _interactUi.transform.localPosition = _interactUiOffset + _interactUiYOffsetRange.Lerp(t) * Vector3.up;
 
-        if (_interactAction.action.IsPressed())
+        // Input
+        if (_settings.Action.IsPressed())
         {
             OnInteract();
         }

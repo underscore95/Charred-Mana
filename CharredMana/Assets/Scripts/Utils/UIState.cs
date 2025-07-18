@@ -6,6 +6,7 @@ public static class UIState
     public static bool IsLevelUpRewardsUiOpen = false;
     public static bool IsSpellSelectUiOpen = false;
     public static bool IsDeathStateUiOpen = false;
+    public static bool IsAltarUiOpen = false;
 
     public static bool IsAnyUiOpen()
     {
@@ -13,6 +14,7 @@ public static class UIState
             IsLevelUpRewardsUiOpen ||
             IsSpellSelectUiOpen ||
             IsDeathStateUiOpen ||
+            IsAltarUiOpen ||
             false
             ;
     }
@@ -22,6 +24,8 @@ public static class UIState
         IsLevelUpRewardsUiOpen = false;
         IsSpellSelectUiOpen = false;
         IsDeathStateUiOpen = false;
+        IsAltarUiOpen = false;
+
         Assert.IsFalse(IsAnyUiOpen());
     }
 }

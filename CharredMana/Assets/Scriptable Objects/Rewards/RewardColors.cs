@@ -20,7 +20,7 @@ public class RewardColors : ScriptableObject
 
     private void Setup()
     {
-        _rarityToColor = _rarityColorsSerializable;
+        _rarityToColor = _rarityColorsSerializable.ToEnumDictionary();
     }
 
     public Color GetColor(Rarity rarity)
