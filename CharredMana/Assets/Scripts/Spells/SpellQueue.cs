@@ -33,6 +33,7 @@ public class SpellQueue : MonoBehaviour
 
     public void QueueTrigger(PlayerSpell spell)
     {
+        if (UIState.IsAnyUiOpen()) return;
         if (_queuedSpells.Count >= _player.EntityStats.Focus) return;
         if (spell.IsOnCooldown()) return;
         if (_mana.Mana < spell.ManaCost) return;
