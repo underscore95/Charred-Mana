@@ -10,6 +10,7 @@ public class AltarCardUi : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _descText;
     [SerializeField] private Button _buyButton;
     [SerializeField] private TextMeshProUGUI _buyButtonText;
+    [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private Image _splashImage;
     [SerializeField] private Color _buyButtonTextColor = Color.black;
     [SerializeField] private Color _buyButtonTextColorTooExpensive = Color.darkRed;
@@ -45,8 +46,9 @@ public class AltarCardUi : MonoBehaviour
         _buyButton.onClick.AddListener(onBuy);
     }
 
-    public void SetCost(int cost)
+    public void SetCost(int cost, int level)
     {
+        _levelText.text = "LV" + level;
         _buyButtonText.text = $"Pray for {cost} {_currencyManager.GetCurrencyInfo(CurrencyType.Essence).Name}";
         _cost = cost;
         UpdateCostDisplay();

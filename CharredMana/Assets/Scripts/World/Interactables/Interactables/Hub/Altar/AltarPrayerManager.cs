@@ -40,7 +40,7 @@ public class AltarPrayerManager : MonoBehaviour
 
     public void UpgradePrayerLevel(StatType stat)
     {
-        _saveManager.Save.AltarPrayerLevels.Set(stat, GetPrayerLevel(stat) + 1);
+        _saveManager.Save.AltarPrayerLevels[stat] = GetPrayerLevel(stat) + 1;
 
         // increase stat
         AltarStatInfo info = _statTypes.AltarStatInfo[stat];

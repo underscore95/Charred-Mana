@@ -79,7 +79,7 @@ public static class TransformUtils
         {
             K k = getEnumFunc(v);
             Assert.IsFalse(dict.ContainsKey(k), $"{parent.gameObject.name} contains duplicate {typeof(K).Name} enum value {k} (recursions: {recursions})");
-            dict.Set(k, v);
+            dict.Add(k, v);
         }
 
         if (requireAllValues && !dict.IsFull())

@@ -42,8 +42,8 @@ public class AltarUi : MonoBehaviour
                info.SplashImage,
                 () => OnBuy(type)
                 );
-            card.SetCost(GetCost(type));
-            _altarCards.Set(type, card);
+            UpdateCost(card, type);
+            _altarCards.Add(type, card);
         }
 
         _navBar.SetMax(_statTypesWithPrayers.Count);
@@ -80,23 +80,26 @@ public class AltarUi : MonoBehaviour
     {
         AltarCardUi card = _altarCards[type];
 
-        int cost = GetCost(type);
+        int currentLevel = _altarPrayerManager.GetPrayerLevel(type);
+        int cost = GetCost(currentLevel + 1);
         _currencyManager.Remove(CurrencyType.Essence, cost);
         _altarPrayerManager.UpgradePrayerLevel(type);
 
-        card.SetCost(GetCost(type));
+        UpdateCost(card, type);
     }
 
     // Get cost of upgrading to next level
     // nextLevel >= 1
-    public int GetCost(int nextLevel)
+    private int GetCost(int nextLevel)
     {
         return 2 + nextLevel + nextLevel / 5;
     }
-    public int GetCost(StatType type)
+
+    private void UpdateCost(AltarCardUi card, StatType type)
     {
         int currentLevel = _altarPrayerManager.GetPrayerLevel(type);
-        return GetCost(currentLevel + 1);
+        int cost = GetCost(currentLevel + 1);
+        card.SetCost(cost, currentLevel);
     }
 
     public void SwitchCardRight()

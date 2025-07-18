@@ -16,7 +16,7 @@ public class ParticleManager : MonoBehaviour
         EnumDictionary<ParticleType, GameObject> prefabs = _registeredParticles.ToEnumDictionary();
         foreach (var (particleType, prefab) in prefabs)
         {
-            _pools.Set(particleType, new(prefab, _maxParticlesPerType, transform));
+            _pools.Add(particleType, new(prefab, _maxParticlesPerType, transform));
         }
     }
 
