@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 public class AltarUi : MonoBehaviour
 {
     [SerializeField] private GameObject _altarCardPrefab;
     [SerializeField] private float _paddingBetweenCards = 25;
     [SerializeField] private Vector3 _cardCenter = Vector3.zero;
+    [SerializeField] private InputActionReference _scrollInput;
+
     private readonly EnumDictionary<StatType, AltarCardUi> _altarCards = new();
     private readonly List<StatType> _statTypesWithPrayers = new();
 
@@ -42,6 +46,13 @@ public class AltarUi : MonoBehaviour
         _padding = _altarCards.First().Value.GetComponent<RectTransform>().sizeDelta.x + _paddingBetweenCards;
 
         SwitchCard(false);
+    }
+
+    private void Update()
+    {
+        var val = _scrollInput.action.ReadValue<Vector2>();
+        if (val.y > 0) SwitchCard(true);
+        else if (val.y < 0) SwitchCard(false);
     }
 
     private void OnEnable()
@@ -81,6 +92,7 @@ public class AltarUi : MonoBehaviour
     public void SwitchCard(bool left)
     {
         _currentCard += left ? -1 : 1;
+        while (_currentCard < 0) _currentCard += _statTypesWithPrayers.Count;
         _currentCard %= _statTypesWithPrayers.Count;
 
         for (int i = 0; i < _statTypesWithPrayers.Count; ++i)
@@ -88,6 +100,12 @@ public class AltarUi : MonoBehaviour
             var card = GetCard(i);
             card.SetDisplayState(AltarCardUi.DisplayState.HIDDEN);
             int offsetFromCenter = i - _currentCard;
+
+            // make it wrap
+            if (_currentCard == 0 && i == _statTypesWithPrayers.Count - 1) offsetFromCenter = -1;
+            else if (_currentCard == _statTypesWithPrayers.Count - 1 && i == 0) offsetFromCenter = 1;
+
+            // set position
             card.transform.localPosition = _cardCenter + Vector3.right * (offsetFromCenter * _padding);
         }
 
@@ -100,6 +118,7 @@ public class AltarUi : MonoBehaviour
 
     private AltarCardUi GetCard(int cardPos)
     {
+        while (cardPos < 0) cardPos += _statTypesWithPrayers.Count;
         StatType type = _statTypesWithPrayers[cardPos % _statTypesWithPrayers.Count];
         return _altarCards[type];
     }

@@ -1,20 +1,24 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class AltarPrayerManager : MonoBehaviour
 {
-    private GameSave _save;
+    private SaveManager _saveManager;
     private Player _player;
     private StatTypes _statTypes;
 
-    private void Start()
+    private void Awake()
     {
         _player = FindAnyObjectByType<Player>();
         _statTypes = FindAnyObjectByType<StatTypes>();
 
-        SaveManager saveManager = FindAnyObjectByType<SaveManager>();
-        _save = saveManager.Save;
+        _saveManager = FindAnyObjectByType<SaveManager>();
+    }
 
-        foreach (var (stat, level) in _save.AltarPrayerLevels)
+    private void Start()
+    {
+        // Apply stat increases
+        foreach (var (stat, level) in _saveManager.Save.AltarPrayerLevels)
         {
             AltarStatInfo info = _statTypes.AltarStatInfo[stat];
             for (int i = 0; i < level; i++)
@@ -26,7 +30,8 @@ public class AltarPrayerManager : MonoBehaviour
 
     public int GetPrayerLevel(StatType stat)
     {
-        if (_save.AltarPrayerLevels.TryGetValue(stat, out int level))
+        Assert.IsNotNull(_saveManager.Save, "Attempted to get prayer level for stat " + stat + " when save wasn't loaded yet");
+        if (_saveManager.Save.AltarPrayerLevels.TryGetValue(stat, out int level))
         {
             return level;
         }
@@ -35,6 +40,10 @@ public class AltarPrayerManager : MonoBehaviour
 
     public void UpgradePrayerLevel(StatType stat)
     {
-        _save.AltarPrayerLevels.Set(stat, GetPrayerLevel(stat) + 1);
+        _saveManager.Save.AltarPrayerLevels.Set(stat, GetPrayerLevel(stat) + 1);
+
+        // increase stat
+        AltarStatInfo info = _statTypes.AltarStatInfo[stat];
+        _player.EntityStats.ApplyModifier(stat, info.StatBoostPerPrayerLevel);
     }
 }
