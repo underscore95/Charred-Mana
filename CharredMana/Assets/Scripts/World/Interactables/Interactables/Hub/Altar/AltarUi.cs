@@ -15,6 +15,7 @@ public class AltarUi : MonoBehaviour
     private readonly EnumDictionary<StatType, AltarCardUi> _altarCards = new();
     private readonly List<StatType> _statTypesWithPrayers = new();
 
+    private SpriteBar _navBar;
     private StatTypes _statTypes;
     private AltarPrayerManager _altarPrayerManager;
     private CurrencyManager _currencyManager;
@@ -23,6 +24,7 @@ public class AltarUi : MonoBehaviour
 
     private void Start()
     {
+        _navBar = GetComponentInChildren<SpriteBar>();
         _statTypes = FindAnyObjectByType<StatTypes>();
         _altarPrayerManager = FindAnyObjectByType<AltarPrayerManager>();
         _currencyManager = FindAnyObjectByType<CurrencyManager>();
@@ -43,16 +45,18 @@ public class AltarUi : MonoBehaviour
             _altarCards.Set(type, card);
         }
 
+        _navBar.SetMax(_statTypesWithPrayers.Count);
+
         _padding = _altarCards.First().Value.GetComponent<RectTransform>().sizeDelta.x + _paddingBetweenCards;
 
-        SwitchCard(false);
+        UpdateCards();
     }
 
     private void Update()
     {
         var val = _scrollInput.action.ReadValue<Vector2>();
-        if (val.y > 0) SwitchCard(true);
-        else if (val.y < 0) SwitchCard(false);
+        if (val.y > 0) SwitchCardRight();
+        else if (val.y < 0) SwitchCardLeft();
     }
 
     private void OnEnable()
@@ -89,11 +93,24 @@ public class AltarUi : MonoBehaviour
         return GetCost(currentLevel + 1);
     }
 
-    public void SwitchCard(bool left)
+    public void SwitchCardRight()
     {
-        _currentCard += left ? -1 : 1;
+        _currentCard++;
+        UpdateCards();
+    }
+
+    public void SwitchCardLeft()
+    {
+        _currentCard--;
+        UpdateCards();
+    }
+
+    private void UpdateCards()
+    {
         while (_currentCard < 0) _currentCard += _statTypesWithPrayers.Count;
         _currentCard %= _statTypesWithPrayers.Count;
+
+        _navBar.SetCurrent(_currentCard);
 
         for (int i = 0; i < _statTypesWithPrayers.Count; ++i)
         {
