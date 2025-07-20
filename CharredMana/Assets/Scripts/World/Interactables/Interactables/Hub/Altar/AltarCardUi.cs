@@ -16,6 +16,7 @@ public class AltarCardUi : MonoBehaviour
     [SerializeField] private Color _buyButtonTextColorTooExpensive = Color.darkRed;
     [SerializeField] private float _partiallyTransparentAlpha = 0.6f;
     [SerializeField] private float _partiallyTransparentScale = 0.75f;
+    [SerializeField] private string _buyButtonTextContents = "Purchase for {0} {1}";
 
     private CurrencyManager _currencyManager;
     private int _cost = int.MaxValue;
@@ -49,7 +50,7 @@ public class AltarCardUi : MonoBehaviour
     public void SetCost(int cost, int level)
     {
         _levelText.text = "LV" + level;
-        _buyButtonText.text = $"Pray for {cost} {_currencyManager.GetCurrencyInfo(CurrencyType.Essence).Name}";
+        _buyButtonText.text = string.Format(_buyButtonTextContents, cost, _currencyManager.GetCurrencyInfo(CurrencyType.Essence).Name);
         _cost = cost;
         UpdateCostDisplay();
     }
