@@ -3087,6 +3087,7 @@ Transform:
   - {fileID: 1844475618}
   - {fileID: 545189887}
   - {fileID: 1669138267}
+  - {fileID: 2046284001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802137172
@@ -3468,7 +3469,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1999166152}
-  - {fileID: 2046284001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &821079317
@@ -6855,12 +6855,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046284000}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 818734370}
+  m_Father: {fileID: 800884771}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2046284002
 MonoBehaviour:
@@ -6879,7 +6879,7 @@ MonoBehaviour:
     - First: 0
       Second:
         Name: Essence
-        Icon: {fileID: 0}
+        Icon: {fileID: 21300000, guid: 1f957f9e83d3fee4d86270befd162ad7, type: 3}
         StartingAmount: 0
 --- !u!1 &2071944206
 GameObject:
