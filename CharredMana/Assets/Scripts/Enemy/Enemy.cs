@@ -16,8 +16,7 @@ public class Enemy : LivingEntity
     private IEnemyTargeter _targeter;
     public IEnemyController Controller { get; private set; }
     public LivingEntity CurrentTarget { get; private set; }
-    public EnemySpawner Spawner { get; private set; }
-    public ObjectPool Pool; // pool that contains this enemy
+    private ObjectPoolRef _pool;
     private TurnManager _turnManager;
     private EffectManager _effectManager;
     private bool _isDead = false;
@@ -26,18 +25,13 @@ public class Enemy : LivingEntity
     {
         _player = FindAnyObjectByType<Player>();
         _attack = GetComponent<IEnemyAttack>();
-        Spawner = transform.parent.gameObject.GetComponent<EnemySpawner>();
         _turnManager = FindAnyObjectByType<TurnManager>();
         Controller = GetComponent<IEnemyController>();
         _targeter = GetComponent<IEnemyTargeter>();
-        _effectManager=FindAnyObjectByType<EffectManager>();
+        _effectManager = FindAnyObjectByType<EffectManager>();
+        _pool = GetComponent<ObjectPoolRef>();
 
         OnDamaged() += OnDamage;
-    }
-
-    private void Start()
-    {
-        Assert.IsNotNull(Pool);
     }
 
     private void OnEnable()
@@ -73,14 +67,14 @@ public class Enemy : LivingEntity
     {
         if (EntityStats.IsDead())
         {
-            if (_isDead)    return;
+            if (_isDead) return;
             _isDead = true;
             _player.MonstersKilled++;
             _player.PlayerLevel.Experience += _experienceDropped;
 
             _effectManager.RemoveAllEffects(this);
 
-            Pool.ReleaseObject(gameObject);
+            _pool.Pool.ReleaseObject(gameObject);
         }
     }
 

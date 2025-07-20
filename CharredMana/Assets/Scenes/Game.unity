@@ -1401,16 +1401,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 270274204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Script: {fileID: 11500000, guid: b18a3ec7f2902c8488855724fba047cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeDuringTurns:
+  _prefab: {fileID: 5190042482056591089, guid: 8fa2efd997cb1104d8e3b173c8dd45d3, type: 3}
+  _capacity: 10
+  _spawnInterval: 5
+  _overwriteOldest: 0
+  _minDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _maxDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _activity:
+    _floors:
+      Begin: 1
+      End: 1
+  _waitTurnsBeforeFirstSpawnPerFloor: 0
+  _resetFirstSpawnWaitEveryFloor: 1
+  _activeDuringFloorTurns:
     Begin: 0
     End: 999999
-  _spawnCooldown: 5
-  _enemyPrefab: {fileID: 5190042482056591089, guid: 8fa2efd997cb1104d8e3b173c8dd45d3, type: 3}
-  _maxEnemies: 10
-  _floor: 1
 --- !u!1001 &451863109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3770,16 +3778,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 908121076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Script: {fileID: 11500000, guid: b18a3ec7f2902c8488855724fba047cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeDuringTurns:
+  _prefab: {fileID: 5190042482056591089, guid: 2453c3c9663bba442a43fc093b7684a1, type: 3}
+  _capacity: 10
+  _spawnInterval: 12
+  _overwriteOldest: 0
+  _minDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _maxDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _activity:
+    _floors:
+      Begin: 1
+      End: 1
+  _waitTurnsBeforeFirstSpawnPerFloor: 0
+  _resetFirstSpawnWaitEveryFloor: 1
+  _activeDuringFloorTurns:
     Begin: 100
     End: 999999
-  _spawnCooldown: 12
-  _enemyPrefab: {fileID: 5190042482056591089, guid: 2453c3c9663bba442a43fc093b7684a1, type: 3}
-  _maxEnemies: 10
-  _floor: 1
 --- !u!1 &925560500
 GameObject:
   m_ObjectHideFlags: 0
@@ -4219,16 +4235,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8545847315921335065, guid: 611a5067fb8cddf45b8ac993f9123403, type: 3}
   _capacity: 5
-  _activity:
-    _floors:
-      Begin: 1
-      End: 1
   _spawnInterval: 50
   _overwriteOldest: 1
   _minDistanceFromPlayer: {x: 15, y: 15}
   _maxDistanceFromPlayer: {x: 25, y: 25}
-  _waitBeforeFirstSpawn: 250
+  _activity:
+    _floors:
+      Begin: 1
+      End: 1
+  _waitTurnsBeforeFirstSpawnPerFloor: 0
   _resetFirstSpawnWaitEveryFloor: 1
+  _activeDuringFloorTurns:
+    Begin: 0
+    End: 999999
 --- !u!4 &1056847052
 Transform:
   m_ObjectHideFlags: 0
@@ -4413,16 +4432,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1141862145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Script: {fileID: 11500000, guid: b18a3ec7f2902c8488855724fba047cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeDuringTurns:
+  _prefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
+  _capacity: 10
+  _spawnInterval: 10
+  _overwriteOldest: 0
+  _minDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _maxDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _activity:
+    _floors:
+      Begin: 1
+      End: 1
+  _waitTurnsBeforeFirstSpawnPerFloor: 0
+  _resetFirstSpawnWaitEveryFloor: 1
+  _activeDuringFloorTurns:
     Begin: 150
     End: 999999
-  _spawnCooldown: 10
-  _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
-  _maxEnemies: 10
-  _floor: 1
 --- !u!1 &1232652833
 GameObject:
   m_ObjectHideFlags: 0
@@ -5034,16 +5061,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1747460919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Script: {fileID: 11500000, guid: b18a3ec7f2902c8488855724fba047cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeDuringTurns:
+  _prefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
+  _capacity: 10
+  _spawnInterval: 20
+  _overwriteOldest: 0
+  _minDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _maxDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _activity:
+    _floors:
+      Begin: 1
+      End: 1
+  _waitTurnsBeforeFirstSpawnPerFloor: 0
+  _resetFirstSpawnWaitEveryFloor: 1
+  _activeDuringFloorTurns:
     Begin: 100
     End: 150
-  _spawnCooldown: 20
-  _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
-  _maxEnemies: 10
-  _floor: 1
 --- !u!1 &1754467238
 GameObject:
   m_ObjectHideFlags: 0
@@ -5238,16 +5273,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786949190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6662cd7ddf72a41a7f59187a983277, type: 3}
+  m_Script: {fileID: 11500000, guid: b18a3ec7f2902c8488855724fba047cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeDuringTurns:
+  _prefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
+  _capacity: 10
+  _spawnInterval: 9
+  _overwriteOldest: 0
+  _minDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _maxDistanceFromPlayer: {x: 3.5, y: 5.5}
+  _activity:
+    _floors:
+      Begin: 1
+      End: 1
+  _waitTurnsBeforeFirstSpawnPerFloor: 0
+  _resetFirstSpawnWaitEveryFloor: 1
+  _activeDuringFloorTurns:
     Begin: 50
     End: 100
-  _spawnCooldown: 9
-  _enemyPrefab: {fileID: 5190042482056591089, guid: 520fcd42fffeb2b48b0258f979836495, type: 3}
-  _maxEnemies: 10
-  _floor: 1
 --- !u!1 &1800552153
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ public class ObjectPool
 
     public ObjectPool(GameObject prefab, int capacity, Transform parent = null)
     {
+        Assert.IsTrue(capacity > 0);
+
         _values = new GameObject[capacity];
 
         _parent = parent;
