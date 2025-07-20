@@ -3139,48 +3139,42 @@ MonoBehaviour:
     - First: 0
       Second:
         Title: Prayer of Health
-        Desc: Permanently increases your maximum HP by 5.
-        SplashImage: {fileID: 0}
+        SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 1
       Second:
         Title: Prayer of Damage
-        Desc: Permanently increases your damage by 5.
-        SplashImage: {fileID: 0}
+        SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 2
       Second:
         Title: Prayer of Defense
-        Desc: Permanently increases your defense by 5.
-        SplashImage: {fileID: 0}
+        SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 3
       Second:
         Title: Prayer of Resting
-        Desc: Permanently increases your MP regen by 5.
-        SplashImage: {fileID: 0}
+        SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 5
       Second:
         Title: Prayer of Regeneration
-        Desc: Permanently increases your HP regen by 5.
-        SplashImage: {fileID: 0}
+        SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 6
       Second:
         Title: Prayer of Mana
-        Desc: Permanently increases your maximum MP by 5.
-        SplashImage: {fileID: 0}
+        SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
