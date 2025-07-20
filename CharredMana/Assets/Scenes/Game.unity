@@ -3138,42 +3138,42 @@ MonoBehaviour:
     _values:
     - First: 0
       Second:
-        Title: Prayer of Health
+        Title: Health
         SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 1
       Second:
-        Title: Prayer of Damage
+        Title: Damage
         SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 2
       Second:
-        Title: Prayer of Defense
+        Title: Defense
         SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 3
       Second:
-        Title: Prayer of Resting
+        Title: Resting
         SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 5
       Second:
-        Title: Prayer of Regeneration
+        Title: Regeneration
         SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0
           Value: 5
     - First: 6
       Second:
-        Title: Prayer of Mana
+        Title: Mana
         SplashImage: {fileID: 21300000, guid: 9f9a690b02c8c1c4098aab4e8569dac0, type: 3}
         StatBoostPerPrayerLevel:
           Operation: 0

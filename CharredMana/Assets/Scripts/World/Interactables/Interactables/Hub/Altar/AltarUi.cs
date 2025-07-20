@@ -50,7 +50,7 @@ public class AltarUi : MonoBehaviour
             );
 
             card.SetStat(
-              info.Title,
+           "Prayer of\n" + info.Title,
               desc,
                info.SplashImage,
                 () => OnBuy(type)
