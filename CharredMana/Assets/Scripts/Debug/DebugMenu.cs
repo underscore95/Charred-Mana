@@ -46,15 +46,20 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Button _subtractCurrency100;
     [SerializeField] private Button _subtractCurrency1000;
     [SerializeField] private Button _subtractCurrency10000;
+    [SerializeField] private TMP_Dropdown _selectedSpellToUnlock;
+    [SerializeField] private Button _unlockSpellButton;
 
     public DebugOptions Options { get; private set; }
     private bool _wasDebugMenuOpenLastFrame = false;
     private FloorManager _floorManager;
     private CurrencyManager _currencyManager;
+    private SpellManager _spellManager;
+    private List<PlayerSpell> _lockedSpells = new();
 
     private void Awake()
     {
         _floorManager = FindAnyObjectByType<FloorManager>();
+        _spellManager = FindAnyObjectByType<SpellManager>();
         _currencyManager = FindAnyObjectByType<CurrencyManager>();
 
         if (_debugBuildText)
@@ -134,7 +139,43 @@ public class DebugMenu : MonoBehaviour
 
         StartCoroutine(GoToStartingFloorIfUsing());
 
+        // Spells
+        #region UnlockSpell
+        RefreshUnlockSpellDropdown();
+
+        _unlockSpellButton.onClick.RemoveAllListeners();
+        _unlockSpellButton.onClick.AddListener(() =>
+        {
+            if (_lockedSpells.Count == 0) return;
+
+            int selectedIndex = _selectedSpellToUnlock.value;
+            PlayerSpell selectedSpell = _lockedSpells[selectedIndex];
+
+            if (_spellManager.IsSpellUnlocked(selectedSpell))
+            {
+                Debug.Log("[DebugMenu] Spell already unlocked: " + selectedSpell);
+                return;
+            }
+
+            int slot = _spellManager.GetUnusedSelectedSlot();
+            if (slot < 0)
+            {
+                Debug.LogWarning("[DebugMenu] No available spell slot.");
+                return;
+            }
+
+            _spellManager.UnlockSpell(_spellManager.GetSpellIndex(selectedSpell));
+            _spellManager.SelectSpell(slot, selectedSpell);
+            Debug.Log("[DebugMenu] Unlocked and assigned spell: " + selectedSpell + " to slot " + slot);
+
+            RefreshUnlockSpellDropdown();
+        });
+
+        _spellManager.OnSpellUnlock += RefreshUnlockSpellDropdown;
+        #endregion
+
         // Currency
+        #region Currency
         List<TMP_Dropdown.OptionData> currencyDropdownOptions = new();
         foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
         {
@@ -215,6 +256,7 @@ public class DebugMenu : MonoBehaviour
         #endregion
 
         #endregion
+        #endregion
 
     }
 
@@ -239,6 +281,26 @@ public class DebugMenu : MonoBehaviour
             _debugMenuWasOpenOnLastScene = _wasDebugMenuOpenLastFrame;
             JsonUtils.Save(PATH, Options);
         }
+    }
+
+    private void RefreshUnlockSpellDropdown()
+    {
+        _lockedSpells.Clear();
+        _selectedSpellToUnlock.ClearOptions();
+
+        List<TMP_Dropdown.OptionData> options = new();
+        foreach (PlayerSpell spell in _spellManager.GetAllSpells())
+        {
+            if (!_spellManager.IsSpellUnlocked(spell))
+            {
+                _lockedSpells.Add(spell);
+                options.Add(new(spell.ToString()));
+            }
+        }
+
+        _selectedSpellToUnlock.AddOptions(options);
+        _selectedSpellToUnlock.SetValueWithoutNotify(0);
+        _unlockSpellButton.interactable = _lockedSpells.Count > 0;
     }
 
     private void Update()

@@ -85,6 +85,11 @@ public class SpellManager : MonoBehaviour
         return _unlockedSpells;
     }
 
+    public IReadOnlyList<PlayerSpell> GetAllSpells()
+    {
+        return _spells;
+    }
+
     public bool IsSpellIndexSelected(int spellIndex, out int selectedIndex)
     {
         for (int i = 0; i < _spellUis.Count; ++i)
