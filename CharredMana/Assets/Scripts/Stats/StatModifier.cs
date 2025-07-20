@@ -22,12 +22,12 @@ public class StatModifier
 
     public override string ToString()
     {
-        return ToString(5);
+        return ToString(5, false);
     }
 
-    public string ToString(int numDecimals)
+    public string ToString(int numDecimals, bool trimTrailingZeroes)
     {
-        return MathOps.ToString(Operation, Value, numDecimals);
+        return MathOps.ToString(Operation, Value, numDecimals, trimTrailingZeroes);
     }
 
     public void Apply(ref float value)
@@ -87,5 +87,19 @@ public class StatModifier
     public void Invert()
     {
         Value *= -1;
+    }
+
+    // Return the modifier you get if you apply the modifier n times
+    public static StatModifier MergeN(StatModifier modifier, int n)
+    {
+        Assert.IsTrue(n >= 0);
+        if (n == 0) return new(modifier.Operation, MathOps.GetDefaultValue(modifier.Operation));
+        StatModifier mod = new(modifier);
+        for (int i = 1; i < n; i++)
+        {
+            bool merged = mod.Merge(modifier);
+            Assert.IsTrue(merged);
+        }
+        return mod;
     }
 }

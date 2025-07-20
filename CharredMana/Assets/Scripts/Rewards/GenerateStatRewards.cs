@@ -62,7 +62,7 @@ public class GenerateStatRewards : MonoBehaviour
             foreach (StatRewardBase baseReward in baseRewards)
             {
                 GameObject obj = new(
-                    string.Format("{2} StatReward {0} {1}", StatTypes.ToString(type.Type), baseReward.Modifier.ToString(_numDecimals), baseReward.Rarity),
+                    string.Format("{2} StatReward {0} {1}", StatTypes.ToString(type.Type), baseReward.Modifier.ToString(_numDecimals, true), baseReward.Rarity),
                     new Type[] { typeof(StatReward) }
                     );
 
@@ -70,8 +70,8 @@ public class GenerateStatRewards : MonoBehaviour
 
                 StatReward reward = obj.GetComponent<StatReward>();
                 reward._modifiers.AddModifierNoMerging(type.Type, baseReward.Modifier);
-                reward.Title = baseReward.Modifier.ToString(_numDecimals) + " " + StatTypes.ToString(type.Type);
-                reward.Description = string.Format(type.Desc, baseReward.Modifier.ToString(_numDecimals));
+                reward.Title = baseReward.Modifier.ToString(_numDecimals, true) + " " + StatTypes.ToString(type.Type);
+                reward.Description = string.Format(type.Desc, baseReward.Modifier.ToString(_numDecimals, true));
                 reward.Category = RewardCategory.Stat;
                 reward.Rarity = baseReward.Rarity;
             }

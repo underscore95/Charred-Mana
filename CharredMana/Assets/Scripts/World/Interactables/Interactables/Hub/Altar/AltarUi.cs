@@ -12,6 +12,7 @@ public class AltarUi : MonoBehaviour
     [SerializeField] private Vector3 _cardCenter = Vector3.zero;
     [SerializeField] private InputActionReference _scrollInput;
     [SerializeField] private InputActionReference _closeUiInput;
+    [SerializeField] private string _altarCardDesc = "Permanently increases your {0} by {1} ({2} -> {3})"; // 0 = stat name, 1 = amount, 2 = current, 3 = new)
 
     private readonly EnumDictionary<StatType, AltarCardUi> _altarCards = new();
     private readonly List<StatType> _statTypesWithPrayers = new();
@@ -35,13 +36,25 @@ public class AltarUi : MonoBehaviour
             _statTypesWithPrayers.Add(type);
 
             AltarCardUi card = Instantiate(_altarCardPrefab, transform).GetComponent<AltarCardUi>();
+            int currentLevel = _altarPrayerManager.GetPrayerLevel(type);
+            StatModifier currentModifier = StatModifier.MergeN(info.StatBoostPerPrayerLevel, currentLevel);
+            StatModifier nextModifier = new StatModifier(currentModifier);
+            nextModifier.Merge(info.StatBoostPerPrayerLevel);
+
+            string desc = string.Format(
+                _altarCardDesc,
+               StatTypes.ToString(type),
+               info.StatBoostPerPrayerLevel.ToString(1, true),
+               currentModifier.ToString(1, true),
+               nextModifier.ToString(1, true)
+            );
 
             card.SetStat(
               info.Title,
-               info.Desc,
+              desc,
                info.SplashImage,
                 () => OnBuy(type)
-                );
+            );
             UpdateCost(card, type);
             _altarCards.Add(type, card);
         }

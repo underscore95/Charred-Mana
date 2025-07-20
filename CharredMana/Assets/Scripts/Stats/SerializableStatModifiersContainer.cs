@@ -14,7 +14,7 @@ public class SerializableStatModifiersContainer
 
         public override readonly string ToString()
         {
-            return "{" + Type + ": " + Modifier.ToString(3) + "}";
+            return "{" + Type + ": " + Modifier.ToString(3, false) + "}";
         }
     }
 

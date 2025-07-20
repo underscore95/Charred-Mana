@@ -29,6 +29,21 @@ public class MathOps
         Assert.IsTrue(ApproxEqual(Eval(MathOp.Multiply, 10, -1.1f), 9));
     }
 
+    // Return the value y for op such that Eval(op, x, y) approx equals x
+    public static float GetDefaultValue(MathOp op)
+    {
+        switch (op)
+        {
+            case MathOp.Add:
+                return 0;
+            case MathOp.Multiply:
+                return 1;
+            default:
+                Assert.IsTrue(false);
+                return 0;
+        }
+    }
+
     private static bool ApproxEqual(float a, float b)
     {
         if (Mathf.Approximately(a, b)) return true;
@@ -36,15 +51,25 @@ public class MathOps
         return false;
     }
 
-    public static string ToString(MathOp op, float val, int numDecimals = 1)
+    public static string ToString(MathOp op, float val, int numDecimals = 1, bool trimTrailingZeros = false)
     {
-        string format = "F" + numDecimals;
+        string Format(float v)
+        {
+            string format = "F" + numDecimals;
+            string result = v.ToString(format);
+            if (trimTrailingZeros)
+            {
+                result = result.TrimEnd('0').TrimEnd('.');
+            }
+            return result;
+        }
+
         switch (op)
         {
             case MathOp.Add:
-                return (val < 0 ? "-" : "+") + Math.Abs(val).ToString(format);
+                return (val < 0 ? "-" : "+") + Format(Math.Abs(val));
             case MathOp.Multiply:
-                string percent = ((Math.Abs(val) - 1) * 100).ToString(format) + "%";
+                string percent = Format((Math.Abs(val) - 1) * 100) + "%";
                 return (val > 0 ? "+" : "-") + percent;
             default:
                 Assert.IsTrue(false);
