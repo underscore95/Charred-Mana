@@ -9,6 +9,12 @@ public class StatsText : MonoBehaviour
     [SerializeField] private string _hubScene = "Game";
     private TextMeshProUGUI _statsText;
     private string _statsTextOriginalContents;
+    private GainEssenceManager _gainEssenceManager;
+
+    private void Awake()
+    {
+        _gainEssenceManager = FindAnyObjectByType<GainEssenceManager>();
+    }
 
     private void OnEnable()
     {
@@ -34,7 +40,8 @@ public class StatsText : MonoBehaviour
            turnManager.CurrentTurn,
             player.MonstersKilled,
             player.PlayerLevel.TotalExperienceGained,
-            player.SpellsCast
+            player.SpellsCast,
+            _gainEssenceManager.GetEssenceGainedThisRun()
         );
     }
 
