@@ -50,7 +50,7 @@ public class AltarCardUi : MonoBehaviour
     public void SetCost(int cost, int level)
     {
         _levelText.text = "LV" + level;
-        _buyButtonText.text = string.Format(_buyButtonTextContents, cost, _currencyManager.GetCurrencyInfo(CurrencyType.Essence).Name);
+        _buyButtonText.text = string.Format(_buyButtonTextContents, cost, _currencyManager.GetCurrencyInfo(CurrencyType.Essence).IconSpriteTag);
         _cost = cost;
         UpdateCostDisplay();
     }

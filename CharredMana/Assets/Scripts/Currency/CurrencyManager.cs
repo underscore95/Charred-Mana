@@ -7,6 +7,7 @@ public class CurrencyManager : MonoBehaviour
 
     private EnumDictionary<CurrencyType, CurrencyInfo> _currencyInfoDeserialized;
     private SaveManager _saveManager;
+    private UiSprites _uiSprites;
 
     private EnumDictionary<CurrencyType, float> Currencies
     {
@@ -20,10 +21,12 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
+        _uiSprites = FindAnyObjectByType<UiSprites>();
         _saveManager = FindAnyObjectByType<SaveManager>();
         Assert.IsNotNull(_saveManager, "Save manager doesn't exist");
 
         _currencyInfoDeserialized = _currencyInfo.ToEnumDictionary();
+        SetCurrencySpriteTags();
 
         _saveManager.RunAfterSaveLoaded(() =>
         {
@@ -35,6 +38,15 @@ public class CurrencyManager : MonoBehaviour
                 }
             }
         });
+    }
+
+    private void SetCurrencySpriteTags()
+    {
+        foreach (var (type, info) in _currencyInfoDeserialized)
+        {
+            info.IconSpriteTag = _uiSprites.CreateSpriteTag(info.Icon);
+            Assert.IsTrue(_uiSprites.IsValidTag(info.IconSpriteTag), $"Currency {type} has invalid sprite tag '{info.IconSpriteTag}'");
+        }
     }
 
     public CurrencyInfo GetCurrencyInfo(CurrencyType currencyType)

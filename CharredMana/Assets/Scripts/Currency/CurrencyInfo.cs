@@ -7,4 +7,5 @@ public class CurrencyInfo
     public string Name;
     public Sprite Icon;
     public float StartingAmount = 0;
+    [HideInInspector] public string IconSpriteTag;
 }
