@@ -6,7 +6,10 @@ public class Ui : MonoBehaviour
 
     private void Update()
     {
-        _hubUi.enabled = !ShouldHideHubUi();
+        if (_hubUi)
+        {
+            _hubUi.enabled = !ShouldHideHubUi();
+        }
     }
 
     private bool ShouldHideHubUi()
