@@ -103,26 +103,29 @@ public class DebugMenu : MonoBehaviour
         }
 
         // Num played runs
-        _playedRunsText.text = _runManager.GetPlayedRuns() + " Played Runs";
-        _playedRunsInput.text = _runManager.GetPlayedRuns().ToString();
-        _playedRunsButton.onClick.AddListener(() =>
+        if (_runManager != null)
         {
-            if (int.TryParse(_playedRunsInput.text, out int run))
+            _playedRunsText.text = _runManager.GetPlayedRuns() + " Played Runs";
+            _playedRunsInput.text = _runManager.GetPlayedRuns().ToString();
+            _playedRunsButton.onClick.AddListener(() =>
             {
-                if (run < 0)
+                if (int.TryParse(_playedRunsInput.text, out int run))
                 {
-                    Debug.LogError($"[DebugMenu] {_playedRunsInput.text} must be >= 0 to set current played runs");
-                    return;
-                }
+                    if (run < 0)
+                    {
+                        Debug.LogError($"[DebugMenu] {_playedRunsInput.text} must be >= 0 to set current played runs");
+                        return;
+                    }
 
-                _runManager.SetPlayedRuns(run);
-                Debug.Log($"[DebugMenu] You now have {_playedRunsInput.text} played runs.");
-            }
-            else
-            {
-                Debug.LogError($"[DebugMenu] Failed to parse {_playedRunsInput.text} as an int");
-            }
-        });
+                    _runManager.SetPlayedRuns(run);
+                    Debug.Log($"[DebugMenu] You now have {_playedRunsInput.text} played runs.");
+                }
+                else
+                {
+                    Debug.LogError($"[DebugMenu] Failed to parse {_playedRunsInput.text} as an int");
+                }
+            });
+        }
 
         // Music
         _nextMusicButton.onClick.AddListener(() => { print("[DebugMenu] Next music track"); FindAnyObjectByType<MusicPlayer>().PlayNextMusic(); });
@@ -132,157 +135,166 @@ public class DebugMenu : MonoBehaviour
         _goToMenuButton.onClick.AddListener(() => { print("[DebugMenu] Loaded main menu scene"); SceneManager.LoadScene("MainMenu", LoadSceneMode.Single); });
 
         // Floors
-        _nextFloorButton.onClick.AddListener(() => { _floorManager.NextFloor(); });
-
-        _startOnFloorToggle.SetIsOnWithoutNotify(Options.StartOnFloor);
-        _startOnFloorToggle.onValueChanged.AddListener(on => Options.StartOnFloor = on);
-        Options.StartingFloor = Mathf.Max(0, Options.StartingFloor);
-        _startingFloorInput.SetTextWithoutNotify(Options.StartingFloor.ToString());
-        _startingFloorInput.onValueChanged.AddListener(newText =>
+        if (_floorManager != null)
         {
-            // Get rid of any spaces, etc
-            string cleanedInput = new string(newText
-            .Where(c => !char.IsWhiteSpace(c) && !char.IsControl(c) && c != '\u200B')
-            .ToArray());
+            _nextFloorButton.onClick.AddListener(() => { _floorManager.NextFloor(); });
 
-            // Parse as int
-            if (int.TryParse(cleanedInput, out int startingFloor))
+            _startOnFloorToggle.SetIsOnWithoutNotify(Options.StartOnFloor);
+            _startOnFloorToggle.onValueChanged.AddListener(on => Options.StartOnFloor = on);
+            Options.StartingFloor = Mathf.Max(0, Options.StartingFloor);
+            _startingFloorInput.SetTextWithoutNotify(Options.StartingFloor.ToString());
+            _startingFloorInput.onValueChanged.AddListener(newText =>
             {
-                if (startingFloor >= 0)
+                // Get rid of any spaces, etc
+                string cleanedInput = new string(newText
+                .Where(c => !char.IsWhiteSpace(c) && !char.IsControl(c) && c != '\u200B')
+                .ToArray());
+
+                // Parse as int
+                if (int.TryParse(cleanedInput, out int startingFloor))
                 {
-                    Options.StartingFloor = startingFloor;
-                    print($"[DebugMenu] You will start on floor {startingFloor} next time you launch the game. (assuming the checkbox is checked)");
+                    if (startingFloor >= 0)
+                    {
+                        Options.StartingFloor = startingFloor;
+                        print($"[DebugMenu] You will start on floor {startingFloor} next time you launch the game. (assuming the checkbox is checked)");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[DebugMenu] Starting floor ({startingFloor}) cannot be negative, using {Options.StartingFloor} as the starting floor.");
+                    }
                 }
                 else
                 {
-                    Debug.LogWarning($"[DebugMenu] Starting floor ({startingFloor}) cannot be negative, using {Options.StartingFloor} as the starting floor.");
+                    Debug.LogWarning($"[DebugMenu] Failed to parse '{cleanedInput}' as an integer");
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"[DebugMenu] Failed to parse '{cleanedInput}' as an integer");
-            }
-        });
+            });
 
-        StartCoroutine(GoToStartingFloorIfUsing());
+            StartCoroutine(GoToStartingFloorIfUsing());
+        }
 
         // Spells
         #region UnlockSpell
-        RefreshUnlockSpellDropdown();
-
-        _unlockSpellButton.onClick.RemoveAllListeners();
-        _unlockSpellButton.onClick.AddListener(() =>
+        if (_spellManager != null)
         {
-            if (_lockedSpells.Count == 0) return;
-
-            int selectedIndex = _selectedSpellToUnlock.value;
-            PlayerSpell selectedSpell = _lockedSpells[selectedIndex];
-
-            if (_spellManager.IsSpellUnlocked(selectedSpell))
-            {
-                Debug.Log("[DebugMenu] Spell already unlocked: " + selectedSpell);
-                return;
-            }
-
-            int slot = _spellManager.GetUnusedSelectedSlot();
-            if (slot < 0)
-            {
-                Debug.LogWarning("[DebugMenu] No available spell slot.");
-                return;
-            }
-
-            _spellManager.UnlockSpell(_spellManager.GetSpellIndex(selectedSpell));
-            _spellManager.SelectSpell(slot, selectedSpell);
-            Debug.Log("[DebugMenu] Unlocked and assigned spell: " + selectedSpell + " to slot " + slot);
-
             RefreshUnlockSpellDropdown();
-        });
 
-        _spellManager.OnSpellUnlock += RefreshUnlockSpellDropdown;
+            _unlockSpellButton.onClick.RemoveAllListeners();
+            _unlockSpellButton.onClick.AddListener(() =>
+            {
+                if (_lockedSpells.Count == 0) return;
+
+                int selectedIndex = _selectedSpellToUnlock.value;
+                PlayerSpell selectedSpell = _lockedSpells[selectedIndex];
+
+                if (_spellManager.IsSpellUnlocked(selectedSpell))
+                {
+                    Debug.Log("[DebugMenu] Spell already unlocked: " + selectedSpell);
+                    return;
+                }
+
+                int slot = _spellManager.GetUnusedSelectedSlot();
+                if (slot < 0)
+                {
+                    Debug.LogWarning("[DebugMenu] No available spell slot.");
+                    return;
+                }
+
+                _spellManager.UnlockSpell(_spellManager.GetSpellIndex(selectedSpell));
+                _spellManager.SelectSpell(slot, selectedSpell);
+                Debug.Log("[DebugMenu] Unlocked and assigned spell: " + selectedSpell + " to slot " + slot);
+
+                RefreshUnlockSpellDropdown();
+            });
+
+            _spellManager.OnSpellUnlock += RefreshUnlockSpellDropdown;
+        }
         #endregion
 
         // Currency
-        #region Currency
-        List<TMP_Dropdown.OptionData> currencyDropdownOptions = new();
-        foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
+        if (_currencyManager != null)
         {
-            currencyDropdownOptions.Add(new(currency.ToString()));
-        }
-        _selectedCurrency.AddOptions(currencyDropdownOptions);
-        _selectedCurrency.SetValueWithoutNotify((int)Options.SelectedCurrency);
-        _selectedCurrency.onValueChanged.AddListener(newCurrency =>
-        {
-            Options.SelectedCurrency = (CurrencyType)newCurrency;
+            #region Currency
+            List<TMP_Dropdown.OptionData> currencyDropdownOptions = new();
+            foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
+            {
+                currencyDropdownOptions.Add(new(currency.ToString()));
+            }
+            _selectedCurrency.AddOptions(currencyDropdownOptions);
+            _selectedCurrency.SetValueWithoutNotify((int)Options.SelectedCurrency);
+            _selectedCurrency.onValueChanged.AddListener(newCurrency =>
+            {
+                Options.SelectedCurrency = (CurrencyType)newCurrency;
+                _currencyDisplay.Currency = Options.SelectedCurrency;
+                print("[DebugMenu] Selected currency" + Options.SelectedCurrency);
+            });
             _currencyDisplay.Currency = Options.SelectedCurrency;
-            print("[DebugMenu] Selected currency" + Options.SelectedCurrency);
-        });
-        _currencyDisplay.Currency = Options.SelectedCurrency;
 
-        #region Currency Buttons
+            #region Currency Buttons
 
-        _setCurrency0.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Set {Options.SelectedCurrency} to 0");
-            _currencyManager.Set(Options.SelectedCurrency, 0);
-        });
+            _setCurrency0.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Set {Options.SelectedCurrency} to 0");
+                _currencyManager.Set(Options.SelectedCurrency, 0);
+            });
 
-        #region Add Currency
-        _addCurrency1.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Add 1 to {Options.SelectedCurrency}");
-            _currencyManager.Add(Options.SelectedCurrency, 1);
-        });
-        _addCurrency10.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Add 10 to {Options.SelectedCurrency}");
-            _currencyManager.Add(Options.SelectedCurrency, 10);
-        });
-        _addCurrency100.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Add 100 to {Options.SelectedCurrency}");
-            _currencyManager.Add(Options.SelectedCurrency, 100);
-        });
-        _addCurrency1000.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Add 1000 to {Options.SelectedCurrency}");
-            _currencyManager.Add(Options.SelectedCurrency, 1000);
-        });
-        _addCurrency10000.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Add 10000 to {Options.SelectedCurrency}");
-            _currencyManager.Add(Options.SelectedCurrency, 10000);
-        });
-        #endregion
+            #region Add Currency
+            _addCurrency1.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Add 1 to {Options.SelectedCurrency}");
+                _currencyManager.Add(Options.SelectedCurrency, 1);
+            });
+            _addCurrency10.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Add 10 to {Options.SelectedCurrency}");
+                _currencyManager.Add(Options.SelectedCurrency, 10);
+            });
+            _addCurrency100.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Add 100 to {Options.SelectedCurrency}");
+                _currencyManager.Add(Options.SelectedCurrency, 100);
+            });
+            _addCurrency1000.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Add 1000 to {Options.SelectedCurrency}");
+                _currencyManager.Add(Options.SelectedCurrency, 1000);
+            });
+            _addCurrency10000.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Add 10000 to {Options.SelectedCurrency}");
+                _currencyManager.Add(Options.SelectedCurrency, 10000);
+            });
+            #endregion
 
-        #region Subtract Currency
-        _subtractCurrency1.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Subtract 1 from {Options.SelectedCurrency}");
-            _currencyManager.Remove(Options.SelectedCurrency, 1);
-        });
-        _subtractCurrency10.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Subtract 10 from {Options.SelectedCurrency}");
-            _currencyManager.Remove(Options.SelectedCurrency, 10);
-        });
-        _subtractCurrency100.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Subtract 100 from {Options.SelectedCurrency}");
-            _currencyManager.Remove(Options.SelectedCurrency, 100);
-        });
-        _subtractCurrency1000.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Subtract 1000 from {Options.SelectedCurrency}");
-            _currencyManager.Remove(Options.SelectedCurrency, 1000);
-        });
-        _subtractCurrency10000.onClick.AddListener(() =>
-        {
-            Debug.Log($"[DebugMenu] Subtract 10000 from {Options.SelectedCurrency}");
-            _currencyManager.Remove(Options.SelectedCurrency, 10000);
-        });
-        #endregion
+            #region Subtract Currency
+            _subtractCurrency1.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Subtract 1 from {Options.SelectedCurrency}");
+                _currencyManager.Remove(Options.SelectedCurrency, 1);
+            });
+            _subtractCurrency10.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Subtract 10 from {Options.SelectedCurrency}");
+                _currencyManager.Remove(Options.SelectedCurrency, 10);
+            });
+            _subtractCurrency100.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Subtract 100 from {Options.SelectedCurrency}");
+                _currencyManager.Remove(Options.SelectedCurrency, 100);
+            });
+            _subtractCurrency1000.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Subtract 1000 from {Options.SelectedCurrency}");
+                _currencyManager.Remove(Options.SelectedCurrency, 1000);
+            });
+            _subtractCurrency10000.onClick.AddListener(() =>
+            {
+                Debug.Log($"[DebugMenu] Subtract 10000 from {Options.SelectedCurrency}");
+                _currencyManager.Remove(Options.SelectedCurrency, 10000);
+            });
+            #endregion
 
-        #endregion
+            #endregion
+        }
         #endregion
 
     }
