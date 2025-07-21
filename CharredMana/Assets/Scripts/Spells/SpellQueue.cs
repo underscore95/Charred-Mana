@@ -66,7 +66,7 @@ public class SpellQueue : MonoBehaviour
 
     private void UpdateText()
     {
-        StringBuilder sb = new(string.Format("{0} / {1} Queued Spells{2}", _queuedSpells.Count, _player.EntityStats.Focus, _queuedSpells.Count > 0 ? ":\n" : ""));
+        StringBuilder sb = new(string.Format("{0} / {1} Queued Spells\n", _queuedSpells.Count, _player.EntityStats.Focus));
         foreach (var spell in _queuedSpells)
         {
             sb.AppendLine(spell.Spell.name);

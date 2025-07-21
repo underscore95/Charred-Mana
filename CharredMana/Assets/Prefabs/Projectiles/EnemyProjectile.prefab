@@ -108,8 +108,8 @@ MonoBehaviour:
     entries:
     - Type: 1
       Modifier:
-        Operation: 0
-        Value: 0
+        Operation: 1
+        Value: 1
   Effects: []
   Shooter: {fileID: 0}
 --- !u!50 &874879147589860793
