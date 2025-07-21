@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3009189112777315498}
   m_Layer: 0
-  m_Name: InteractUi
+  m_Name: WorldTextbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,10 +225,6 @@ PrefabInstance:
     - target: {fileID: 6774286528171591873, guid: 262c33045f21f0f44a8b91b8b15978a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6984347558061651053, guid: 262c33045f21f0f44a8b91b8b15978a5, type: 3}
-      propertyPath: m_text
-      value: E
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

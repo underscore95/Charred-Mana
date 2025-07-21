@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7951001797335805011}
   - component: {fileID: 5574279019130705875}
   - component: {fileID: 4110598471232908318}
+  - component: {fileID: 855965691302833594}
   m_Layer: 0
   m_Name: Altar
   m_TagString: Untagged
@@ -94,11 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f84da1c1fa02d47b64c70a33142dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactUiYOffsetRange:
-    Begin: -0.05
-    End: 0.05
-  _interactUiFloatDuration: 0.75
-  _interactUiOffset: {x: 0, y: 1, z: -1}
   _activateWhenInteractedWith:
   - {fileID: 7399233988551413676}
   _toggleActivationState: 0
@@ -115,6 +111,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _z: -1
+--- !u!114 &855965691302833594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574719809764303210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad4c048e6f18dd4dbfdf7e7624271be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range:
+    Begin: 1
+    End: 1
+  _prefab: {fileID: 1600261908625335015, guid: 9b7cce8ed24e438479c8bc4614a03e8b, type: 3}
 --- !u!1 &2958033536675120025
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,9 +379,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3472093619788991448}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
+      - m_Target: {fileID: 7399233988551413676}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -616,7 +628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6077647374276406682
 RectTransform:
   m_ObjectHideFlags: 0

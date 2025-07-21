@@ -10,10 +10,12 @@ public class StatsText : MonoBehaviour
     private TextMeshProUGUI _statsText;
     private string _statsTextOriginalContents;
     private GainEssenceManager _gainEssenceManager;
+    private RunManager _runManager;
 
     private void Awake()
     {
         _gainEssenceManager = FindAnyObjectByType<GainEssenceManager>();
+        _runManager = FindAnyObjectByType<RunManager>();
     }
 
     private void OnEnable()
@@ -47,6 +49,7 @@ public class StatsText : MonoBehaviour
 
     public void GoToHub()
     {
+        _runManager.IncrementPlayedRuns();
         UIState.MarkAllUiClosed();
         SceneManager.LoadScene(_hubScene, LoadSceneMode.Single);
     }

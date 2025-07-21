@@ -48,19 +48,24 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private Button _subtractCurrency10000;
     [SerializeField] private TMP_Dropdown _selectedSpellToUnlock;
     [SerializeField] private Button _unlockSpellButton;
+    [SerializeField] private TextMeshProUGUI _playedRunsText;
+    [SerializeField] private TMP_InputField _playedRunsInput;
+    [SerializeField] private Button _playedRunsButton;
 
     public DebugOptions Options { get; private set; }
     private bool _wasDebugMenuOpenLastFrame = false;
     private FloorManager _floorManager;
     private CurrencyManager _currencyManager;
     private SpellManager _spellManager;
-    private List<PlayerSpell> _lockedSpells = new();
+    private readonly List<PlayerSpell> _lockedSpells = new();
+    private RunManager _runManager;
 
     private void Awake()
     {
         _floorManager = FindAnyObjectByType<FloorManager>();
         _spellManager = FindAnyObjectByType<SpellManager>();
         _currencyManager = FindAnyObjectByType<CurrencyManager>();
+        _runManager = FindAnyObjectByType<RunManager>();
 
         if (_debugBuildText)
         {
@@ -96,6 +101,28 @@ public class DebugMenu : MonoBehaviour
 
             _killPlayerButton.onClick.AddListener(() => { print("[DebugMenu] Damaged player for " + player.EntityStats.MaxHealth); LivingEntity.Damage(player, player.EntityStats.MaxHealth); });
         }
+
+        // Num played runs
+        _playedRunsText.text = _runManager.GetPlayedRuns() + " Played Runs";
+        _playedRunsInput.text = _runManager.GetPlayedRuns().ToString();
+        _playedRunsButton.onClick.AddListener(() =>
+        {
+            if (int.TryParse(_playedRunsInput.text, out int run))
+            {
+                if (run < 0)
+                {
+                    Debug.LogError($"[DebugMenu] {_playedRunsInput.text} must be >= 0 to set current played runs");
+                    return;
+                }
+
+                _runManager.SetPlayedRuns(run);
+                Debug.Log($"[DebugMenu] You now have {_playedRunsInput.text} played runs.");
+            }
+            else
+            {
+                Debug.LogError($"[DebugMenu] Failed to parse {_playedRunsInput.text} as an int");
+            }
+        });
 
         // Music
         _nextMusicButton.onClick.AddListener(() => { print("[DebugMenu] Next music track"); FindAnyObjectByType<MusicPlayer>().PlayNextMusic(); });
