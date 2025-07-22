@@ -51,6 +51,13 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _playedRunsText;
     [SerializeField] private TMP_InputField _playedRunsInput;
     [SerializeField] private Button _playedRunsButton;
+    [SerializeField] private Button _sendPlayerMessageButton;
+    [SerializeField]
+    private List<string> _playerMessages = new() {
+        "Kinda sorta a little long laceholder message 1",
+        "Very very very very very very very very very very very very very very very very very very very very very long placeholder message 2",
+        "msg 3"
+    };
 
     public DebugOptions Options { get; private set; }
     private bool _wasDebugMenuOpenLastFrame = false;
@@ -59,6 +66,7 @@ public class DebugMenu : MonoBehaviour
     private SpellManager _spellManager;
     private readonly List<PlayerSpell> _lockedSpells = new();
     private RunManager _runManager;
+    private PlayerMessageManager _playerMessageManager;
 
     private void Awake()
     {
@@ -66,6 +74,7 @@ public class DebugMenu : MonoBehaviour
         _spellManager = FindAnyObjectByType<SpellManager>();
         _currencyManager = FindAnyObjectByType<CurrencyManager>();
         _runManager = FindAnyObjectByType<RunManager>();
+        _playerMessageManager = FindAnyObjectByType<PlayerMessageManager>();
 
         if (_debugBuildText)
         {
@@ -170,6 +179,17 @@ public class DebugMenu : MonoBehaviour
             });
 
             StartCoroutine(GoToStartingFloorIfUsing());
+
+            // Player messages
+            if (_playerMessageManager != null)
+            {
+                _sendPlayerMessageButton.onClick.AddListener(() =>
+                {
+                    string message = _playerMessages.Count > 0 ? _playerMessages[UnityEngine.Random.Range(0, _playerMessages.Count)] : "Debug Player Message";
+                    _playerMessageManager.SendPlayerMessage(message);
+                    Debug.Log($"[DebugMenu] Sent player message '{message}'.");
+                });
+            }
         }
 
         // Spells

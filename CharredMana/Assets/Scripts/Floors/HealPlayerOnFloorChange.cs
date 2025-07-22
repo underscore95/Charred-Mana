@@ -5,6 +5,7 @@ public class HealPlayerOnFloorChange : MonoBehaviour
     private FloorManager _floorManager;
     private Player _player;
 
+
     private void Awake()
     {
         _floorManager = FindAnyObjectByType<FloorManager>();

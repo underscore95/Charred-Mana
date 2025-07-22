@@ -34,14 +34,9 @@ public static class Utils
         return new(xy.x, xy.y, z);
     }
 
-    // returns value between 0 and 1
-    // imagine it like something fading in, staying for a bit at full opacity, then fading out, where this returns the alpha and elapsed is time since started fading in
     public static float GetTransitionValueInOut(float elapsed, float transitionIn, float stay, float transitionOut)
     {
-        if (elapsed <= 0 || elapsed >= transitionIn + stay + transitionOut) return 0;
-        if (elapsed >= transitionIn && elapsed <= transitionIn + stay) return 1;
-        if (elapsed < transitionIn) return Mathf.InverseLerp(0, transitionIn, elapsed);
-        else return Mathf.InverseLerp(transitionOut, 0, elapsed - transitionIn - stay);
+       return new Transition(transitionIn, stay, transitionOut).GetTransition(elapsed);
     }
 
     public static System.Random CreateRandom()
