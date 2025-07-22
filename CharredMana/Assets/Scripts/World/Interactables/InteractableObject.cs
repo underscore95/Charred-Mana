@@ -14,7 +14,7 @@ public abstract class InteractableObject : MonoBehaviour
         _settings = FindAnyObjectByType<InteractableSettings>();
 
         _interactUi = Instantiate(_settings.UiPrefab, transform);
-        _interactUi.GetComponentInChildren<Textbox>().SetText("E"); // todo
+        _interactUi.GetComponentInChildren<Textbox>().SetText("E", 100, 100); // todo
         Assert.IsNotNull(_interactUi);
         _interactUi.SetActive(false);
     }

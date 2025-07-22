@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class PlayerMessageManager : ObjectPoolMonoBehaviour
 {
@@ -21,6 +22,8 @@ public class PlayerMessageManager : ObjectPoolMonoBehaviour
     [SerializeField] private float _messageSpacing = 15; // pixels between messages
     [SerializeField] private float _speed = 50; // pixels per second messages can move
 
+    public Transition Fading { get { return _fading; } }
+
     private readonly Queue<PlayerMessage> _messages = new();
 
     protected new void Awake()
@@ -28,9 +31,10 @@ public class PlayerMessageManager : ObjectPoolMonoBehaviour
         base.Awake();
         Assert.IsTrue(TryGetComponent<Canvas>(out var _), $"No canvas component on {name}");
         Assert.IsNotNull(_messagesParent);
+        _pool.SetParent(_messagesParent, false);
         foreach (GameObject go in _pool.AliveAndDead)
         {
-            go.transform.SetParent(_messagesParent, false);
+            go.AddComponent<CanvasGroup>();
         }
     }
 
@@ -39,7 +43,7 @@ public class PlayerMessageManager : ObjectPoolMonoBehaviour
         // message fading
         foreach (var message in _messages)
         {
-            message.SecondsElapsed += Time.deltaTime;
+                message.SecondsElapsed += Time.deltaTime;
 
             float t = _fading.GetTransition(message.SecondsElapsed);
             message.CanvasGroup.alpha = t;
@@ -80,7 +84,7 @@ public class PlayerMessageManager : ObjectPoolMonoBehaviour
         go.transform.localPosition = Vector3.down * heightAndSpacing;
         if (_messages.Count > 0) go.transform.localPosition += _messages.Last().Textbox.transform.localPosition;
 
-        playerMessage.CanvasGroup = go.AddComponent<CanvasGroup>();
+        playerMessage.CanvasGroup = go.GetComponent<CanvasGroup>();
         playerMessage.CanvasGroup.alpha = 0;
 
         _messages.Enqueue(playerMessage);

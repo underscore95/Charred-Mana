@@ -12,14 +12,22 @@ public class Transition
     }
 
     [SerializeField] private float _transitionIn = 1.0f;
+    public float TransitionIn { get { return _transitionIn; } }
     [SerializeField] private float _stay = 3.0f;
+    public float Stay { get { return _stay; } }
     [SerializeField] private float _transitionOut = 1.0f;
+    public float TransitionOut { get { return _transitionOut; } }
 
     public Transition(float transitionIn, float stay, float transitionOut)
     {
         _transitionIn = transitionIn;
         _stay = stay;
         _transitionOut = transitionOut;
+
+        Assert.IsTrue(transitionIn >= 0, $"transitionIn must be >= 0 but it was {transitionIn}");
+        Assert.IsTrue(stay >= 0, $"stay must be >= 0 but it was {stay}");
+        Assert.IsTrue(transitionOut >= 0, $"transitionOut must be >= 0 but it was {transitionOut}");
+        GetDuration(); // asserts that duration is valid
     }
 
     // returns value between 0 and 1
@@ -31,19 +39,17 @@ public class Transition
 
     public float GetTransition(float elapsed, out State state)
     {
-        Assert.IsTrue(_transitionIn + _stay + _transitionOut > 0, "Transition cannot be instant");
+        // After transition in
+        if (elapsed >= GetDuration())
+        {
+            state = State.TransitionOut;
+            return 0;
+        }
 
         // Before transition in
         if (elapsed <= 0)
         {
             state = State.TransitionIn;
-            return 0;
-        }
-
-        // After transition in
-        if (elapsed >= _transitionIn + _stay + _transitionOut)
-        {
-            state = State.TransitionOut;
             return 0;
         }
 
@@ -69,6 +75,19 @@ public class Transition
     public bool IsTransitionFinished(float elapsed)
     {
         Assert.IsTrue(_transitionIn + _stay + _transitionOut > 0, "Transition cannot be instant");
-        return elapsed >= _transitionIn + _stay + _transitionOut;
+        return elapsed >= GetDuration();
+    }
+
+    public float GetDuration()
+    {
+        float duration = _transitionIn + _stay + _transitionOut;
+        Assert.IsTrue(duration > 0, "Transition cannot be instant");
+        return duration;
+    }
+
+    public State GetState(float secondsElapsed)
+    {
+        GetTransition(secondsElapsed, out State s);
+        return s;
     }
 }

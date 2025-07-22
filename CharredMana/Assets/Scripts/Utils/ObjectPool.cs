@@ -34,6 +34,18 @@ public class ObjectPool
         prefab.SetActive(true);
     }
 
+    public void SetParent(Transform parent, bool keepWorldPosition = true)
+    {
+        foreach (GameObject go in AliveAndDead)
+        {
+            if (go.transform.parent == _parent)
+            {
+                go.transform.SetParent(parent, keepWorldPosition);
+            }
+        }
+        _parent = parent;
+    }
+
     public bool IsFull() => _freeIndices.Count == 0;
 
     public GameObject ActivateObject(UnityAction<GameObject> runBeforeActivation = null)

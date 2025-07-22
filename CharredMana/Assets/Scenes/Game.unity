@@ -7291,16 +7291,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08f1a5a9aeb74a43b9161c61471f035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textboxPrefab: {fileID: 4341580385199034088, guid: 262c33045f21f0f44a8b91b8b15978a5, type: 3}
+  _prefab: {fileID: 4341580385199034088, guid: 262c33045f21f0f44a8b91b8b15978a5, type: 3}
+  _capacity: 15
   _messagesParent: {fileID: 1312950943}
   _fading:
     _transitionIn: 0.5
-    _stay: 4
+    _stay: 5
     _transitionOut: 0.5
-  _fontSize: 36
+  _fontSize: 30
   _messageWidth: 600
   _messageSpacing: 0
-  _speed: 100
+  _speed: 250
+  PreventFadingMessages: 0
+  DelayNewMessages: 0
 --- !u!114 &1922530203
 MonoBehaviour:
   m_ObjectHideFlags: 0
