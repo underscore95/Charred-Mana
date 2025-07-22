@@ -5,7 +5,7 @@ public class FloorActivityGuardMonoBehaviour : MonoBehaviour
 {
     [SerializeField] private FloorActivityGuard _guard;
 
-    private void Awake()
+    protected void Awake()
     {
         _guard.Init(gameObject);
     }
