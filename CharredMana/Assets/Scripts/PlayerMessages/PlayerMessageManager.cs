@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class PlayerMessageManager : MonoBehaviour
+public class PlayerMessageManager : ObjectPoolMonoBehaviour
 {
     private class PlayerMessage
     {
@@ -14,7 +14,6 @@ public class PlayerMessageManager : MonoBehaviour
         public float TargetY = 0;
     }
 
-    [SerializeField] private GameObject _textboxPrefab;
     [SerializeField] private Transform _messagesParent;
     [SerializeField] private Transition _fading = new(1, 3, 1);
     [SerializeField] private float _fontSize = 30;
@@ -24,11 +23,15 @@ public class PlayerMessageManager : MonoBehaviour
 
     private readonly Queue<PlayerMessage> _messages = new();
 
-    private void Awake()
+    protected new void Awake()
     {
+        base.Awake();
         Assert.IsTrue(TryGetComponent<Canvas>(out var _), $"No canvas component on {name}");
-        Assert.IsNotNull(_textboxPrefab);
         Assert.IsNotNull(_messagesParent);
+        foreach (GameObject go in _pool.AliveAndDead)
+        {
+            go.transform.SetParent(_messagesParent, false);
+        }
     }
 
     private void Update()
@@ -46,7 +49,7 @@ public class PlayerMessageManager : MonoBehaviour
         while (_messages.Count > 0 && _fading.IsTransitionFinished(_messages.Last().SecondsElapsed))
         {
             PlayerMessage lastMessage = _messages.Dequeue();
-            Destroy(lastMessage.Textbox.gameObject);
+            _pool.ReleaseObject(lastMessage.Textbox.gameObject);
             float heightAndSpacing = lastMessage.Height + _messageSpacing;
         }
 
@@ -61,7 +64,7 @@ public class PlayerMessageManager : MonoBehaviour
     public void SendPlayerMessage(string messageContents)
     {
         PlayerMessage playerMessage = new();
-        GameObject go = Instantiate(_textboxPrefab, _messagesParent);
+        GameObject go = _pool.ActivateObject();
 
         playerMessage.Textbox = go.GetComponent<Textbox>();
         playerMessage.Textbox.FloatingAnimationEnabled = false;
