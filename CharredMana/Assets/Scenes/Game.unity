@@ -4442,7 +4442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 5190042482056591089, guid: 2453c3c9663bba442a43fc093b7684a1, type: 3}
-  _capacity: 10
+  _capacity: 3
   _spawnInterval: 12
   _overwriteOldest: 0
   _minDistanceFromPlayer: {x: 3.5, y: 5.5}
