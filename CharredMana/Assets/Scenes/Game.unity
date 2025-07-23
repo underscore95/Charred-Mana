@@ -1265,6 +1265,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a0fc33ef6b94064ebcdb98881dfa486, type: 2}
   _collisionDecorations:
   - {fileID: 11400000, guid: c6d904ee3b68e4b4bb64b66f9c5e3063, type: 2}
+  - {fileID: 11400000, guid: 6625ea4f30250ca45bebafd9fbc21e6b, type: 2}
   _terrainTile: {fileID: 11400000, guid: 9d329d71f6a5f724c87774e1ffe7eb97, type: 2}
 --- !u!1001 &214063695
 PrefabInstance:
@@ -8864,6 +8865,9 @@ MonoBehaviour:
   - _biomes: 0
     _noiseFrequency: 96
     _seed: 0
+  - _biomes: 0
+    _noiseFrequency: 96
+    _seed: 2
 --- !u!1 &2130502736
 GameObject:
   m_ObjectHideFlags: 0
