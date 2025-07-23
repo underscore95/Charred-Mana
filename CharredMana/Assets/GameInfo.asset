@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891d69c5171ed7649a106fbf7e5b614f, type: 3}
+  m_Name: GameInfo
+  m_EditorClassIdentifier: 
+  _gameName: Charred Mana
+  _state: Alpha
+  _majorVersion: 0
+  _minorVersion: 3
+  _patchVersion: 1
+  _patchPatchVersion:
+    Version: 0

@@ -4,14 +4,19 @@ using UnityEngine.Events;
 
 public class SaveManager : MonoBehaviour
 {
-    private static readonly string SAVE_FILE = "GameData.json";
+    [SerializeField] private GameInfo _gameInfo;
 
     public GameSave Save { get; private set; } = null;
     private UnityAction _runAfterSaveLoaded = () => { };
 
+    private string GetSaveFileName()
+    {
+        return $"Saves/GameData_{_gameInfo.GetVersionIdentifier()}.json";
+    }
+
     private void Awake()
     {
-        Save = JsonUtils.Load<GameSave>(SAVE_FILE, false);
+        Save = JsonUtils.Load<GameSave>(GetSaveFileName(), false);
         Save ??= new();
         _runAfterSaveLoaded.Invoke();
         _runAfterSaveLoaded = null;
@@ -24,7 +29,7 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGame()
     {
-        JsonUtils.Save(SAVE_FILE, Save);
+        JsonUtils.Save(GetSaveFileName(), Save);
     }
 
     /// <summary>
