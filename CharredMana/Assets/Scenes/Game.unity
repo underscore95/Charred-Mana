@@ -1732,6 +1732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteToIndexMappingJsonFile: {fileID: 4900000, guid: 55c461698e490eb479139593d7b5943c, type: 3}
+  _spriteKeyToPathJsonFile: {fileID: 4900000, guid: ac422bb91c89d8f428e7b8b555e03d79, type: 3}
   _spriteTextureAssetName: TMP_SpriteTextureAtlas
 --- !u!1 &270274204
 GameObject:
