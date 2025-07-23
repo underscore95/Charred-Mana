@@ -179,5 +179,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a164318b71b8ab14c9ae6e2072771934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _interactUiPrefab: {fileID: 2213609963428003195, guid: 5b48e3725ac5dca4db7c36bf7833a4e9, type: 3}
