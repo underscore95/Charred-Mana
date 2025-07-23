@@ -8,8 +8,7 @@ using UnityEngine.Events;
 public class TurnManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _turnText;
-    [SerializeField] private List<DelayedStatBoost> _enemyStatBoosts = new();
-    public StatModifiersContainer CurrentEnemyStatBoost { get; private set; } = new();
+    public UnityAction OnPreTurnChange { get; set; } = () => { };
     public UnityAction OnTurnChange { get; set; } = () => { };
     public UnityAction OnLateTurnChange { get; set; } = () => { };
     public UnityAction OnTurnReset { get; set;  } = () => { };
@@ -22,8 +21,6 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         _floorManager = FindAnyObjectByType<FloorManager>();
-
-        OnTurnChange += () => CurrentTurn++;
 
         OnTurnChangeOrReset += UpdateTurn;
 
@@ -38,11 +35,12 @@ public class TurnManager : MonoBehaviour
     private void UpdateTurn()
     {
         _turnText.text = "Turn #" + (CurrentTurn + 1);
-        CurrentEnemyStatBoost = DelayedStatBoost.GetMergedStatBoost(_enemyStatBoosts, CurrentTurn);
     }
 
     public void NextTurn()
     {
+        CurrentTurn++;
+        OnPreTurnChange.Invoke();
         OnTurnChangeOrReset.Invoke();
         OnTurnChange.Invoke();
         OnLateTurnChange.Invoke();

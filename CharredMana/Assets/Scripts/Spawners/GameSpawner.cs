@@ -12,6 +12,8 @@ public class GameSpawner : BaseSpawner
 
     private FloorManager _floorManager;
     private int _turnsSinceEnterFloor = 0;
+    public FloorActivityGuard FloorActivity { get { return _activity; } }
+    public IntRange FloorTurnActivity { get { return _activeDuringFloorTurns; } }
 
     protected new void Awake()
     {

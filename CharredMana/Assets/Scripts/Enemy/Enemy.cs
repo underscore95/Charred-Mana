@@ -18,6 +18,7 @@ public class Enemy : LivingEntity
     public LivingEntity CurrentTarget { get; private set; }
     private ObjectPoolRef _pool;
     private TurnManager _turnManager;
+    private EnemyTurnStatBoosts _turnStatBoosts;
     private EffectManager _effectManager;
     private bool _isDead = false;
 
@@ -26,6 +27,7 @@ public class Enemy : LivingEntity
         _player = FindAnyObjectByType<Player>();
         _attack = GetComponent<IEnemyAttack>();
         _turnManager = FindAnyObjectByType<TurnManager>();
+        _turnStatBoosts = FindAnyObjectByType<EnemyTurnStatBoosts>();
         Controller = GetComponent<IEnemyController>();
         _targeter = GetComponent<IEnemyTargeter>();
         _effectManager = FindAnyObjectByType<EffectManager>();
@@ -41,7 +43,7 @@ public class Enemy : LivingEntity
 
         _turnManager.OnTurnChange += PlayTurn;
         EntityStats = new(_baseStats);
-        EntityStats.ApplyModifiers(_turnManager.CurrentEnemyStatBoost);
+        EntityStats.ApplyModifiers(_turnStatBoosts.CurrentEnemyStatBoost);
         EntityStats.Heal();
     }
 

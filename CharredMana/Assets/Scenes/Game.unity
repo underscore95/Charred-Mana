@@ -1908,6 +1908,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312911478}
   m_CullTransparentMesh: 1
+--- !u!1 &357530000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 357530001}
+  - component: {fileID: 357530002}
+  m_Layer: 0
+  m_Name: ContentCompletionTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &357530001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357530000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 800884771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &357530002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357530000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6159c049aa3284d4ca47ec6c76ab11b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _completedFinalTurnAndFloorMessage: Congratulations! You have reached the final
+    floor and turn.\nThere is no more content after this point.
+  _turnBuffer: 100
 --- !u!1001 &451863109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2362,6 +2409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _floorText: {fileID: 132153419}
+  _finalFloor: 1
 --- !u!114 &519300079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3476,36 +3524,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _turnText: {fileID: 1038945658}
-  _enemyStatBoosts:
-  - RequiredTurn: 50
-    StatModifiers:
-      entries:
-      - Type: 1
-        Modifier:
-          Operation: 0
-          Value: 1
-  - RequiredTurn: 100
-    StatModifiers:
-      entries:
-      - Type: 1
-        Modifier:
-          Operation: 0
-          Value: 2
-      - Type: 2
-        Modifier:
-          Operation: 0
-          Value: 1
-  - RequiredTurn: 150
-    StatModifiers:
-      entries:
-      - Type: 1
-        Modifier:
-          Operation: 1
-          Value: 1.5
-      - Type: 2
-        Modifier:
-          Operation: 0
-          Value: 2
 --- !u!1 &752262274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,6 +3734,7 @@ Transform:
   - {fileID: 1669138267}
   - {fileID: 2046284001}
   - {fileID: 264842961}
+  - {fileID: 357530001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802137172
@@ -4124,6 +4143,7 @@ Transform:
   m_Children:
   - {fileID: 2117248935}
   - {fileID: 739235274}
+  - {fileID: 1175542950}
   - {fileID: 891771361}
   - {fileID: 1046816243}
   - {fileID: 622747382}
@@ -5074,6 +5094,80 @@ MonoBehaviour:
   _activeDuringFloorTurns:
     Begin: 150
     End: 999999
+--- !u!1 &1175542949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1175542950}
+  - component: {fileID: 1175542951}
+  m_Layer: 0
+  m_Name: EnemyTurnStatBoosts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1175542950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175542949}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 821079318}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1175542951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175542949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06754fac6e8d31c4488306cf526bd90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyStatBoosts:
+  - RequiredTurn: 50
+    StatModifiers:
+      entries:
+      - Type: 1
+        Modifier:
+          Operation: 0
+          Value: 1
+  - RequiredTurn: 100
+    StatModifiers:
+      entries:
+      - Type: 1
+        Modifier:
+          Operation: 0
+          Value: 2
+      - Type: 2
+        Modifier:
+          Operation: 0
+          Value: 1
+  - RequiredTurn: 150
+    StatModifiers:
+      entries:
+      - Type: 1
+        Modifier:
+          Operation: 1
+          Value: 1.5
+      - Type: 2
+        Modifier:
+          Operation: 0
+          Value: 2
 --- !u!1 &1232652833
 GameObject:
   m_ObjectHideFlags: 0
@@ -7302,8 +7396,6 @@ MonoBehaviour:
   _messageWidth: 600
   _messageSpacing: 0
   _speed: 250
-  PreventFadingMessages: 0
-  DelayNewMessages: 0
 --- !u!114 &1922530203
 MonoBehaviour:
   m_ObjectHideFlags: 0

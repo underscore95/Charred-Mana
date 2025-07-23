@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 public class FloorRange
 {
     [SerializeField] private IntRange _floors;
+    public IntRange Floors { get { return _floors; } }
 
     protected FloorManager _floorManager;
 
