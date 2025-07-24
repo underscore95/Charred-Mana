@@ -18,6 +18,6 @@ public class DamageOverTimeEffect : Effect
     {
         if (_entity == null) return;
 
-        LivingEntity.Damage(_entity, Amplifier);
+        LivingEntity.Damage(_entity, Amplifier, DamageSource.StatusEffect);
     }
 }

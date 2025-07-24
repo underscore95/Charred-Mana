@@ -17,6 +17,7 @@ public class Projectile : MonoBehaviour
     private TurnManager _turnManager;
     private EffectManager _effectManager;
     private int _enemiesHit = 0;
+    private Player _player;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class Projectile : MonoBehaviour
         Assert.IsNotNull(_statModifiers);
         _turnManager = FindAnyObjectByType<TurnManager>();
         _effectManager = FindAnyObjectByType<EffectManager>();
+        _player = FindAnyObjectByType<Player>();
     }
 
     private void Start()
@@ -58,7 +60,7 @@ public class Projectile : MonoBehaviour
             Stats stats = Shooter.EntityStats.DuplicateAndAddModifiers(_statModifiers);
             float dmg = entity.EntityStats.GetDamageWhenAttackedBy(stats);
             _effectManager.ApplyEffects(entity, Effects);
-            LivingEntity.Damage(entity, dmg);
+            LivingEntity.Damage(entity, dmg, _player == Shooter ? DamageSource.Player : DamageSource.EnemyRanged);
         }
 
         // Kill if at pierce cap now

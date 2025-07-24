@@ -18,9 +18,13 @@ public abstract class LivingEntity : MonoBehaviour
         }
     }
     // Damage the entity, returns true if the entity is dead
-    public static bool Damage(LivingEntity entity, float damage)
+    public static bool Damage(LivingEntity entity, float damage, DamageSource source)
     {
         Assert.IsTrue(damage > 0);
+        if (!DamageSources.BypassesDefense(source))
+        {
+            damage = Mathf.Max(1, damage - entity._stats.Defense);
+        }
         entity.EntityStats.SetCurrentHealthSilently(entity.EntityStats.CurrentHealth - damage);
         entity.OnDamaged().Invoke(damage);
         return entity.EntityStats.CurrentHealth <= 0;

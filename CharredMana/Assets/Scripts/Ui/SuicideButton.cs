@@ -24,6 +24,6 @@ public class SuicideButton : MonoBehaviour
 
     public void KillPlayer()
     {
-        LivingEntity.Damage(_player, float.MaxValue);
+        LivingEntity.Damage(_player, float.MaxValue, DamageSource.Other);
     }
 }

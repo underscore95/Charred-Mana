@@ -108,7 +108,9 @@ public class DebugMenu : MonoBehaviour
                 for (int i = 0; i < 10; i++) player.PlayerLevel.ForceLevelUp();
             });
 
-            _killPlayerButton.onClick.AddListener(() => { print("[DebugMenu] Damaged player for " + player.EntityStats.MaxHealth); LivingEntity.Damage(player, player.EntityStats.MaxHealth); });
+            _killPlayerButton.onClick.AddListener(() => { 
+                print("[DebugMenu] Damaged player for " + player.EntityStats.MaxHealth); LivingEntity.Damage(player, player.EntityStats.MaxHealth, DamageSource.Other); 
+            });
         }
 
         // Num played runs
