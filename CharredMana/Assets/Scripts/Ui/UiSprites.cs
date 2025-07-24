@@ -84,7 +84,7 @@ public class UiSprites : MonoBehaviour
         if (sprite == null)
             return null;
 
-        string spriteKey = $"{sprite.texture.name}_{sprite.textureRect.x}_{sprite.textureRect.y}_{sprite.textureRect.size.x}_{sprite.textureRect.size.y}";
+        string spriteKey = $"{sprite.texture.name}_{sprite.textureRect.x}_{sprite.textureRect.y}_{sprite.textureRect.size.x}_{sprite.textureRect.size.y}".ToLower();
 
 #if UNITY_EDITOR
         string path = AssetDatabase.GetAssetPath(sprite).ToLower();
