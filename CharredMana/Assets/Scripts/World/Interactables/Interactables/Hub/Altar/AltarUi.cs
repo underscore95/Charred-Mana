@@ -31,23 +31,39 @@ public class AltarUi : MonoBehaviour
         _altarPrayerManager = FindAnyObjectByType<AltarPrayerManager>();
         _currencyManager = FindAnyObjectByType<CurrencyManager>();
 
-        foreach (var (type, info) in _statTypes.AltarStatInfo)
+        foreach (var (type, _) in _statTypes.AltarStatInfo)
         {
             _statTypesWithPrayers.Add(type);
 
             AltarCardUi card = Instantiate(_altarCardPrefab, transform).GetComponent<AltarCardUi>();
+            _altarCards.Add(type, card);
+        }
+        UpdateCardsText();
+
+        _navBar.SetMax(_statTypesWithPrayers.Count);
+
+        _padding = _altarCards.First().Value.GetComponent<RectTransform>().sizeDelta.x + _paddingBetweenCards;
+
+        UpdateCards();
+    }
+
+    private void UpdateCardsText()
+    {
+        foreach (var (type, info) in _statTypes.AltarStatInfo)
+        {
+            AltarCardUi card = _altarCards[type];
             int currentLevel = _altarPrayerManager.GetPrayerLevel(type);
             StatModifier currentModifier = StatModifier.MergeN(info.StatBoostPerPrayerLevel, currentLevel);
             StatModifier nextModifier = new StatModifier(currentModifier);
             nextModifier.Merge(info.StatBoostPerPrayerLevel);
 
             string desc = string.Format(
-                _altarCardDesc,
-               StatTypes.ToString(type),
-               info.StatBoostPerPrayerLevel.ToString(1, true),
-               currentModifier.ToString(1, true),
-               nextModifier.ToString(1, true)
-            );
+               _altarCardDesc,
+              StatTypes.ToString(type),
+              info.StatBoostPerPrayerLevel.ToString(1, true),
+              currentModifier.ToString(1, true),
+              nextModifier.ToString(1, true)
+           );
 
             card.SetStat(
            "Prayer of\n" + info.Title,
@@ -56,14 +72,7 @@ public class AltarUi : MonoBehaviour
                 () => OnBuy(type)
             );
             UpdateCost(card, type);
-            _altarCards.Add(type, card);
         }
-
-        _navBar.SetMax(_statTypesWithPrayers.Count);
-
-        _padding = _altarCards.First().Value.GetComponent<RectTransform>().sizeDelta.x + _paddingBetweenCards;
-
-        UpdateCards();
     }
 
     private void Update()
@@ -98,7 +107,7 @@ public class AltarUi : MonoBehaviour
         _currencyManager.Remove(CurrencyType.Essence, cost);
         _altarPrayerManager.UpgradePrayerLevel(type);
 
-        UpdateCost(card, type);
+        UpdateCardsText();
     }
 
     // Get cost of upgrading to next level
