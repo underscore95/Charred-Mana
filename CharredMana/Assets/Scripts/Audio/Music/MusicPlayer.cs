@@ -13,8 +13,8 @@ public class MusicPlayer : MonoBehaviour
     private bool _hasNotPlayedMusic = true;
     private readonly System.Random _random = Utils.CreateRandom();
     private GameSettings _settings;
-    private float _secondsSinceFadeInStart;
-    private float _secondsSinceFadeOutStart;
+    private float _secondsSinceFadeInStart = -1;
+    private float _secondsSinceFadeOutStart = -1;
 
     private void Awake()
     {
@@ -42,24 +42,29 @@ public class MusicPlayer : MonoBehaviour
             PlayNextMusic();
         }
 
-        _secondsSinceFadeInStart += Time.deltaTime;
-        if (_secondsSinceFadeInStart <= _fadeDuration)
+        if (_secondsSinceFadeInStart >= 0)
         {
-            // fading in
-            _source.volume = Mathf.InverseLerp(0, _fadeDuration, _secondsSinceFadeInStart) * _settings.MusicVolume;
-            return;
+            _secondsSinceFadeInStart += Time.deltaTime;
+            if (_secondsSinceFadeInStart <= _fadeDuration)
+            {
+                // fading in
+                float t = Mathf.InverseLerp(0, _fadeDuration, _secondsSinceFadeInStart);
+                _source.volume = t * _settings.MusicVolume;
+                return;
+            }
         }
 
         if (_secondsSinceFadeOutStart >= 0)
         {
             // fading out
             _secondsSinceFadeOutStart += Time.deltaTime;
-            if ( _secondsSinceFadeOutStart <= _fadeDuration)
+            if (_secondsSinceFadeOutStart <= _fadeDuration)
             {
                 _source.volume = 1 - Mathf.InverseLerp(0, _fadeDuration, _secondsSinceFadeOutStart) * _settings.MusicVolume;
                 return;
             }
-        } else
+        }
+        else
         {
             _source.volume = _settings.MusicVolume;
         }
