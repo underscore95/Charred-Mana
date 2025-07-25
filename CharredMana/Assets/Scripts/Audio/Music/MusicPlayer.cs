@@ -37,7 +37,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (_hasNotPlayedMusic && MusicDestroyer.NumberMusicInProcessOfBeingDestroyed <= 0)
+        if (!_source.isPlaying && MusicDestroyer.NumberMusicInProcessOfBeingDestroyed <= 0)
         {
             PlayNextMusic();
         }
@@ -78,7 +78,7 @@ public class MusicPlayer : MonoBehaviour
     private IEnumerator FadeOutMusicThenStartNext()
     {
         // fade out
-        if (!_hasNotPlayedMusic)
+        if (!_hasNotPlayedMusic && _source.volume > 0)
         {
             _secondsSinceFadeOutStart = 0;
             yield return new WaitForSecondsRealtime(_fadeDuration);
