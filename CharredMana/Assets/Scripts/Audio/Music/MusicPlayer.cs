@@ -45,13 +45,23 @@ public class MusicPlayer : MonoBehaviour
         _secondsSinceFadeInStart += Time.deltaTime;
         if (_secondsSinceFadeInStart <= _fadeDuration)
         {
+            // fading in
             _source.volume = Mathf.InverseLerp(0, _fadeDuration, _secondsSinceFadeInStart) * _settings.MusicVolume;
+            return;
         }
 
-        _secondsSinceFadeOutStart += Time.deltaTime;
-        if (_secondsSinceFadeOutStart >= 0 && _secondsSinceFadeOutStart <= _fadeDuration)
+        if (_secondsSinceFadeOutStart >= 0)
         {
-            _source.volume = 1 - Mathf.InverseLerp(0, _fadeDuration, _secondsSinceFadeOutStart) * _settings.MusicVolume;
+            // fading out
+            _secondsSinceFadeOutStart += Time.deltaTime;
+            if ( _secondsSinceFadeOutStart <= _fadeDuration)
+            {
+                _source.volume = 1 - Mathf.InverseLerp(0, _fadeDuration, _secondsSinceFadeOutStart) * _settings.MusicVolume;
+                return;
+            }
+        } else
+        {
+            _source.volume = _settings.MusicVolume;
         }
     }
 

@@ -36,6 +36,7 @@ public class MusicDestroyer : MonoBehaviour
     {
         _secondsElapsed += Time.deltaTime;
         _source.volume = Mathf.InverseLerp(0, Duration, _secondsElapsed) * _settings.MusicVolume;
+        print("destroying: " + _settings.MusicVolume);
 
         if (_secondsElapsed > Duration)
         {
